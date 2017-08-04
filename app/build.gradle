@@ -1,0 +1,61 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+def APP_ID = "com.framgia.fbook"
+
+android {
+  compileSdkVersion rootProject.ext.compileSdkVersion
+  buildToolsVersion rootProject.ext.buildToolsVersion
+  defaultConfig {
+    applicationId "${APP_ID}"
+    minSdkVersion rootProject.ext.minSdkVersion
+    targetSdkVersion rootProject.ext.targetSdkVersion
+    versionCode rootProject.ext.versionCode
+    versionName rootProject.ext.versionName
+    vectorDrawables.useSupportLibrary = true
+  }
+
+  dataBinding {
+    enabled = true
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+}
+dependencies {
+  compile fileTree(dir: 'libs', include: ['*.jar'])
+
+  Map<String, String> dependencies = rootProject.ext.dependencies;
+
+  compile dependencies.supportDesign
+  compile dependencies.constraintLayout
+
+  compile dependencies.rxJava
+  compile dependencies.rxAndroid
+  compile dependencies.kotlin
+
+  compile dependencies.retrofit2
+  compile dependencies.retrofit2Adapter
+  compile dependencies.retrofitGson
+  compile dependencies.loggingInterceptor
+  compile dependencies.cardView
+  compile dependencies.glide
+
+  annotationProcessor dependencies.dagger2Compile
+  compile dependencies.dagger2
+  provided dependencies.annotation
+
+  testCompile dependencies.junit
+  testCompile dependencies.mockito
+
+  androidTestCompile 'info.cukes:cucumber-android:1.2.0@jar'
+  androidTestCompile 'info.cukes:cucumber-picocontainer:1.2.0'
+  androidTestCompile('com.android.support.test.espresso:espresso-core:3.0.0', {
+    exclude group: 'com.android.support', module: 'support-annotations'
+  })
+}
