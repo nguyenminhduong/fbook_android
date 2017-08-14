@@ -1,4 +1,4 @@
-package com.fstyle.fbook.screen
+package com.framgia.fbook.screen
 
 /**
  * Created by le.quang.dao on 10/03/2017.

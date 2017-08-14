@@ -1,4 +1,4 @@
-package com.fstyle.fbook.utils.validator
+package com.framgia.fbook.utils.validator
 
 
 /**

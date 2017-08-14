@@ -1,6 +1,6 @@
-package com.fstyle.fbook.data.source.remote.api.response
+package com.framgia.fbook.data.source.remote.api.response
 
-import com.fstyle.fbook.data.model.User
+import com.framgia.fbook.data.model.User
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 

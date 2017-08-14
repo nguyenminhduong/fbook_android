@@ -1,4 +1,4 @@
-package com.fstyle.fbook.data.source.local.sqlite
+package com.framgia.fbook.data.source.local.sqlite
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase

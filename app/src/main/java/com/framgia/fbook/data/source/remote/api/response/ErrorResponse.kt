@@ -1,4 +1,4 @@
-package com.fstyle.fbook.data.source.remote.api.response
+package com.framgia.fbook.data.source.remote.api.response
 
 import com.google.gson.annotations.Expose
 

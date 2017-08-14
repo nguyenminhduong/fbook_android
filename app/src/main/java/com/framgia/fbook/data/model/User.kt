@@ -1,4 +1,4 @@
-package com.fstyle.fbook.data.model
+package com.framgia.fbook.data.model
 
 import android.os.Parcel
 import android.os.Parcelable

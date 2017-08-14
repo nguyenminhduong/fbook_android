@@ -1,4 +1,4 @@
-package com.fstyle.fbook.utils.navigator
+package com.framgia.fbook.utils.navigator
 
 import android.app.Activity
 import android.content.Intent

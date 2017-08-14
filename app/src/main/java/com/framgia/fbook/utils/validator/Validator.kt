@@ -1,4 +1,4 @@
-package com.fstyle.fbook.utils.validator
+package com.framgia.fbook.utils.validator
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -8,7 +8,7 @@ import android.text.TextUtils
 import android.util.Log
 import android.util.SparseArray
 import android.util.SparseIntArray
-import com.fstyle.fbook.screen.BaseViewModel
+import com.framgia.fbook.screen.BaseViewModel
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers

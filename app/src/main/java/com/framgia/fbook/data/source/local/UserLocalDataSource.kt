@@ -1,11 +1,11 @@
-package com.fstyle.fbook.data.source.local
+package com.framgia.fbook.data.source.local
 
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import com.fstyle.fbook.data.model.User
-import com.fstyle.fbook.data.source.UserDataSource
-import com.fstyle.fbook.data.source.local.sqlite.UserDbHelper
+import com.framgia.fbook.data.model.User
+import com.framgia.fbook.data.source.UserDataSource
+import com.framgia.fbook.data.source.local.sqlite.UserDbHelper
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Completable
 import io.reactivex.Flowable

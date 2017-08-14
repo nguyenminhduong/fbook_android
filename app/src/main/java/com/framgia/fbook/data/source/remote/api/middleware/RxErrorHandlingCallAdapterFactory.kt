@@ -1,9 +1,9 @@
-package com.fstyle.fbook.data.source.remote.api.middleware
+package com.framgia.fbook.data.source.remote.api.middleware
 
 import android.text.TextUtils
 import android.util.Log
-import com.fstyle.fbook.data.source.remote.api.error.BaseException
-import com.fstyle.fbook.data.source.remote.api.response.ErrorResponse
+import com.framgia.fbook.data.source.remote.api.error.BaseException
+import com.framgia.fbook.data.source.remote.api.response.ErrorResponse
 import com.google.gson.Gson
 import io.reactivex.*
 import retrofit2.Call

@@ -1,4 +1,4 @@
-package com.fstyle.fbook.data.source.remote.api.error
+package com.framgia.fbook.data.source.remote.api.error
 
 import java.io.IOException
 

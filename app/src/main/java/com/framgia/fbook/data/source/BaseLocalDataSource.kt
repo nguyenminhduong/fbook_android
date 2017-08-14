@@ -1,4 +1,4 @@
-package com.fstyle.fbook.data.source
+package com.framgia.fbook.data.source
 
 /**
  * Created by le.quang.dao on 13/03/2017.

@@ -1,4 +1,4 @@
-package com.fstyle.fbook.data.source.remote.api.service
+package com.framgia.fbook.data.source.remote.api.service
 
 import com.google.gson.TypeAdapter
 import com.google.gson.stream.JsonReader

@@ -1,10 +1,10 @@
-package com.fstyle.fbook
+package com.framgia.fbook
 
 import android.content.Context
-import com.fstyle.fbook.data.source.remote.api.NetworkModule
-import com.fstyle.fbook.data.source.remote.api.service.NameApi
-import com.fstyle.fbook.utils.dagger.AppScope
-import com.fstyle.fbook.utils.rx.BaseSchedulerProvider
+import com.framgia.fbook.data.source.remote.api.NetworkModule
+import com.framgia.fbook.data.source.remote.api.service.NameApi
+import com.framgia.fbook.utils.dagger.AppScope
+import com.framgia.fbook.utils.rx.BaseSchedulerProvider
 import dagger.Component
 
 /**

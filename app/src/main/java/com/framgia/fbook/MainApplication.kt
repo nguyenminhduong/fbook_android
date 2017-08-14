@@ -1,7 +1,7 @@
-package com.fstyle.fbook
+package com.framgia.fbook
 
 import android.app.Application
-import com.fstyle.fbook.data.source.remote.api.NetworkModule
+import com.framgia.fbook.data.source.remote.api.NetworkModule
 
 /**
  * Created by le.quang.dao on 10/03/2017.

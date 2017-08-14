@@ -1,4 +1,4 @@
-package com.fstyle.fbook.utils.rx
+package com.framgia.fbook.utils.rx
 
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -27,6 +27,6 @@ class SchedulerProvider private constructor() : BaseSchedulerProvider {
   }
 
   companion object {
-    val instance: com.fstyle.fbook.utils.rx.SchedulerProvider by lazy { SchedulerProvider.instance }
+    val instance: com.framgia.fbook.utils.rx.SchedulerProvider by lazy { SchedulerProvider.instance }
   }
 }

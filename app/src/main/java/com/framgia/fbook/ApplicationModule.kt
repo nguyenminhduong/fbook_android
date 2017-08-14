@@ -1,11 +1,11 @@
-package com.fstyle.fbook
+package com.framgia.fbook
 
 import android.content.Context
-import com.fstyle.fbook.data.source.local.sharedprf.SharedPrefsApi
-import com.fstyle.fbook.data.source.local.sharedprf.SharedPrefsImpl
-import com.fstyle.fbook.utils.dagger.AppScope
-import com.fstyle.fbook.utils.rx.BaseSchedulerProvider
-import com.fstyle.fbook.utils.rx.SchedulerProvider
+import com.framgia.fbook.data.source.local.sharedprf.SharedPrefsApi
+import com.framgia.fbook.data.source.local.sharedprf.SharedPrefsImpl
+import com.framgia.fbook.utils.dagger.AppScope
+import com.framgia.fbook.utils.rx.BaseSchedulerProvider
+import com.framgia.fbook.utils.rx.SchedulerProvider
 import dagger.Module
 import dagger.Provides
 

@@ -1,6 +1,6 @@
-package com.fstyle.fbook.data.source.remote.api.error
+package com.framgia.fbook.data.source.remote.api.error
 
-import com.fstyle.fbook.data.source.remote.api.response.ErrorResponse
+import com.framgia.fbook.data.source.remote.api.response.ErrorResponse
 import retrofit2.Response
 import java.io.IOException
 import java.net.SocketTimeoutException

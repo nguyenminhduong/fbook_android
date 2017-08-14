@@ -1,14 +1,14 @@
-package com.fstyle.fbook.data.source.remote.api
+package com.framgia.fbook.data.source.remote.api
 
 import android.app.Application
 import com.framgia.fbook.BuildConfig
-import com.fstyle.fbook.data.source.remote.api.middleware.InterceptorImpl
-import com.fstyle.fbook.data.source.remote.api.middleware.RxErrorHandlingCallAdapterFactory
-import com.fstyle.fbook.data.source.remote.api.service.BooleanAdapter
-import com.fstyle.fbook.data.source.remote.api.service.IntegerAdapter
-import com.fstyle.fbook.data.source.remote.api.service.NameApi
-import com.fstyle.fbook.utils.Constant
-import com.fstyle.fbook.utils.dagger.AppScope
+import com.framgia.fbook.data.source.remote.api.middleware.InterceptorImpl
+import com.framgia.fbook.data.source.remote.api.middleware.RxErrorHandlingCallAdapterFactory
+import com.framgia.fbook.data.source.remote.api.service.BooleanAdapter
+import com.framgia.fbook.data.source.remote.api.service.IntegerAdapter
+import com.framgia.fbook.data.source.remote.api.service.NameApi
+import com.framgia.fbook.utils.Constant
+import com.framgia.fbook.utils.dagger.AppScope
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder

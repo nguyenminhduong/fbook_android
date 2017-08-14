@@ -1,4 +1,4 @@
-package com.fstyle.fbook.screen
+package com.framgia.fbook.screen
 
 import android.support.v7.app.AppCompatActivity
 
