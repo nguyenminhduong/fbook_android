@@ -1,6 +1,13 @@
 apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+apply from: '../autodimension.gradle'
+
+/**
+ * start config and check ci*/
+apply from: '../checkci.gradle'
 
 def APP_ID = "com.framgia.fbook"
 
@@ -32,6 +39,8 @@ dependencies {
 
   Map<String, String> dependencies = rootProject.ext.dependencies;
 
+  kapt dependencies.dataBinding
+
   compile dependencies.supportDesign
   compile dependencies.constraintLayout
 
@@ -46,16 +55,16 @@ dependencies {
   compile dependencies.cardView
   compile dependencies.glide
 
-  annotationProcessor dependencies.dagger2Compile
+  kapt dependencies.dagger2Compile
   compile dependencies.dagger2
   provided dependencies.annotation
 
   testCompile dependencies.junit
   testCompile dependencies.mockito
 
-  androidTestCompile 'info.cukes:cucumber-android:1.2.0@jar'
-  androidTestCompile 'info.cukes:cucumber-picocontainer:1.2.0'
-  androidTestCompile('com.android.support.test.espresso:espresso-core:3.0.0', {
+  androidTestCompile 'info.cukes:cucumber-android:1.2.5@jar'
+  androidTestCompile 'info.cukes:cucumber-picocontainer:1.2.5'
+  androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
 }
