@@ -1,4 +1,4 @@
-package com.fstyle.fbook.utils.binding
+package com.framgia.fbook.utils.binding
 
 import android.databinding.BindingAdapter
 import android.net.Uri
@@ -7,7 +7,7 @@ import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.RecyclerView
 import android.widget.ImageView
 import com.bumptech.glide.Glide
-import com.fstyle.fbook.utils.common.StringUtils
+import com.framgia.fbook.utils.common.StringUtils
 
 
 /**

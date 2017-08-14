@@ -1,6 +1,6 @@
-package com.fstyle.fbook.data.source
+package com.framgia.fbook.data.source
 
-import com.fstyle.fbook.data.model.User
+import com.framgia.fbook.data.model.User
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single

@@ -1,4 +1,4 @@
-package com.fstyle.fbook.data.source.local.sharedprf
+package com.framgia.fbook.data.source.local.sharedprf
 
 import android.content.Context
 import android.content.SharedPreferences

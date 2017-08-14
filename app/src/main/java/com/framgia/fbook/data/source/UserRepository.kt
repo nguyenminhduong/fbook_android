@@ -1,7 +1,7 @@
-package com.fstyle.fbook.data.source
+package com.framgia.fbook.data.source
 
-import com.fstyle.fbook.data.model.User
-import com.fstyle.fbook.data.source.remote.UserRemoteDataSource
+import com.framgia.fbook.data.model.User
+import com.framgia.fbook.data.source.remote.UserRemoteDataSource
 import io.reactivex.Single
 
 /**

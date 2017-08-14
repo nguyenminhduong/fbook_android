@@ -1,4 +1,4 @@
-package com.fstyle.fbook.utils.dagger
+package com.framgia.fbook.utils.dagger
 
 import javax.inject.Scope
 

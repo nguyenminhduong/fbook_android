@@ -1,6 +1,6 @@
-package com.fstyle.fbook.data.source.remote
+package com.framgia.fbook.data.source.remote
 
-import com.fstyle.fbook.data.source.remote.api.service.NameApi
+import com.framgia.fbook.data.source.remote.api.service.NameApi
 
 /**
  * Created by le.quang.dao on 10/03/2017.

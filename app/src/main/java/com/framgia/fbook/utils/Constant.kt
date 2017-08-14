@@ -1,4 +1,4 @@
-package com.fstyle.fbook.utils
+package com.framgia.fbook.utils
 
 /**
  * Created by le.quang.dao on 10/03/2017.

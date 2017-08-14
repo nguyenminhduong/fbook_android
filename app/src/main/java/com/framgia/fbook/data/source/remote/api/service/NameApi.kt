@@ -1,7 +1,7 @@
-package com.fstyle.fbook.data.source.remote.api.service
+package com.framgia.fbook.data.source.remote.api.service
 
-import com.fstyle.fbook.data.model.User
-import com.fstyle.fbook.data.source.remote.api.response.SearchUserResponse
+import com.framgia.fbook.data.model.User
+import com.framgia.fbook.data.source.remote.api.response.SearchUserResponse
 import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.http.GET

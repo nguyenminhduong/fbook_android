@@ -1,4 +1,4 @@
-package com.fstyle.fbook.utils.navigator
+package com.framgia.fbook.utils.navigator
 
 /**
  * Created by framgia on 05/05/2017.

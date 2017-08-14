@@ -1,4 +1,4 @@
-package com.fstyle.fbook.utils.rx
+package com.framgia.fbook.utils.rx
 
 import io.reactivex.Scheduler
 import io.reactivex.schedulers.Schedulers

@@ -1,4 +1,4 @@
-package com.fstyle.fbook.utils.common
+package com.framgia.fbook.utils.common
 
 /**
  * Created by framgia on 05/05/2017.

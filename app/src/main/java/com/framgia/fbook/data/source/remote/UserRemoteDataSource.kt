@@ -1,8 +1,8 @@
-package com.fstyle.fbook.data.source.remote
+package com.framgia.fbook.data.source.remote
 
-import com.fstyle.fbook.data.model.User
-import com.fstyle.fbook.data.source.UserDataSource
-import com.fstyle.fbook.data.source.remote.api.service.NameApi
+import com.framgia.fbook.data.model.User
+import com.framgia.fbook.data.source.UserDataSource
+import com.framgia.fbook.data.source.remote.api.service.NameApi
 import io.reactivex.Single
 import javax.inject.Inject
 

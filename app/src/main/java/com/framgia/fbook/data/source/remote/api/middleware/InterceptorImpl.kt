@@ -1,4 +1,4 @@
-package com.fstyle.fbook.data.source.remote.api.middleware
+package com.framgia.fbook.data.source.remote.api.middleware
 
 import java.io.IOException
 import java.net.HttpURLConnection
