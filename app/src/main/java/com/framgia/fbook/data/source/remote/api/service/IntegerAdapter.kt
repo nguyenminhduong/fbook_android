@@ -21,26 +21,24 @@ class IntegerAdapter : TypeAdapter<Int>() {
   }
 
   @Throws(IOException::class)
-  override fun read(`in`: JsonReader): Int? {
-    val peek = `in`.peek()
+  override fun read(input: JsonReader): Int? {
+    val peek = input.peek()
     when (peek) {
       JsonToken.NULL -> {
-        `in`.nextNull()
+        input.nextNull()
         return null
       }
 
-      JsonToken.NUMBER -> return `in`.nextInt()
+      JsonToken.NUMBER -> return input.nextInt()
 
-      JsonToken.BOOLEAN -> return if (`in`.nextBoolean()) 1 else 0
+      JsonToken.BOOLEAN -> return if (input.nextBoolean()) 1 else 0
 
       JsonToken.STRING -> {
         try {
-          return Integer.valueOf(`in`.nextString())
+          return Integer.valueOf(input.nextString())
         } catch (e: NumberFormatException) {
           return null
         }
-
-        return null
       }
       else -> return null
     }

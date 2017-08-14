@@ -21,19 +21,19 @@ class BooleanAdapter : TypeAdapter<Boolean>() {
   }
 
   @Throws(IOException::class)
-  override fun read(`in`: JsonReader): Boolean? {
-    val peek = `in`.peek()
+  override fun read(input: JsonReader): Boolean? {
+    val peek = input.peek()
     when (peek) {
       JsonToken.NULL -> {
-        `in`.nextNull()
+        input.nextNull()
         return null
       }
 
-      JsonToken.BOOLEAN -> return `in`.nextBoolean()
+      JsonToken.BOOLEAN -> return input.nextBoolean()
 
-      JsonToken.NUMBER -> return `in`.nextInt() != 0
+      JsonToken.NUMBER -> return input.nextInt() != 0
 
-      JsonToken.STRING -> return java.lang.Boolean.valueOf(`in`.nextString())
+      JsonToken.STRING -> return java.lang.Boolean.valueOf(input.nextString())
 
       else -> return null
     }
