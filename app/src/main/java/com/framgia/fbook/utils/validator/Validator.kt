@@ -129,17 +129,17 @@ class Validator(@param:ApplicationContext private val mContext: Context, clzz: C
   }
 
   @Throws(IllegalAccessException::class)
-  fun <T : BaseViewModel> validateAll(`object`: T): Boolean {
+  fun <T : BaseViewModel> validateAll(objectInput: T): Boolean {
     var isValid = true
 
-    for (field in `object`.javaClass.declaredFields) {
+    for (field in objectInput.javaClass.declaredFields) {
       val annotation = field.getAnnotation(Validation::class.java) ?: continue
       val rules = annotation.value
       val optional = field.getAnnotation(Optional::class.java)
       val isOptional = optional != null
       field.isAccessible = true
 
-      val obj = field.get(`object`)
+      val obj = field.get(objectInput)
       val valid = validate(obj, rules, isOptional)
       if (!valid) {
         isValid = false

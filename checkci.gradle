@@ -8,7 +8,7 @@ apply plugin: 'pmd'
 check.dependsOn 'checkstyle', 'findbugs', 'pmd', 'cpd'
 
 dependencies {
-  checkstyle 'com.puppycrawl.tools:checkstyle:7.6'
+    checkstyle 'com.puppycrawl.tools:checkstyle:7.6'
 }
 
 task checkstyle(type: Checkstyle) {
@@ -21,7 +21,7 @@ task checkstyle(type: Checkstyle) {
     configFile conf
     configProperties.checkstyleSuppressionsPath = file("${project.rootDir}/config/checkstyle/suppressions.xml")
     source 'src'
-    include '**/*.java'
+    include '**/*.kt'
     exclude '**/gen/**'
     exclude '**/R.java'
     exclude '**/BuildConfig.java'
@@ -39,13 +39,13 @@ task findbugs(type: FindBugs, dependsOn: "assembleDebug") {
     if (project.hasProperty('findBugsExcludeFilter')) {
         conf = file(findBugsExcludeFilter)
     } else {
-      conf = file("${project.rootDir}/config/findbugs/exclude.xml")
+        conf = file("${project.rootDir}/config/findbugs/exclude.xml")
     }
     excludeFilter = conf
     classes = files("$project.buildDir/intermediates/classes/")
 
     source 'src'
-    include '**/*.java'
+    include '**/*.kt'
     exclude '**/gen/**'
 
     reports {
@@ -73,7 +73,7 @@ task pmd(type: Pmd) {
     ruleSets = []
 
     source 'src'
-    include '**/*.java'
+    include '**/*.kt'
     exclude '**/gen/**'
 
     reports {
@@ -98,7 +98,7 @@ task cpd doLast {
         format: 'xml',
         outputFile: new File(outDir , 'cpd.xml')) {
         fileset(dir: "src/main/java") {
-            include(name: '**/*.java')
+            include(name: '**/*.kt')
         }
     }
 }
