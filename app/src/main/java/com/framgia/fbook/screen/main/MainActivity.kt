@@ -2,20 +2,21 @@ package com.framgia.fbook.screen.main
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import com.framia.fbook.screen.main.MainContract
+import android.view.View
 import com.framgia.fbook.MainApplication
 import com.framgia.fbook.R
 import com.framgia.fbook.databinding.ActivityMainBinding
 import com.framgia.fbook.screen.BaseActivity
 import com.framgia.fbook.utils.navigator.Navigator
+import com.framia.fbook.screen.main.MainContract
 import javax.inject.Inject
 
-class MainActivity : BaseActivity(),MainContract.ViewModel {
+class MainActivity : BaseActivity(), MainContract.ViewModel {
 
   @Inject
-  lateinit var presenter : MainContract.Presenter
+  lateinit var presenter: MainContract.Presenter
   @Inject
-  lateinit var navigator : Navigator
+  lateinit var navigator: Navigator
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -37,5 +38,17 @@ class MainActivity : BaseActivity(),MainContract.ViewModel {
   override fun onStop() {
     presenter.onStop()
     super.onStop()
+  }
+
+  fun onClickSearch(view: View) {
+    //Todo dev later
+  }
+
+  fun onClickChooseDomain(view: View) {
+    //Todo dev later
+  }
+
+  fun onClickLogin(view: View) {
+    //Todo dev later
   }
 }
