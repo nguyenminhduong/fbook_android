@@ -6,10 +6,10 @@ import com.framia.fbook.screen.main.MainContract
 /**
  * Created by daolq on 8/14/17.
  */
-class MainPresenter : MainContract.Presenter{
+class MainPresenter : MainContract.Presenter {
 
   private lateinit var mMainViewModel: MainContract.ViewModel
-  private lateinit var mSchedulerProvider : BaseSchedulerProvider
+  private lateinit var mSchedulerProvider: BaseSchedulerProvider
 
   override fun onStart() {
   }
@@ -21,7 +21,7 @@ class MainPresenter : MainContract.Presenter{
     mMainViewModel = viewModel
   }
 
-  fun setSchedulerProvider(schedulerProvider: BaseSchedulerProvider){
+  fun setSchedulerProvider(schedulerProvider: BaseSchedulerProvider) {
     mSchedulerProvider = schedulerProvider
   }
 }

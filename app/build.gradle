@@ -43,6 +43,7 @@ dependencies {
 
   Map<String, String> dependencies = rootProject.ext.dependencies;
 
+  compile 'com.android.support.constraint:constraint-layout:1.0.2'
   kapt dependencies.dataBinding
 
   compile dependencies.supportDesign
@@ -58,6 +59,7 @@ dependencies {
   compile dependencies.loggingInterceptor
   compile dependencies.cardView
   compile dependencies.glide
+  compile dependencies.bottombar
 
   kapt dependencies.dagger2Compile
   compile dependencies.dagger2
