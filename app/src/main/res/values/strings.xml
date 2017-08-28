@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Fbook</string>
     <string name="login">Login</string>
+    <string name="home">Home</string>
+    <string name="my_book">My Book</string>
+    <string name="notification">Notification</string>
+    <string name="account">Account</string>
 </resources>
