@@ -6,7 +6,7 @@ package com.framgia.fbook.utils
 
 object Constant {
 
-  val END_POINT_URL = "https://api.github.com"
+  val END_POINT_URL = "http://api-book.framgia.vn"
 
   // For bundle
   val ARGUMENT_LIST_USER = "ARGUMENT_LIST_USER"
