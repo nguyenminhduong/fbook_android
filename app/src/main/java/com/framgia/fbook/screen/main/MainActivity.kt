@@ -1,5 +1,6 @@
 package com.framgia.fbook.screen.main
 
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.View
@@ -9,6 +10,7 @@ import com.framgia.fbook.R
 import com.framgia.fbook.databinding.ActivityMainBinding
 import com.framgia.fbook.screen.BaseActivity
 import com.framgia.fbook.screen.SearchBook.SearchBookActivity
+import com.framgia.fbook.screen.login.LoginActivity
 import com.framgia.fbook.utils.navigator.Navigator
 import com.framia.fbook.screen.main.MainContract
 import com.roughike.bottombar.BottomBar
@@ -76,7 +78,7 @@ class MainActivity : BaseActivity(), MainContract.ViewModel {
     //Todo dev later
   }
 
-  fun onClickLogin(view: View) {
-    //Todo dev later
+  fun onClickLogin(view: View) { //Todo dev later
+    mNavigator.startActivity(LoginActivity::class.java)
   }
 }

@@ -20,6 +20,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".screen.login.LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity
             android:name=".screen$SearchBook$SearchBookActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"/>
