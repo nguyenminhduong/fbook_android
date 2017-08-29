@@ -18,15 +18,17 @@ class SearchBookActivity : BaseActivity(), SearchBookContract.ViewModel {
   lateinit var mPresenter: SearchBookContract.Presenter
   @Inject
   lateinit var mNavigator: Navigator
-
+  @Inject
+  lateinit var searchBookPagerAdapter: SearchBookPagerAdapter
+  private lateinit var mSearchBookComponent: SearchBookComponent
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-    DaggerSearchBookComponent.builder()
+    mSearchBookComponent = DaggerSearchBookComponent.builder()
         .appComponent((application as MainApplication).appComponent)
         .searchBookModule(SearchBookModule(this))
         .build()
-        .inject(this)
+    mSearchBookComponent.inject(this)
 
     val binding = DataBindingUtil.setContentView<ActivitySearchbookBinding>(this,
         R.layout.activity_searchbook)
@@ -41,6 +43,10 @@ class SearchBookActivity : BaseActivity(), SearchBookContract.ViewModel {
   override fun onStop() {
     mPresenter.onStop()
     super.onStop()
+  }
+
+  fun getSearchBookComponent(): SearchBookComponent {
+    return mSearchBookComponent
   }
 
   fun onClickArrowBack() {
