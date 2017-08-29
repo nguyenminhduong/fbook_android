@@ -2,6 +2,7 @@ package com.framgia.fbook.screen.login;
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.view.View
 import com.framgia.fbook.MainApplication
 import com.framgia.fbook.R
 import com.framgia.fbook.databinding.ActivityLoginBinding
@@ -37,5 +38,9 @@ class LoginActivity : BaseActivity(), LoginContract.ViewModel {
   override fun onStop() {
     presenter.onStop()
     super.onStop()
+  }
+
+  fun onClickLogin() {
+    //Navigation when Click button Login
   }
 }
