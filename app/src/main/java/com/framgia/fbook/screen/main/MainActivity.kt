@@ -8,6 +8,7 @@ import com.framgia.fbook.MainApplication
 import com.framgia.fbook.R
 import com.framgia.fbook.databinding.ActivityMainBinding
 import com.framgia.fbook.screen.BaseActivity
+import com.framgia.fbook.screen.SearchBook.SearchBookActivity
 import com.framgia.fbook.utils.navigator.Navigator
 import com.framia.fbook.screen.main.MainContract
 import com.roughike.bottombar.BottomBar
@@ -18,15 +19,16 @@ class MainActivity : BaseActivity(), MainContract.ViewModel {
   @Inject
   lateinit var presenter: MainContract.Presenter
   @Inject
-  lateinit var navigator: Navigator
+  lateinit var mNavigator: Navigator
+  private lateinit var mMainComponent: MainComponent
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    DaggerMainComponent.builder()
+    mMainComponent = DaggerMainComponent.builder()
         .appComponent((application as MainApplication).appComponent)
         .mainModule(MainModule(this))
         .build()
-        .inject(this)
+    mMainComponent.inject(this)
 
     val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
     binding.viewModel = this
@@ -41,6 +43,10 @@ class MainActivity : BaseActivity(), MainContract.ViewModel {
   override fun onStop() {
     presenter.onStop()
     super.onStop()
+  }
+
+  fun getMainComponent(): MainComponent {
+    return mMainComponent
   }
 
   fun onSelectItemMenu() {
@@ -63,7 +69,7 @@ class MainActivity : BaseActivity(), MainContract.ViewModel {
   }
 
   fun onClickSearch(view: View) {
-    //Todo dev later
+    mNavigator.startActivity(SearchBookActivity::class.java)
   }
 
   fun onClickChooseDomain(view: View) {
