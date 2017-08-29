@@ -2,7 +2,10 @@ package com.framgia.fbook.utils.binding
 
 import android.databinding.BindingAdapter
 import android.net.Uri
+import android.support.design.widget.TabLayout
 import android.support.design.widget.TextInputLayout
+import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.view.ViewPager
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.RecyclerView
 import android.widget.ImageView
@@ -59,5 +62,20 @@ object BindingUtils {
   @BindingAdapter("addItemDecoration")
   fun setItemDecoration(recyclerView: RecyclerView, orientation: Int) {
     recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, orientation))
+  }
+
+  /**
+   * setAdapter for viewpager
+   */
+  @JvmStatic
+  @BindingAdapter("viewPageAdapter")
+  fun setViewPageAdapter(viewPager: ViewPager, adapter: FragmentPagerAdapter) {
+    viewPager.adapter = adapter
+  }
+
+  @JvmStatic
+  @BindingAdapter("setViewPager")
+  fun setUpViewPager(tabLayout: TabLayout, viewPager: ViewPager) {
+    tabLayout.setupWithViewPager(viewPager)
   }
 }
