@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Fbook</string>
+    <string name="login">Đăng nhập</string>
+    <string name="home">Trang chủ</string>
+    <string name="my_book">Sách của tôi</string>
+    <string name="notification">Thông báo</string>
+    <string name="account">Tài khoản</string>
+    <string name="password">Mật khẩu</string>
+    <string name="forgot_password">Quên mật khẩu?</string>
+</resources>
