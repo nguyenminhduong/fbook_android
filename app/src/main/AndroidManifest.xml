@@ -24,7 +24,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity
-            android:name=".screen$SearchBook$SearchBookActivity"
+            android:name=".screen.SearchBook.SearchBookActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"/>
     </application>
