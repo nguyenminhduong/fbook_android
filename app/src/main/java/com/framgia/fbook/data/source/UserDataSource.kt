@@ -1,6 +1,8 @@
 package com.framgia.fbook.data.source
 
 import com.framgia.fbook.data.model.User
+import com.framgia.fbook.data.source.remote.api.request.SignInRequest
+import com.framgia.fbook.data.source.remote.api.response.SignInResponse
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -33,6 +35,9 @@ interface UserDataSource {
    */
   interface RemoteDataSource {
     fun searchUsers(keyWord: String?, limit: Int): Single<List<User>>
+
     fun getUserDetailFromServer(userLogin: String?): Single<User>
+
+    fun login(signInRequest: SignInRequest?): Single<SignInResponse>
   }
 }
