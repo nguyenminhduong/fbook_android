@@ -3,8 +3,12 @@ package com.framgia.fbook.screen.login;
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.View
+import android.util.Log
 import com.framgia.fbook.MainApplication
 import com.framgia.fbook.R
+import com.framgia.fbook.data.source.remote.api.error.BaseException
+import com.framgia.fbook.data.source.remote.api.request.SignInRequest
+import com.framgia.fbook.data.source.remote.api.response.SignInResponse
 import com.framgia.fbook.databinding.ActivityLoginBinding
 import com.framgia.fbook.screen.BaseActivity
 import javax.inject.Inject
@@ -14,8 +18,12 @@ import javax.inject.Inject
  */
 class LoginActivity : BaseActivity(), LoginContract.ViewModel {
 
+  companion object {
+    val TAG: String = LoginActivity::class.java.name
+  }
+
   @Inject
-  internal lateinit var presenter: LoginContract.Presenter
+  internal lateinit var mPresenter: LoginContract.Presenter
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -32,15 +40,28 @@ class LoginActivity : BaseActivity(), LoginContract.ViewModel {
 
   override fun onStart() {
     super.onStart()
-    presenter.onStart()
+    mPresenter.onStart()
   }
 
   override fun onStop() {
-    presenter.onStop()
+    mPresenter.onStop()
     super.onStop()
   }
 
+  //TODO edit later
+  override fun onLoginSuccess(signInResponse: SignInResponse) {
+    Log.e(TAG, signInResponse.signInData?.accessToken.toString())
+  }
+
+  override fun onError(exception: BaseException) {
+    Log.e(TAG, exception.message)
+  }
+
   fun onClickLogin() {
-    //Navigation when Click button Login
+    //TODO edit later
+    val signInRequest: SignInRequest = SignInRequest()
+    signInRequest.email = "nguyen.van.a@framgia.com"
+    signInRequest.password = "12345678"
+    mPresenter.login(signInRequest)
   }
 }

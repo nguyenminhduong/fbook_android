@@ -2,6 +2,8 @@ package com.framgia.fbook.data.source.remote
 
 import com.framgia.fbook.data.model.User
 import com.framgia.fbook.data.source.UserDataSource
+import com.framgia.fbook.data.source.remote.api.request.SignInRequest
+import com.framgia.fbook.data.source.remote.api.response.SignInResponse
 import com.framgia.fbook.data.source.remote.api.service.NameApi
 import io.reactivex.Single
 import javax.inject.Inject
@@ -12,6 +14,10 @@ import javax.inject.Inject
 
 class UserRemoteDataSource @Inject
 constructor(nameApi: NameApi) : BaseRemoteDataSource(nameApi), UserDataSource.RemoteDataSource {
+
+  override fun login(signInRequest: SignInRequest?): Single<SignInResponse> {
+    return nameApi.login(signInRequest)
+  }
 
   override fun searchUsers(keyWord: String?, limit: Int): Single<List<User>> {
     return nameApi.searchGithubUsers(limit, keyWord)
