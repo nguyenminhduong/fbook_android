@@ -9,4 +9,7 @@
     <color name="color_white_light">#D1CFD3</color>
     <color name="color_white">#FFFFFF</color>
     <color name="color_red_translate">#90FF3328</color>
+    <color name="color_red_click">#70BA000C</color>
+    <color name="color_dark_gray">#484848</color>
+    <color name="color_white_translate_light">#73F1F1F1</color>
 </resources>
