@@ -66,7 +66,7 @@ class BaseException : RuntimeException {
     }
     if (this in 400..451) {
       // Client error
-      return "An error occurred on the application side. Please try again later!"
+      return "Invalid email or password!"
     }
     if (this in 500..511) {
       // Server error

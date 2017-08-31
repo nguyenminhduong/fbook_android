@@ -6,6 +6,7 @@ import android.content.Context
 import android.databinding.ObservableField
 import android.text.TextUtils
 import android.util.Log
+import android.util.Patterns.EMAIL_ADDRESS
 import android.util.SparseArray
 import android.util.SparseIntArray
 import com.framgia.fbook.screen.BaseViewModel
@@ -196,6 +197,25 @@ class Validator(@param:ApplicationContext private val mContext: Context, clzz: C
   fun validateValueNonEmpty(value: String?): String? {
     val isValid = !TextUtils.isEmpty(value)
     mMessage = if (isValid) "" else mContext.getString(mAllErrorMessage.get(ValidType.NON_EMPTY))
+    return mMessage
+  }
+
+  @ValidMethod(type = intArrayOf(ValidType.EMAIL_FORMAT))
+  fun validateEmailFormat(value: String?): String? {
+    val isValid = EMAIL_ADDRESS.matcher(value).matches()
+    mMessage = if (isValid) "" else mContext.getString(mAllErrorMessage.get(ValidType.EMAIL_FORMAT))
+    return mMessage
+  }
+
+  @ValidMethod(type = intArrayOf(ValidType.VALUE_RANGE_MIN_6))
+  fun validateValueRangeMin6(input: String?): String? {
+    if (input == null) {
+      return ""
+    }
+    val value: Int = input.length
+    val isValid = value >= 6
+    mMessage = if (isValid) "" else mContext.getString(
+        mAllErrorMessage.get(ValidType.VALUE_RANGE_MIN_6))
     return mMessage
   }
 
