@@ -1,16 +1,16 @@
 package com.framgia.fbook.screen.main
 
-import android.content.Intent
 import android.databinding.DataBindingUtil
+import android.databinding.ObservableField
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import com.framgia.fbook.MainApplication
 import com.framgia.fbook.R
 import com.framgia.fbook.databinding.ActivityMainBinding
 import com.framgia.fbook.screen.BaseActivity
 import com.framgia.fbook.screen.SearchBook.SearchBookActivity
 import com.framgia.fbook.screen.login.LoginActivity
+import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.navigator.Navigator
 import com.framia.fbook.screen.main.MainContract
 import com.roughike.bottombar.BottomBar
@@ -22,7 +22,10 @@ class MainActivity : BaseActivity(), MainContract.ViewModel {
   lateinit var presenter: MainContract.Presenter
   @Inject
   lateinit var mNavigator: Navigator
-  private lateinit var mMainComponent: MainComponent
+  @Inject
+  lateinit var mAdapter: MainContainerPagerAdapter
+  lateinit var mMainComponent: MainComponent
+  val mCurrentTab: ObservableField<Int> = ObservableField()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -47,25 +50,20 @@ class MainActivity : BaseActivity(), MainContract.ViewModel {
     super.onStop()
   }
 
-  fun getMainComponent(): MainComponent {
-    return mMainComponent
+  fun setCurrentTab(tab: Int) {
+    mCurrentTab.set(tab)
   }
+
 
   fun onSelectItemMenu() {
     val bottomBar = findViewById(R.id.bottom_navigation) as BottomBar
-    bottomBar.setOnTabSelectListener { i ->
-      when (i) {
-      //Todo Edit later -> Fragment Home
-        R.id.tab_home -> Toast.makeText(applicationContext, R.string.home, Toast.LENGTH_LONG).show()
-      //Todo Edit later -> Fragment My Book
-        R.id.tab_my_book -> Toast.makeText(applicationContext, R.string.my_book,
-            Toast.LENGTH_LONG).show()
-      //Todo Edit later -> Fragment Notification
-        R.id.tab_notification -> Toast.makeText(applicationContext, R.string.notification,
-            Toast.LENGTH_SHORT).show()
-      //Todo Edit later -> Fragment Account
-        R.id.tab_account -> Toast.makeText(applicationContext, R.string.account,
-            Toast.LENGTH_SHORT).show()
+    bottomBar.setOnTabSelectListener {
+      idView ->
+      when (idView) {
+        R.id.tab_home -> setCurrentTab(Constant.Tab.TAB_HOME)
+        R.id.tab_my_book -> setCurrentTab(Constant.Tab.TAB_MY_BOOK)
+        R.id.tab_notification -> setCurrentTab(Constant.Tab.TAB_NOTIFICATION)
+        R.id.tab_account -> setCurrentTab(Constant.Tab.TAB_ACCOUNT)
       }
     }
   }
@@ -78,7 +76,11 @@ class MainActivity : BaseActivity(), MainContract.ViewModel {
     //Todo dev later
   }
 
-  fun onClickLogin(view: View) { //Todo dev later
+  fun getMainComponent(): MainComponent {
+    return mMainComponent
+  }
+
+  fun onClickLogin(view: View) {
     mNavigator.startActivity(LoginActivity::class.java)
   }
 }

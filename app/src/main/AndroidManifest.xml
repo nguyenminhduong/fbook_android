@@ -12,9 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".screen.login.LoginActivity"
+            android:name=".screen.main.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".screen.main.MainActivity"
+            android:name=".screen.login.LoginActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".screen.SearchBook.SearchBookActivity"

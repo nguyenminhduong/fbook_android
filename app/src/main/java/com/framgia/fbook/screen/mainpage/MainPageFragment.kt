@@ -21,7 +21,6 @@ class MainPageFragment : BaseFragment() {
 
   override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
-
     DaggerMainPageComponent.builder()
         .mainComponent((activity as MainActivity).getMainComponent())
         .mainPageModule(MainPageModule(this))
