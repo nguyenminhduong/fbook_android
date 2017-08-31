@@ -17,6 +17,8 @@ interface LoginContract {
     fun onLoginSuccess(signInResponse: SignInResponse)
 
     fun onError(exception: BaseException)
+
+    fun onUserLoggedIn()
   }
 
   /**
@@ -24,5 +26,7 @@ interface LoginContract {
    */
   interface Presenter : BasePresenter<ViewModel> {
     fun login(signInRequest: SignInRequest)
+
+    fun checkUserLogin()
   }
 }

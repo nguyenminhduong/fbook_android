@@ -2,15 +2,17 @@ package com.framgia.fbook.screen.login;
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.view.View
 import android.util.Log
 import com.framgia.fbook.MainApplication
 import com.framgia.fbook.R
+import com.framgia.fbook.data.source.TokenRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.data.source.remote.api.request.SignInRequest
 import com.framgia.fbook.data.source.remote.api.response.SignInResponse
 import com.framgia.fbook.databinding.ActivityLoginBinding
 import com.framgia.fbook.screen.BaseActivity
+import com.framgia.fbook.screen.main.MainActivity
+import com.framgia.fbook.utils.navigator.Navigator
 import javax.inject.Inject
 
 /**
@@ -24,6 +26,10 @@ class LoginActivity : BaseActivity(), LoginContract.ViewModel {
 
   @Inject
   internal lateinit var mPresenter: LoginContract.Presenter
+  @Inject
+  internal lateinit var mTokenRepository: TokenRepository
+  @Inject
+  internal lateinit var mNavigator: Navigator
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -36,6 +42,7 @@ class LoginActivity : BaseActivity(), LoginContract.ViewModel {
     val binding = DataBindingUtil.setContentView<ActivityLoginBinding>(this,
         R.layout.activity_login)
     binding.viewModel = this
+    mPresenter.checkUserLogin()
   }
 
   override fun onStart() {
@@ -48,19 +55,24 @@ class LoginActivity : BaseActivity(), LoginContract.ViewModel {
     super.onStop()
   }
 
-  //TODO edit later
   override fun onLoginSuccess(signInResponse: SignInResponse) {
-    Log.e(TAG, signInResponse.signInData?.accessToken.toString())
+    mTokenRepository.saveToken(signInResponse.signInData?.accessToken.toString())
+    onUserLoggedIn()
   }
 
   override fun onError(exception: BaseException) {
     Log.e(TAG, exception.message)
   }
 
+  override fun onUserLoggedIn() {
+    mNavigator.startActivity(MainActivity::class.java)
+    mNavigator.finishActivity()
+  }
+
   fun onClickLogin() {
     //TODO edit later
-    val signInRequest: SignInRequest = SignInRequest()
-    signInRequest.email = "nguyen.van.a@framgia.com"
+    val signInRequest = SignInRequest()
+    signInRequest.email = "tran.dinh.vi@framgia.com"
     signInRequest.password = "12345678"
     mPresenter.login(signInRequest)
   }
