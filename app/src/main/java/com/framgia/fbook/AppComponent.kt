@@ -1,6 +1,7 @@
 package com.framgia.fbook
 
 import android.content.Context
+import com.framgia.fbook.data.source.local.sharedprf.SharedPrefsApi
 import com.framgia.fbook.data.source.remote.api.NetworkModule
 import com.framgia.fbook.data.source.remote.api.service.NameApi
 import com.framgia.fbook.utils.dagger.AppScope
@@ -19,6 +20,8 @@ interface AppComponent {
   //============== Region for Repository ================//
 
   fun nameApi(): NameApi
+
+  fun sharedPrefsApi(): SharedPrefsApi
 
   //=============== Region for common ===============//
 
