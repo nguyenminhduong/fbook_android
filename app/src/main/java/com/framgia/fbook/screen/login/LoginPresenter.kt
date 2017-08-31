@@ -4,7 +4,6 @@ import android.util.Log
 import com.framgia.fbook.data.source.TokenRepository
 import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException
-import com.framgia.fbook.data.source.remote.api.request.SignInRequest
 import com.framgia.fbook.screen.BaseViewModel
 import com.framgia.fbook.utils.common.StringUtils
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
@@ -73,8 +72,8 @@ class LoginPresenter(private val mUserRepository: UserRepository,
     mViewModel?.onInvalidPassWord(message)
   }
 
-  override fun login(signInRequest: SignInRequest) {
-    val disposable: Disposable = mUserRepository.login(signInRequest)
+  override fun login(email: String?, password: String?) {
+    val disposable: Disposable = mUserRepository.login(email, password)
         .subscribeOn(mSchedulerProvider.io())
         .doOnSubscribe { mViewModel?.onShowProgressDialog() }
         .doAfterTerminate { mViewModel?.onDismissProgressDialog() }

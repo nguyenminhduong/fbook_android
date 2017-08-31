@@ -14,10 +14,13 @@ import javax.inject.Inject
 
 class UserRemoteDataSource @Inject
 constructor(nameApi: NameApi) : BaseRemoteDataSource(nameApi), UserDataSource.RemoteDataSource {
-
-  override fun login(signInRequest: SignInRequest?): Single<SignInResponse> {
+  override fun login(email: String?, password: String?): Single<SignInResponse> {
+    val signInRequest = SignInRequest()
+    signInRequest.email = email
+    signInRequest.password = password
     return nameApi.login(signInRequest)
   }
+
 
   override fun searchUsers(keyWord: String?, limit: Int): Single<List<User>> {
     return nameApi.searchGithubUsers(limit, keyWord)

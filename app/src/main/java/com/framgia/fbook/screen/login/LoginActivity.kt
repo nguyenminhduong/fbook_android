@@ -7,7 +7,6 @@ import com.framgia.fbook.MainApplication
 import com.framgia.fbook.R
 import com.framgia.fbook.data.source.TokenRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException
-import com.framgia.fbook.data.source.remote.api.request.SignInRequest
 import com.framgia.fbook.data.source.remote.api.response.SignInResponse
 import com.framgia.fbook.databinding.ActivityLoginBinding
 import com.framgia.fbook.screen.BaseActivity
@@ -22,7 +21,7 @@ import javax.inject.Inject
 /**
  * Login Screen.
  */
-class LoginActivity : BaseActivity(), LoginContract.ViewModel {
+open class LoginActivity : BaseActivity(), LoginContract.ViewModel {
 
   companion object {
     val TAG: String = LoginActivity::class.java.name
@@ -107,9 +106,6 @@ class LoginActivity : BaseActivity(), LoginContract.ViewModel {
     if (!mPresenter.validateDataInput(email.get(), password.get())) {
       return
     }
-    val signInRequest = SignInRequest()
-    signInRequest.email = email.get()
-    signInRequest.password = password.get()
-    mPresenter.login(signInRequest)
+    mPresenter.login(email.get(), password.get())
   }
 }
