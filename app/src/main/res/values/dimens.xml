@@ -18,4 +18,6 @@
     <dimen name="dp_50">50dp</dimen>
     <dimen name="dp_0">0dp</dimen>
     <dimen name="sp_20">20sp</dimen>
+    <dimen name="dp_3">3dp</dimen>
+    <dimen name="dp_2">2dp</dimen>
 </resources>

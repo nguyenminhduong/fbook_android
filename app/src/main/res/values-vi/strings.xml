@@ -8,4 +8,8 @@
     <string name="account">Tài khoản</string>
     <string name="password">Mật khẩu</string>
     <string name="forgot_password">Quên mật khẩu?</string>
+    <string name="user_name">Tên người dùng</string>
+    <string name="setting">Cài đặt</string>
+    <string name="approve_request">Phê duyệt yêu cầu</string>
+    <string name="share_book">Chia sẻ sách</string>
 </resources>

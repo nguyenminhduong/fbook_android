@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.framgia.fbook.screen.menuprofile.MenuProfileFragment"
+            />
+
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.framgia.fbook.screen.menuprofile.MenuprofileActivity"
+        >
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/layout_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+            <!--Image User-->
+            <ImageView
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:layout_marginTop="@dimen/dp_3"
+                android:onClick="@{() -> viewModel.onClickArrow()}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_back"
+                tools:ignore="ContentDescription"
+                />
+            <ImageView
+                android:id="@+id/image_user"
+                android:layout_width="@dimen/dp_150"
+                android:layout_height="@dimen/dp_150"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@drawable/ic_user_xml"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_20"
+                android:fontFamily="serif"
+                android:gravity="center_horizontal"
+                android:text="@string/user_name"
+                android:textColor="@color/color_dark_gray"
+                android:textSize="@dimen/sp_22"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image_user"
+                />
+        </android.support.constraint.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_5"
+            android:background="@color/color_white_translate_light"
+            android:orientation="horizontal"
+            android:weightSum="3.5"
+            app:layout_constraintTop_toBottomOf="@+id/layout_header"
+            >
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/dp_1"
+                android:layout_weight="1"
+                android:background="@drawable/button_click"
+                android:onClick="@{() -> viewModel.onClickShareBook()}"
+                android:text="@string/share_book"
+                android:textAllCaps="false"
+                android:textColor="@color/color_white"
+                tools:ignore="ButtonStyle"
+                />
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/dp_1"
+                android:layout_weight="1.5"
+                android:background="@drawable/button_click"
+                android:onClick="@{() -> viewModel.onClickApproveRequest()}"
+                android:text="@string/approve_request"
+                android:textAllCaps="false"
+                android:textColor="@color/color_white"
+                tools:ignore="ButtonStyle"
+                />
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/dp_1"
+                android:layout_weight="1"
+                android:background="@drawable/button_click"
+                android:onClick="@{() -> viewModel.onClickSetting()}"
+                android:text="@string/setting"
+                android:textAllCaps="false"
+                android:textColor="@color/color_white"
+                tools:ignore="ButtonStyle"
+                />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:layout_marginTop="@dimen/dp_2"
+            android:background="@color/color_red_mos"
+            app:layout_constraintTop_toBottomOf="@+id/layout_button"
+            />
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_40"
+            android:layout_marginTop="@dimen/dp_2"
+            android:background="@color/colorPrimary"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_button"
+            app:tabIndicatorColor="@color/color_white"
+            app:tabSelectedTextColor="@android:color/white"
+            />
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tab_layout"
+            />
+    </android.support.constraint.ConstraintLayout>
+</layout>
