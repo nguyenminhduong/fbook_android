@@ -15,4 +15,21 @@
     <string name="title">Title</string>
     <string name="author">Author</string>
     <string name="description">Description</string>
+    <string name="invalid_email_format">Invalid email format!</string>
+    <string name="is_empty">Empty, please enter!</string>
+    <string name="least_6_characters">Please enter at least 6 characters!</string>
+
+    <!-- Dialog -->
+    <string name="agree">Agree</string>
+    <string name="disagree">Disagree</string>
+    <string name="allow">Allow</string>
+    <string name="deny">Deny</string>
+    <string name="dont_ask_again">Don\'t ask again</string>
+    <string name="more_info">More Info</string>
+    <string name="choose">Choose</string>
+    <string name="clear">Clear</string>
+
+    <!-- Common -->
+    <string name="error">Error</string>
+    <string name="retry">Retry</string>
 </resources>

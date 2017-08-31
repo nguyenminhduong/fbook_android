@@ -19,6 +19,14 @@ interface LoginContract {
     fun onError(exception: BaseException)
 
     fun onUserLoggedIn()
+
+    fun onInvalidEmail(errorMsg: String?)
+
+    fun onInvalidPassWord(errorMsg: String?)
+
+    fun onShowProgressDialog()
+
+    fun onDismissProgressDialog()
   }
 
   /**
@@ -28,5 +36,11 @@ interface LoginContract {
     fun login(signInRequest: SignInRequest)
 
     fun checkUserLogin()
+
+    fun validateDataInput(email: String?, password: String?): Boolean
+
+    fun validateEmailInput(email: String?)
+
+    fun validatePasswordInput(password: String?)
   }
 }

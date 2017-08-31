@@ -26,7 +26,8 @@ class RxErrorHandlingCallAdapterFactory private constructor() : CallAdapter.Fact
 
   override fun get(returnType: Type, annotations: Array<Annotation>,
       retrofit: Retrofit): CallAdapter<*, *> {
-    return RxCallAdapterWrapper(returnType, original.get(returnType, annotations, retrofit) as CallAdapter<Any, Any>)
+    return RxCallAdapterWrapper(returnType,
+        original.get(returnType, annotations, retrofit) as CallAdapter<Any, Any>)
   }
 
   /**
@@ -103,7 +104,7 @@ class RxErrorHandlingCallAdapterFactory private constructor() : CallAdapter.Fact
             val errorResponse = Gson().fromJson(response.errorBody()?.string(),
                 ErrorResponse::class.java)
             if (errorResponse != null && !TextUtils.isEmpty(
-                errorResponse.message)) {
+                errorResponse.message?.get(0))) {
               return BaseException.toServerError(errorResponse)
             } else {
               return BaseException.toHttpError(response)

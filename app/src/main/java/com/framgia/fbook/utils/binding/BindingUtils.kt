@@ -8,6 +8,8 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.RecyclerView
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.framgia.fbook.utils.common.StringUtils
@@ -26,6 +28,19 @@ object BindingUtils {
   @BindingAdapter("errorText")
   fun setErrorMessage(view: TextInputLayout, errorMessage: String?) {
     view.error = errorMessage
+    val editText = view.editText
+    editText?.addTextChangedListener(object : TextWatcher {
+      override fun afterTextChanged(p0: Editable?) {
+        view.error = ""
+      }
+
+      override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+      }
+
+      override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+      }
+
+    })
   }
 
   /**
