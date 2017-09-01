@@ -15,7 +15,7 @@ import com.framgia.fbook.R
  * Created by le.quang.dao on 17/03/2017.
  */
 
-class Navigator {
+open class Navigator {
 
   private var mActivity: Activity
   private var mFragment: Fragment? = null

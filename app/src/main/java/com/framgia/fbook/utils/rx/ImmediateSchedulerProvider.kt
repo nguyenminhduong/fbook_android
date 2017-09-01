@@ -7,7 +7,7 @@ import io.reactivex.schedulers.Schedulers
  * Created by le.quang.dao on 28/03/2017.
  */
 
-class ImmediateSchedulerProvider : BaseSchedulerProvider {
+open class ImmediateSchedulerProvider : BaseSchedulerProvider {
 
   override fun computation(): Scheduler {
     return Schedulers.trampoline()

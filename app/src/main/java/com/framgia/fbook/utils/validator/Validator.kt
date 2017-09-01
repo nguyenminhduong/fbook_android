@@ -27,7 +27,7 @@ import java.util.regex.Pattern
  * Created by le.quang.dao on 16/03/2017.
  */
 
-class Validator(@param:ApplicationContext private val mContext: Context, clzz: Class<*>) {
+open class Validator(@param:ApplicationContext private val mContext: Context, clzz: Class<*>) {
   private val mValidatedMethods: SparseArray<Method>
   private var mMessage: String? = null
 
@@ -194,21 +194,21 @@ class Validator(@param:ApplicationContext private val mContext: Context, clzz: C
   }
 
   @ValidMethod(type = intArrayOf(ValidType.NON_EMPTY))
-  fun validateValueNonEmpty(value: String?): String? {
+  open fun validateValueNonEmpty(value: String?): String? {
     val isValid = !TextUtils.isEmpty(value)
     mMessage = if (isValid) "" else mContext.getString(mAllErrorMessage.get(ValidType.NON_EMPTY))
     return mMessage
   }
 
   @ValidMethod(type = intArrayOf(ValidType.EMAIL_FORMAT))
-  fun validateEmailFormat(value: String?): String? {
+  open fun validateEmailFormat(value: String?): String? {
     val isValid = EMAIL_ADDRESS.matcher(value).matches()
     mMessage = if (isValid) "" else mContext.getString(mAllErrorMessage.get(ValidType.EMAIL_FORMAT))
     return mMessage
   }
 
   @ValidMethod(type = intArrayOf(ValidType.VALUE_RANGE_MIN_6))
-  fun validateValueRangeMin6(input: String?): String? {
+  open fun validateValueRangeMin6(input: String?): String? {
     if (input == null) {
       return ""
     }

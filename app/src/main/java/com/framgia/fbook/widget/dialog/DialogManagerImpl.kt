@@ -10,7 +10,7 @@ import com.fstyle.library.MaterialDialog
  * Created by le.quang.dao on 14/03/2017.
  */
 
-class DialogManagerImpl(private val mContext: Context) : DialogManager {
+open class DialogManagerImpl(private val mContext: Context) : DialogManager {
   private var mProgressDialog: MaterialDialog? = null
 
   override fun showIndeterminateProgressDialog() {
