@@ -2,6 +2,7 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     >
 
@@ -110,11 +111,13 @@
             tools:layout_editor_absoluteX="0dp"
             >
 
-            <FrameLayout
+            <com.framgia.fbook.utils.widget.UnSwipeViewPager
+                android:id="@+id/viewpager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_above="@+id/bottom_navigation"
-                android:background="@color/color_white_light"
+                bind:adapter="@{viewModel.mAdapter}"
+                bind:currentFragment="@{viewModel.mCurrentTab}"
                 />
 
             <com.roughike.bottombar.BottomBar

@@ -93,4 +93,14 @@ object BindingUtils {
   fun setUpViewPager(tabLayout: TabLayout, viewPager: ViewPager) {
     tabLayout.setupWithViewPager(viewPager)
   }
+  @JvmStatic
+  @BindingAdapter("pager")
+  fun setViewPagerTabs(tabLayout: TabLayout, viewPager: ViewPager) {
+    tabLayout.setupWithViewPager(viewPager, true)
+  }
+  @JvmStatic
+  @BindingAdapter("currentFragment")
+  fun setCurrentViewPager(viewPager: ViewPager, currentPage: Int) {
+    viewPager.currentItem = currentPage
+  }
 }
