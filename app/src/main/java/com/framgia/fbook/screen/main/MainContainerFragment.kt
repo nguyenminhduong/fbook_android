@@ -7,7 +7,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.framgia.fbook.R
 import com.framgia.fbook.screen.BaseFragment
+import com.framgia.fbook.screen.mybook.MyBookFragment
+import com.framgia.fbook.screen.notification.NotificationFragment
 import com.framgia.fbook.utils.Constant
+import com.framgia.fbook.utils.navigator.NavigateAnim
 import com.framgia.fbook.utils.navigator.Navigator
 
 /**
@@ -21,15 +24,14 @@ class MainContainerFragment : BaseFragment() {
       savedInstanceState: Bundle?): View? {
     val view = inflater?.inflate(R.layout.fragment_main_container, container, false)
     val tab = arguments.getInt(EXTRA_TAB_FOOTER)
+    val containerId = R.id.layout_content_main
     when (tab) {
     //Todo navigation when click Tab Home
       Constant.Tab.TAB_HOME -> Toast.makeText(activity, R.string.home, Toast.LENGTH_SHORT).show()
-    //Todo navigation when click Tab My Book
-      Constant.Tab.TAB_MY_BOOK -> Toast.makeText(activity, R.string.my_book,
-          Toast.LENGTH_SHORT).show()
-    //Todo navigation when click Tab Notification
-      Constant.Tab.TAB_NOTIFICATION -> Toast.makeText(activity, R.string.notification,
-          Toast.LENGTH_SHORT).show()
+      Constant.Tab.TAB_MY_BOOK -> mNavigator.goNextChildFragment(containerId,
+          MyBookFragment.newInstance(), true, NavigateAnim.NONE, MyBookFragment.TAG)
+      Constant.Tab.TAB_NOTIFICATION -> mNavigator.goNextChildFragment(containerId,
+          NotificationFragment.newInstance(), true, NavigateAnim.NONE, MyBookFragment.TAG)
     //Todo navigation when click Tab Account
       Constant.Tab.TAB_ACCOUNT -> Toast.makeText(activity, R.string.account,
           Toast.LENGTH_SHORT).show()
