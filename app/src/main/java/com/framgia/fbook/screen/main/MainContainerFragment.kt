@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.framgia.fbook.R
 import com.framgia.fbook.screen.BaseFragment
+import com.framgia.fbook.screen.menuprofile.MenuProfileFragment
 import com.framgia.fbook.screen.mybook.MyBookFragment
 import com.framgia.fbook.screen.notification.NotificationFragment
 import com.framgia.fbook.utils.Constant
@@ -33,8 +34,9 @@ class MainContainerFragment : BaseFragment() {
       Constant.Tab.TAB_NOTIFICATION -> mNavigator.goNextChildFragment(containerId,
           NotificationFragment.newInstance(), true, NavigateAnim.NONE, MyBookFragment.TAG)
     //Todo navigation when click Tab Account
-      Constant.Tab.TAB_ACCOUNT -> Toast.makeText(activity, R.string.account,
-          Toast.LENGTH_SHORT).show()
+      Constant.Tab.TAB_ACCOUNT -> mNavigator.goNextChildFragment(containerId,
+          MenuProfileFragment.newInstance(), false, NavigateAnim.RIGHT_LEFT,
+          MenuProfileFragment.TAG)
     }
     return view
   }

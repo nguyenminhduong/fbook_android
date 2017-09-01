@@ -32,4 +32,8 @@
     <!-- Common -->
     <string name="error">Error</string>
     <string name="retry">Retry</string>
+    <string name="user_name">User Name</string>
+    <string name="setting">Setting</string>
+    <string name="approve_request">Approve Request</string>
+    <string name="share_book">Share Book</string>
 </resources>
