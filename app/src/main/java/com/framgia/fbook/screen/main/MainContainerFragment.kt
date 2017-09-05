@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.framgia.fbook.R
 import com.framgia.fbook.screen.BaseFragment
+import com.framgia.fbook.screen.mainpage.MainPageFragment
 import com.framgia.fbook.screen.menuprofile.MenuProfileFragment
 import com.framgia.fbook.screen.mybook.MyBookFragment
 import com.framgia.fbook.screen.notification.NotificationFragment
@@ -27,19 +27,20 @@ class MainContainerFragment : BaseFragment() {
     val tab = arguments.getInt(EXTRA_TAB_FOOTER)
     val containerId = R.id.layout_content_main
     when (tab) {
-    //Todo navigation when click Tab Home
-      Constant.Tab.TAB_HOME -> Toast.makeText(activity, R.string.home, Toast.LENGTH_SHORT).show()
+      Constant.Tab.TAB_HOME -> mNavigator.goNextChildFragment(containerId,
+          MainPageFragment.newInstance(), true, NavigateAnim.NONE, MainPageFragment.TAG)
       Constant.Tab.TAB_MY_BOOK -> mNavigator.goNextChildFragment(containerId,
           MyBookFragment.newInstance(), true, NavigateAnim.NONE, MyBookFragment.TAG)
       Constant.Tab.TAB_NOTIFICATION -> mNavigator.goNextChildFragment(containerId,
           NotificationFragment.newInstance(), true, NavigateAnim.NONE, MyBookFragment.TAG)
-    //Todo navigation when click Tab Account
       Constant.Tab.TAB_ACCOUNT -> mNavigator.goNextChildFragment(containerId,
           MenuProfileFragment.newInstance(), false, NavigateAnim.RIGHT_LEFT,
           MenuProfileFragment.TAG)
     }
     return view
   }
+
+  fun onBackPressed(): Boolean = mNavigator.goBackChildFragment()
 
   companion object {
 
