@@ -1,6 +1,7 @@
 package com.framgia.fbook.screen.menuprofile
 
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentActivity
 import com.framgia.fbook.utils.dagger.FragmentScope
 import com.framgia.fbook.utils.navigator.Navigator
 import dagger.Module
@@ -11,7 +12,7 @@ import dagger.Provides
  * the [MenuProfilePresenter].
  */
 @Module
-class MenuProfileModule(private val fragment: Fragment) {
+class MenuProfileModule(private val mFragment: Fragment) {
 
   @FragmentScope
   @Provides
@@ -22,6 +23,13 @@ class MenuProfileModule(private val fragment: Fragment) {
   @FragmentScope
   @Provides
   fun provideNavigator(): Navigator {
-    return Navigator(fragment)
+    return Navigator(mFragment)
+  }
+
+  @FragmentScope
+  @Provides
+  fun provideMenuProfileAdapter(): MenuProfileAdapter {
+    return MenuProfileAdapter(mFragment.context,
+        (mFragment.activity as FragmentActivity).supportFragmentManager)
   }
 }

@@ -12,4 +12,6 @@
     <string name="setting">Cài đặt</string>
     <string name="approve_request">Phê duyệt yêu cầu</string>
     <string name="share_book">Chia sẻ sách</string>
+    <string name="personal_infor">Thông tin cá nhân</string>
+    <string name="category_favorite">Danh mục yêu thích</string>
 </resources>
