@@ -3,7 +3,9 @@ package com.framgia.fbook.screen.main
 import android.databinding.DataBindingUtil
 import android.databinding.ObservableField
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
+import android.widget.Toast
 import com.framgia.fbook.MainApplication
 import com.framgia.fbook.R
 import com.framgia.fbook.databinding.ActivityMainBinding
@@ -18,6 +20,8 @@ import javax.inject.Inject
 
 class MainActivity : BaseActivity(), MainContract.ViewModel {
 
+  private val DELAY_TIME_TWO_TAP_BACK_BUTTON = 2000
+
   @Inject
   lateinit var presenter: MainContract.Presenter
   @Inject
@@ -26,6 +30,9 @@ class MainActivity : BaseActivity(), MainContract.ViewModel {
   lateinit var mAdapter: MainContainerPagerAdapter
   lateinit var mMainComponent: MainComponent
   val mCurrentTab: ObservableField<Int> = ObservableField()
+  private var mIsDoubleTapBack = false
+  private lateinit var mHandler: Handler
+  private lateinit var mRunnable: Runnable
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -37,6 +44,8 @@ class MainActivity : BaseActivity(), MainContract.ViewModel {
 
     val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
     binding.viewModel = this
+    mHandler = Handler()
+    mRunnable = Runnable { mIsDoubleTapBack = false }
     onSelectItemMenu()
   }
 
@@ -54,11 +63,31 @@ class MainActivity : BaseActivity(), MainContract.ViewModel {
     mCurrentTab.set(tab)
   }
 
+  private fun isBackClick(): Boolean {
+    val fragment = mAdapter.getCurrentFragment()
+    if (fragment is MainContainerFragment) {
+      return fragment.onBackPressed()
+    }
+    return false
+  }
+
+  override fun onBackPressed() {
+    if (isBackClick()) {
+      return
+    }
+    if (mIsDoubleTapBack) {
+      super.onBackPressed()
+      return
+    }
+    mIsDoubleTapBack = true
+    Toast.makeText(this, getString(R.string.please_click_back_again_to_exit),
+        Toast.LENGTH_SHORT).show()
+    mHandler.postDelayed(mRunnable, DELAY_TIME_TWO_TAP_BACK_BUTTON.toLong())
+  }
 
   fun onSelectItemMenu() {
     val bottomBar = findViewById(R.id.bottom_navigation) as BottomBar
-    bottomBar.setOnTabSelectListener {
-      idView ->
+    bottomBar.setOnTabSelectListener { idView ->
       when (idView) {
         R.id.tab_home -> setCurrentTab(Constant.Tab.TAB_HOME)
         R.id.tab_my_book -> setCurrentTab(Constant.Tab.TAB_MY_BOOK)

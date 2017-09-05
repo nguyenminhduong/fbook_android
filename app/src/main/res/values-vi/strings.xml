@@ -14,4 +14,11 @@
     <string name="share_book">Chia sẻ sách</string>
     <string name="personal_infor">Thông tin cá nhân</string>
     <string name="category_favorite">Danh mục yêu thích</string>
+    <string name="lastest_book">Sách mới nhất</string>
+    <string name="top_viewed_book">Xem nhiều nhất</string>
+    <string name="top_rating_book">Đánh giá cao nhất</string>
+    <string name="top_waiting_book">Được đón chờ nhất</string>
+    <string name="top_read_book">Đọc nhiều nhất</string>
+    <string name="more">Xem thêm</string>
+    <string name="please_click_back_again_to_exit">Nhấn nút BACK lần nữa để thoát!</string>
 </resources>

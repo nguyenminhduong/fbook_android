@@ -45,6 +45,8 @@ class MainPageFragment : BaseFragment() {
 
   companion object {
 
+    val TAG: String = MainPageFragment::class.java.name
+
     fun newInstance(): MainPageFragment {
       return MainPageFragment()
     }

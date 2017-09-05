@@ -18,6 +18,13 @@
     <string name="invalid_email_format">Invalid email format!</string>
     <string name="is_empty">Empty, please enter!</string>
     <string name="least_6_characters">Please enter at least 6 characters!</string>
+    <string name="lastest_book">Latest books</string>
+    <string name="top_viewed_book">Top viewed books</string>
+    <string name="top_rating_book">Top rating books</string>
+    <string name="top_waiting_book">Top waiting books</string>
+    <string name="top_read_book">Top read books</string>
+    <string name="more">More</string>
+    <string name="please_click_back_again_to_exit">Please click BACK again to exit!</string>
 
     <!-- Dialog -->
     <string name="agree">Agree</string>
