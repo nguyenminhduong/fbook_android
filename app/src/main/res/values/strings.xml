@@ -36,4 +36,6 @@
     <string name="setting">Setting</string>
     <string name="approve_request">Approve Request</string>
     <string name="share_book">Share Book</string>
+    <string name="personal_infor">Personal Information</string>
+    <string name="category_favorite">Category Favorite</string>
 </resources>
