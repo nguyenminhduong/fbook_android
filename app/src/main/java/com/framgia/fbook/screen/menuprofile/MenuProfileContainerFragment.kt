@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.framgia.fbook.R
 import com.framgia.fbook.screen.BaseFragment
+import com.framgia.fbook.screen.personalinfor.PersonalInforFragment
+import com.framgia.fbook.utils.navigator.NavigateAnim
 import com.framgia.fbook.utils.navigator.Navigator
 
 /**
@@ -37,7 +39,8 @@ class MenuProfileContainerFragment : BaseFragment() {
     var containerId = R.id.layout_menu_profile_container
     var page: Int = arguments.getInt(EXTRA_TAB)
     when (page) {
-      PROFILE -> Toast.makeText(activity, R.string.personal_infor, Toast.LENGTH_SHORT).show()
+      PROFILE -> mNavigator?.goNextChildFragment(containerId, PersonalInforFragment.newInstance(),
+          false, NavigateAnim.BOTTOM_UP, PersonalInforFragment.TAG)
       CATEGORY_FAVORITE -> Toast.makeText(activity, R.string.category_favorite,
           Toast.LENGTH_SHORT).show()
     }

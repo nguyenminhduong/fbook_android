@@ -51,4 +51,10 @@
     <string name="share_book">Share Book</string>
     <string name="personal_infor">Personal Information</string>
     <string name="category_favorite">Category Favorite</string>
+    <string name="phone">Phone</string>
+    <string name="code">Code</string>
+    <string name="position">Position</string>
+    <string name="followed_by">Followed by</string>
+    <string name="name">Name</string>
+    <string name="following">Following</string>
 </resources>

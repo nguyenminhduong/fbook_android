@@ -21,7 +21,7 @@ class MenuProfileFragment : BaseFragment() {
   internal lateinit var mPresenter: MenuProfileContract.Presenter
   private val mNavigator: Navigator by lazy { Navigator(this) }
   @Inject
-  lateinit var mMenuProfileAdapter: MenuProfileAdapter
+  lateinit var menuProfileAdapter: MenuProfileAdapter
   private lateinit var mMenuProfileComponent: MenuProfileComponent
   override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {

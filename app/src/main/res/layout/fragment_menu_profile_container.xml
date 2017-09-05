@@ -4,5 +4,6 @@
     android:id="@+id/layout_menu_profile_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/AppTheme"
     tools:context="com.framgia.fbook.screen.main.MainActivity"
     />

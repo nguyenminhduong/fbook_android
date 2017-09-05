@@ -34,7 +34,7 @@ class MainContainerFragment : BaseFragment() {
       Constant.Tab.TAB_NOTIFICATION -> mNavigator.goNextChildFragment(containerId,
           NotificationFragment.newInstance(), true, NavigateAnim.NONE, MyBookFragment.TAG)
       Constant.Tab.TAB_ACCOUNT -> mNavigator.goNextChildFragment(containerId,
-          MenuProfileFragment.newInstance(), false, NavigateAnim.RIGHT_LEFT,
+          MenuProfileFragment.newInstance(), false, NavigateAnim.NONE,
           MenuProfileFragment.TAG)
     }
     return view
