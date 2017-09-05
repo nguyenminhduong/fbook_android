@@ -19,7 +19,7 @@
         <item name="android:textColorSecondary">@color/colorPrimary</item>
     </style>
 
-    <style name="TextInputLabel" parent="TextAppearance.AppCompat">
+    <style name="TextInputLabel" parent="Widget.Design.TextInputLayout">
         <item name="android:textSize">@dimen/sp_20</item>
         <item name="colorAccent">@color/colorPrimary</item>
     </style>

@@ -1,8 +1,11 @@
 package com.framgia.fbook.data.source.remote.api.service
 
+import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.model.BookType
 import com.framgia.fbook.data.model.User
+import com.framgia.fbook.data.source.remote.api.request.SearchBookRequest
 import com.framgia.fbook.data.source.remote.api.request.SignInRequest
+import com.framgia.fbook.data.source.remote.api.response.BaseBookRespone
 import com.framgia.fbook.data.source.remote.api.response.BaseResponse
 import com.framgia.fbook.data.source.remote.api.response.SearchUserResponse
 import com.framgia.fbook.data.source.remote.api.response.SignInResponse
@@ -26,4 +29,7 @@ interface NameApi {
 
   @POST("/api/v0/login")
   fun login(@Body signInRequest: SignInRequest?): Single<SignInResponse>
+
+  @POST("/api/v0/search")
+  fun searchBook(@Body searchBookRequest: SearchBookRequest): Single<BaseResponse<BaseBookRespone<List<Book>>>>
 }
