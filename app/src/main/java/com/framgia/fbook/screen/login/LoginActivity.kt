@@ -5,9 +5,7 @@ import android.databinding.ObservableField
 import android.os.Bundle
 import com.framgia.fbook.MainApplication
 import com.framgia.fbook.R
-import com.framgia.fbook.data.source.TokenRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException
-import com.framgia.fbook.data.source.remote.api.response.SignInResponse
 import com.framgia.fbook.databinding.ActivityLoginBinding
 import com.framgia.fbook.screen.BaseActivity
 import com.framgia.fbook.screen.main.MainActivity
@@ -29,8 +27,6 @@ open class LoginActivity : BaseActivity(), LoginContract.ViewModel {
 
   @Inject
   internal lateinit var mPresenter: LoginContract.Presenter
-  @Inject
-  internal lateinit var mTokenRepository: TokenRepository
   @Inject
   internal lateinit var mNavigator: Navigator
   @Inject
@@ -78,11 +74,6 @@ open class LoginActivity : BaseActivity(), LoginContract.ViewModel {
 
   override fun onInvalidPassWord(errorMsg: String?) {
     passwordErrorMsg.set(errorMsg)
-  }
-
-  override fun onLoginSuccess(signInResponse: SignInResponse) {
-    mTokenRepository.saveToken(signInResponse.signInData?.accessToken.toString())
-    onUserLoggedIn()
   }
 
   override fun onError(exception: BaseException) {

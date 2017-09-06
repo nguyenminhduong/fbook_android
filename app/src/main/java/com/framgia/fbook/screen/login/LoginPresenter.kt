@@ -77,9 +77,15 @@ class LoginPresenter(private val mUserRepository: UserRepository,
         .subscribeOn(mSchedulerProvider.io())
         .doOnSubscribe { mViewModel?.onShowProgressDialog() }
         .doAfterTerminate { mViewModel?.onDismissProgressDialog() }
+        .flatMap({ signInResponse ->
+          mTokenRepository.saveToken(signInResponse.signInData?.accessToken)
+          mUserRepository.getUser(signInResponse.signInData?.accessToken)
+        })
         .observeOn(mSchedulerProvider.ui())
-        .subscribe({ signInResponse -> mViewModel?.onLoginSuccess(signInResponse) },
-            { e -> mViewModel?.onError(e as BaseException) })
+        .subscribe({ user ->
+          mUserRepository.saveUser(user.item)
+          mViewModel?.onUserLoggedIn()
+        }, { e -> mViewModel?.onError(e as BaseException) })
     mCompositeDisposable.add(disposable)
   }
 

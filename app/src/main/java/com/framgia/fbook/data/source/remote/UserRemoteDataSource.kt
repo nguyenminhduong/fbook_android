@@ -3,6 +3,7 @@ package com.framgia.fbook.data.source.remote
 import com.framgia.fbook.data.model.User
 import com.framgia.fbook.data.source.UserDataSource
 import com.framgia.fbook.data.source.remote.api.request.SignInRequest
+import com.framgia.fbook.data.source.remote.api.response.BaseResponse
 import com.framgia.fbook.data.source.remote.api.response.SignInResponse
 import com.framgia.fbook.data.source.remote.api.service.NameApi
 import io.reactivex.Single
@@ -21,13 +22,7 @@ constructor(nameApi: NameApi) : BaseRemoteDataSource(nameApi), UserDataSource.Re
     return nameApi.login(signInRequest)
   }
 
-
-  override fun searchUsers(keyWord: String?, limit: Int): Single<List<User>> {
-    return nameApi.searchGithubUsers(limit, keyWord)
-        .map { searchUserResponse -> searchUserResponse.users }
-  }
-
-  override fun getUserDetailFromServer(userLogin: String?): Single<User> {
-    return nameApi.getUser(userLogin)
+  override fun getUser(authorization: String?): Single<BaseResponse<User>> {
+    return nameApi.getUser(authorization)
   }
 }

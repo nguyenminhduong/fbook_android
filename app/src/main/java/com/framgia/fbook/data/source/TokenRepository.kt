@@ -9,9 +9,9 @@ import javax.inject.Inject
 interface TokenRepository : TokenDataSource.LocalDataSource
 
 open class TokenRepositoryImpl @Inject constructor(
-    val tokenLocalDataSource: TokenLocalDataSource) : TokenRepository {
+    private val tokenLocalDataSource: TokenLocalDataSource) : TokenRepository {
 
-  override fun saveToken(token: String) {
+  override fun saveToken(token: String?) {
     tokenLocalDataSource.saveToken(token)
   }
 

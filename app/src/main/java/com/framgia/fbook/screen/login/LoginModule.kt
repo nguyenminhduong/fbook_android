@@ -7,6 +7,7 @@ import com.framgia.fbook.data.source.TokenRepositoryImpl
 import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.data.source.UserRepositoryImpl
 import com.framgia.fbook.data.source.local.TokenLocalDataSource
+import com.framgia.fbook.data.source.local.UserLocalDataSource
 import com.framgia.fbook.data.source.remote.UserRemoteDataSource
 import com.framgia.fbook.utils.dagger.ActivityScope
 import com.framgia.fbook.utils.navigator.Navigator
@@ -37,8 +38,9 @@ class LoginModule(private val mActivity: Activity) {
 
   @ActivityScope
   @Provides
-  fun provideUserRepository(userRemoteDataSource: UserRemoteDataSource): UserRepository {
-    return UserRepositoryImpl(userRemoteDataSource)
+  fun provideUserRepository(userRemoteDataSource: UserRemoteDataSource,
+      userLocalDataSource: UserLocalDataSource): UserRepository {
+    return UserRepositoryImpl(userRemoteDataSource, userLocalDataSource)
   }
 
   @ActivityScope

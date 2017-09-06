@@ -5,7 +5,7 @@ package com.framgia.fbook.data.source
  */
 interface TokenDataSource {
   interface LocalDataSource {
-    fun saveToken(token: String)
+    fun saveToken(token: String?)
 
     fun getToken(): String?
   }
