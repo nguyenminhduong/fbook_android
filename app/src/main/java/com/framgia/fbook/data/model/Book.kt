@@ -32,7 +32,7 @@ class Book() {
   var countView: Int? = null
   @Expose
   @SerializedName("avg_star")
-  var avgStar: Int? = null
+  var avgStar: Float? = null
   @Expose
   @SerializedName("overview")
   var overview: String? = null

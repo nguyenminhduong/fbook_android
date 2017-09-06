@@ -1,7 +1,9 @@
 package com.framgia.fbook.screen.SearchBook;
 
 import com.framgia.fbook.AppComponent
+import com.framgia.fbook.data.source.remote.api.service.NameApi
 import com.framgia.fbook.utils.dagger.ActivityScope
+import com.framgia.fbook.utils.rx.BaseSchedulerProvider
 import dagger.Component
 
 /**
@@ -13,4 +15,8 @@ import dagger.Component
     modules = arrayOf(SearchBookModule::class))
 interface SearchBookComponent {
   fun inject(searchbookActivity: SearchBookActivity)
+
+  fun nameApi(): NameApi
+
+  fun baseSchedulerProvider(): BaseSchedulerProvider
 }
