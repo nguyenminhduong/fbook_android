@@ -7,7 +7,6 @@ import com.framgia.fbook.data.source.remote.api.request.SearchBookRequest
 import com.framgia.fbook.data.source.remote.api.request.SignInRequest
 import com.framgia.fbook.data.source.remote.api.response.BaseBookRespone
 import com.framgia.fbook.data.source.remote.api.response.BaseResponse
-import com.framgia.fbook.data.source.remote.api.response.SearchUserResponse
 import com.framgia.fbook.data.source.remote.api.response.SignInResponse
 import io.reactivex.Single
 import retrofit2.http.*
@@ -17,13 +16,6 @@ import retrofit2.http.*
  */
 
 interface NameApi {
-  @GET("/search/users")
-  fun searchGithubUsers(@Query("per_page") limit: Int,
-      @Query("q") searchTerm: String?): Single<SearchUserResponse>
-
-  @GET("/users/{username}")
-  fun getUser(@Path("username") username: String?): Single<User>
-
   @GET("/api/v0/home/")
   fun getHome(@Query("office_id") officeId: Int?): Single<BaseResponse<List<BookType>>>
 
@@ -32,4 +24,7 @@ interface NameApi {
 
   @POST("/api/v0/search")
   fun searchBook(@Body searchBookRequest: SearchBookRequest): Single<BaseResponse<BaseBookRespone<List<Book>>>>
+
+  @GET("/api/v0/user-profile")
+  fun getUser(@Header("Authorization") authorization: String?): Single<BaseResponse<User>>
 }

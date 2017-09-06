@@ -6,5 +6,6 @@ package com.framgia.fbook.data.source.local.sharedprf
 
 object SharedPrefsKey {
 
-  val KEY_TOKEN: String = "KEY_TOKEN"
+  val KEY_TOKEN = "KEY_TOKEN"
+  val KEY_USER = "KEY_USER"
 }

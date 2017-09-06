@@ -1,5 +1,7 @@
 package com.framgia.fbook.data.model
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
@@ -7,7 +9,7 @@ import com.google.gson.annotations.SerializedName
  * Created by nguyenhuy95dn on 8/28/2017.
  */
 
-class Book() {
+class Book() : BaseModel(), Parcelable {
 
   @Expose
   @SerializedName("id")
@@ -42,4 +44,44 @@ class Book() {
   @Expose
   @SerializedName("owners")
   var owners: List<Owner>? = arrayListOf()
+
+  constructor(parcel: Parcel) : this() {
+    id = parcel.readValue(Int::class.java.classLoader) as? Int
+    title = parcel.readString()
+    description = parcel.readString()
+    author = parcel.readString()
+    publishDate = parcel.readString()
+    totalPage = parcel.readValue(Int::class.java.classLoader) as? Int
+    countView = parcel.readValue(Int::class.java.classLoader) as? Int
+    avgStar = parcel.readValue(Float::class.java.classLoader) as? Float
+    overview = parcel.readString()
+  }
+
+  override fun writeToParcel(parcel: Parcel, flags: Int) {
+    parcel.writeValue(id)
+    parcel.writeString(title)
+    parcel.writeString(description)
+    parcel.writeString(author)
+    parcel.writeString(publishDate)
+    parcel.writeValue(totalPage)
+    parcel.writeValue(countView)
+    parcel.writeValue(avgStar)
+    parcel.writeString(overview)
+  }
+
+  override fun describeContents(): Int {
+    return 0
+  }
+
+  companion object CREATOR : Parcelable.Creator<Book> {
+    override fun createFromParcel(parcel: Parcel): Book {
+      return Book(parcel)
+    }
+
+    override fun newArray(size: Int): Array<Book?> {
+      return arrayOfNulls(size)
+    }
+  }
+
+
 }

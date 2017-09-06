@@ -15,4 +15,7 @@ class BaseResponse<T> {
   @Expose
   @SerializedName("items")
   var items: T? = null
+  @Expose
+  @SerializedName("item")
+  var item: T? = null
 }

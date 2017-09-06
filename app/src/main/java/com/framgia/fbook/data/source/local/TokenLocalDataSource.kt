@@ -9,9 +9,9 @@ import javax.inject.Inject
  * Created by ThS on 8/30/2017.
  */
 class TokenLocalDataSource @Inject constructor(
-    val mSharedPrefsApi: SharedPrefsApi) : TokenDataSource.LocalDataSource {
+   private val mSharedPrefsApi: SharedPrefsApi) : TokenDataSource.LocalDataSource {
 
-  override fun saveToken(token: String) {
+  override fun saveToken(token: String?) {
     mSharedPrefsApi.put(SharedPrefsKey.KEY_TOKEN, token)
   }
 
