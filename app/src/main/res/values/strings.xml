@@ -25,6 +25,12 @@
     <string name="top_read_book">Top read books</string>
     <string name="more">More</string>
     <string name="please_click_back_again_to_exit">Please click BACK again to exit!</string>
+    <string name="add_your_book">Add Your Book</string>
+    <string name="category">Category</string>
+    <string name="office">Office</string>
+    <string name="publish_date">Publish date</string>
+    <string name="create_book">Create book</string>
+    <string name="import_data_from_google_book">Import data from google books</string>
 
     <!-- Dialog -->
     <string name="agree">Agree</string>
