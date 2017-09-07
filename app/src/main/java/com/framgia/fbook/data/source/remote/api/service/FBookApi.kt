@@ -15,7 +15,7 @@ import retrofit2.http.*
  * Created by le.quang.dao on 10/03/2017.
  */
 
-interface NameApi {
+interface FBookApi {
   @GET("/api/v0/home/")
   fun getHome(@Query("office_id") officeId: Int?): Single<BaseResponse<List<BookType>>>
 

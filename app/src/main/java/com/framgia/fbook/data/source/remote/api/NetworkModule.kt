@@ -5,14 +5,13 @@ import com.framgia.fbook.BuildConfig
 import com.framgia.fbook.data.source.remote.api.middleware.InterceptorImpl
 import com.framgia.fbook.data.source.remote.api.middleware.RxErrorHandlingCallAdapterFactory
 import com.framgia.fbook.data.source.remote.api.service.BooleanAdapter
+import com.framgia.fbook.data.source.remote.api.service.FBookApi
 import com.framgia.fbook.data.source.remote.api.service.IntegerAdapter
-import com.framgia.fbook.data.source.remote.api.service.NameApi
 import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.dagger.AppScope
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import java.util.concurrent.TimeUnit
 import dagger.Module
 import dagger.Provides
 import okhttp3.Cache
@@ -22,6 +21,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by Sun on 3/18/2017.
@@ -94,8 +94,8 @@ class NetworkModule(private val mApplication: Application) {
 
   @AppScope
   @Provides
-  fun provideNameApi(retrofit: Retrofit): NameApi {
-    return retrofit.create(NameApi::class.java)
+  fun provideFBookApi(retrofit: Retrofit): FBookApi {
+    return retrofit.create(FBookApi::class.java)
   }
 
   companion object {
