@@ -2,6 +2,7 @@ package com.framgia.fbook.data.source.remote.api.service
 
 import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.model.BookType
+import com.framgia.fbook.data.model.GoogleBook
 import com.framgia.fbook.data.model.User
 import com.framgia.fbook.data.source.remote.api.request.SearchBookRequest
 import com.framgia.fbook.data.source.remote.api.request.SignInRequest
@@ -25,9 +26,13 @@ interface FBookApi {
   @POST("/api/v0/search")
   fun searchBook(@Body searchBookRequest: SearchBookRequest): Single<BaseResponse<BaseBookRespone<List<Book>>>>
 
+  @GET("api/v0/search-books")
+  fun searchBookWithGoogleApi(@QueryMap map: Map<String, String?>): Single<BaseResponse<List<GoogleBook>>>
+
   @GET("/api/v0/user-profile")
   fun getUser(@Header("Authorization") authorization: String?): Single<BaseResponse<User>>
 
   @GET("/api/v0/users/book/{user_id}/sharing")
   fun getMyBook(@Path("user_id") userId: Int): Single<BaseResponse<BaseBookRespone<List<Book>>>>
+
 }

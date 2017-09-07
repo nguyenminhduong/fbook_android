@@ -1,23 +1,43 @@
 package com.framgia.fbook.screen.SearchBook.googlebook
 
 import android.databinding.DataBindingUtil
+import android.databinding.ObservableField
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.framgia.fbook.R
+import com.framgia.fbook.data.model.GoogleBook
+import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.databinding.FragmentGooglebookBinding
 import com.framgia.fbook.screen.BaseFragment
 import com.framgia.fbook.screen.SearchBook.SearchBookActivity
+import com.framgia.fbook.screen.onItemRecyclerViewClickListener
+import com.framgia.fbook.utils.common.StringUtils
+import com.fstyle.structure_android.widget.dialog.DialogManager
 import javax.inject.Inject
 
 /**
  * GoogleBook Screen.
  */
-class GoogleBookFragment : BaseFragment() {
+class GoogleBookFragment : BaseFragment(), GoogleBookContract.ViewModel, onItemRecyclerViewClickListener {
 
   @Inject
   internal lateinit var mPresenter: GoogleBookContract.Presenter
+  @Inject
+  internal lateinit var mDialogManager: DialogManager
+  var mBookName: ObservableField<String> = ObservableField()
+  var mErrorMsg: ObservableField<String> = ObservableField()
+
+  companion object {
+
+    val TAG: String = "GoogleBookFragment"
+
+    fun newInstance(): GoogleBookFragment {
+      return GoogleBookFragment()
+    }
+  }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
@@ -44,12 +64,32 @@ class GoogleBookFragment : BaseFragment() {
     super.onStop()
   }
 
-  companion object {
+  override fun onShowProgressDialog() {
+    mDialogManager.showIndeterminateProgressDialog()
+  }
 
-    val TAG: String = "GoogleBookFragment"
+  override fun onDismissProgressDialog() {
+    mDialogManager.dismissProgressDialog()
+  }
 
-    fun newInstance(): GoogleBookFragment {
-      return GoogleBookFragment()
+  override fun onError(error: BaseException) {
+    mDialogManager.dialogError(error.getMessageError())
+  }
+
+  override fun onSearchBookSuccess(bookList: List<GoogleBook>?) {
+    //TODO edit later
+    Log.e(TAG,bookList?.toString())
+  }
+
+  override fun onItemClickListener(any: Any) {
+    Log.e(TAG, (any as GoogleBook).id)
+  }
+
+  fun onClickSearchBookGoogle() {
+    if (StringUtils.isBlank(mBookName.get())) {
+      mErrorMsg.set(context.getString(R.string.is_empty))
+      return
     }
+    mPresenter.searchBook(mBookName.get())
   }
 }

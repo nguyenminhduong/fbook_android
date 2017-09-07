@@ -9,7 +9,6 @@ import com.framgia.fbook.R
 import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.databinding.ItemListMyBookBinding
 import com.framgia.fbook.screen.BaseRecyclerViewAdapter
-import com.framgia.fbook.screen.SearchBook.internalbook.ItemInternalBookListener
 
 /**
  * Created by framgia on 06/09/2017.
