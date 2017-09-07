@@ -3,7 +3,6 @@ package com.framgia.fbook.screen.SearchBook.googlebook
 import android.databinding.DataBindingUtil
 import android.databinding.ObservableField
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +12,8 @@ import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.databinding.FragmentGooglebookBinding
 import com.framgia.fbook.screen.BaseFragment
 import com.framgia.fbook.screen.SearchBook.SearchBookActivity
+import com.framgia.fbook.screen.SearchBook.TypeSearch
+import com.framgia.fbook.screen.SearchBook.adaptersearchbook.SearchBookAdapter
 import com.framgia.fbook.screen.onItemRecyclerViewClickListener
 import com.framgia.fbook.utils.common.StringUtils
 import com.fstyle.structure_android.widget.dialog.DialogManager
@@ -27,6 +28,8 @@ class GoogleBookFragment : BaseFragment(), GoogleBookContract.ViewModel, onItemR
   internal lateinit var mPresenter: GoogleBookContract.Presenter
   @Inject
   internal lateinit var mDialogManager: DialogManager
+  @Inject
+  internal lateinit var mGoogleBookAdapter: SearchBookAdapter
   var mBookName: ObservableField<String> = ObservableField()
   var mErrorMsg: ObservableField<String> = ObservableField()
 
@@ -51,6 +54,7 @@ class GoogleBookFragment : BaseFragment(), GoogleBookContract.ViewModel, onItemR
     val binding = DataBindingUtil.inflate<FragmentGooglebookBinding>(inflater,
         R.layout.fragment_googlebook, container, false)
     binding.viewModel = this
+    mGoogleBookAdapter.setItemInternalBookListener(this)
     return binding.root
   }
 
@@ -77,12 +81,11 @@ class GoogleBookFragment : BaseFragment(), GoogleBookContract.ViewModel, onItemR
   }
 
   override fun onSearchBookSuccess(bookList: List<GoogleBook>?) {
-    //TODO edit later
-    Log.e(TAG,bookList?.toString())
+    bookList?.let { mGoogleBookAdapter.updateDataGoogleBook(it, TypeSearch.GOOGLE_BOOK) }
   }
 
-  override fun onItemClickListener(any: Any) {
-    Log.e(TAG, (any as GoogleBook).id)
+  override fun onItemClickListener(any: Any?) {
+   //TODO edit later
   }
 
   fun onClickSearchBookGoogle() {

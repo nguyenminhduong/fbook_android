@@ -1,6 +1,5 @@
 package com.framgia.fbook.screen.mybook
 
-import android.R
 import android.support.v4.app.Fragment
 import com.framgia.fbook.data.source.BookRepository
 import com.framgia.fbook.data.source.BookRepositoryImpl
@@ -9,9 +8,6 @@ import com.framgia.fbook.data.source.UserRepositoryImpl
 import com.framgia.fbook.data.source.local.UserLocalDataSource
 import com.framgia.fbook.data.source.remote.BookRemoteDataSource
 import com.framgia.fbook.data.source.remote.UserRemoteDataSource
-import com.framgia.fbook.screen.SearchBook.internalbook.InternalBookAdapter
-import com.framgia.fbook.screen.SearchBook.internalbook.InternalBookContract
-import com.framgia.fbook.screen.SearchBook.internalbook.InternalBookPresenter
 import com.framgia.fbook.utils.dagger.FragmentScope
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
 import com.fstyle.structure_android.widget.dialog.DialogManager
