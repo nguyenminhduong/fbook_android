@@ -9,24 +9,25 @@ import com.framgia.fbook.R
 import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.databinding.ItemListMyBookBinding
 import com.framgia.fbook.screen.BaseRecyclerViewAdapter
+import com.framgia.fbook.screen.SearchBook.internalbook.ItemInternalBookListener
 
 /**
  * Created by framgia on 06/09/2017.
  */
-class MyBookAdapter constructor(context: Context,
-    books: List<Book>?) : BaseRecyclerViewAdapter<MyBookAdapter.ItemViewHolder>(context) {
+class MyBookAdapter constructor(
+    context: Context) : BaseRecyclerViewAdapter<MyBookAdapter.ItemViewHolder>(context) {
 
   private val mBooks: MutableList<Book> = ArrayList<Book>()
-  private val mItemMyBookListener: ItemMyBookClickListener
+  private lateinit var mItemMyBookListener: ItemMyBookClickListener
 
-  init {
-    if (books != null) {
-      mBooks.addAll(books)
-    }
-    if (context !is ItemMyBookClickListener) {
-      throw RuntimeException("Activity use this Adapter must implement ItemMyBookClickListener")
-    }
-    mItemMyBookListener = context;
+  fun updateData(listBook: List<Book>) {
+    mBooks.clear()
+    mBooks.addAll(listBook)
+    notifyDataSetChanged()
+  }
+
+  fun setItemMyBookListener(itemMyBookListener: ItemMyBookClickListener) {
+    mItemMyBookListener = itemMyBookListener
   }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {

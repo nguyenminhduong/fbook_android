@@ -1,6 +1,7 @@
 package com.framgia.fbook.screen.main
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,5 +54,15 @@ class MainContainerFragment : BaseFragment() {
       fragment.arguments = bundle
       return fragment
     }
+  }
+
+  override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+    super.setUserVisibleHint(isVisibleToUser)
+    if (!isAdded) {
+      return
+    }
+    val fragment: Fragment = childFragmentManager.findFragmentById(
+        R.id.layout_content_main) ?: return
+    fragment.userVisibleHint
   }
 }
