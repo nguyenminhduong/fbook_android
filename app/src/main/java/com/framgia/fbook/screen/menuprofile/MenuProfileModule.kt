@@ -1,6 +1,10 @@
 package com.framgia.fbook.screen.menuprofile
 
 import android.support.v4.app.Fragment
+import com.framgia.fbook.data.source.UserRepository
+import com.framgia.fbook.data.source.UserRepositoryImpl
+import com.framgia.fbook.data.source.local.UserLocalDataSource
+import com.framgia.fbook.data.source.remote.UserRemoteDataSource
 import com.framgia.fbook.utils.dagger.FragmentScope
 import com.framgia.fbook.utils.navigator.Navigator
 import dagger.Module
@@ -16,7 +20,9 @@ class MenuProfileModule(private val mFragment: Fragment) {
   @FragmentScope
   @Provides
   fun providePresenter(): MenuProfileContract.Presenter {
-    return MenuProfilePresenter()
+    val presenter = MenuProfilePresenter()
+    presenter.setViewModel(mFragment as MenuProfileContract.ViewModel)
+    return presenter
   }
 
   @FragmentScope
@@ -30,5 +36,12 @@ class MenuProfileModule(private val mFragment: Fragment) {
   fun provideMenuProfileAdapter(): MenuProfileAdapter {
     return MenuProfileAdapter(mFragment.context,
         mFragment.childFragmentManager)
+  }
+
+  @FragmentScope
+  @Provides
+  fun providerUserRepository(userRemoteDataSource: UserRemoteDataSource,
+      userLocalDataSource: UserLocalDataSource): UserRepository {
+    return UserRepositoryImpl(userRemoteDataSource, userLocalDataSource)
   }
 }
