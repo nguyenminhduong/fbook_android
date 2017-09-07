@@ -1,6 +1,7 @@
 package com.framgia.fbook.data.source.remote
 
 import com.framgia.fbook.data.model.Book
+import com.framgia.fbook.data.model.GoogleBook
 import com.framgia.fbook.data.source.BookDataSource
 import com.framgia.fbook.data.source.remote.api.request.SearchBookRequest
 import com.framgia.fbook.data.source.remote.api.response.BaseBookRespone
@@ -18,6 +19,15 @@ class BookRemoteDataSource @Inject constructor(nameApi: FBookApi) : BaseRemoteDa
     nameApi), BookDataSource.BookRemoteDataSource {
   override fun getMyBook(userId : Int): Single<BaseResponse<BaseBookRespone<List<Book>>>> {
     return fbookApi.getMyBook(userId)
+  }
+
+  companion object {
+    private val PARAM_BOOK_NAME = "q"
+  }
+
+  override fun searchBookWithGoogleApi(bookName: String?): Single<BaseResponse<List<GoogleBook>>> {
+    val mapBookName: Map<String, String?> = hashMapOf(PARAM_BOOK_NAME to bookName)
+    return fbookApi.searchBookWithGoogleApi(mapBookName)
   }
 
   override fun searchBook(

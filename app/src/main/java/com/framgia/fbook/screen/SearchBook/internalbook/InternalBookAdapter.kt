@@ -9,6 +9,7 @@ import com.framgia.fbook.R
 import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.databinding.FragmentInternalBookItemBinding
 import com.framgia.fbook.screen.BaseRecyclerViewAdapter
+import com.framgia.fbook.screen.onItemRecyclerViewClickListener
 
 /**
  * Created by Hyperion on 9/5/2017.
@@ -20,7 +21,7 @@ class InternalBookAdapter(
     context) {
 
   private val mListBook = mutableListOf<Book>()
-  private lateinit var mItemClickListener: ItemInternalBookListener
+  private lateinit var mItemClickListener: onItemRecyclerViewClickListener
 
   fun updateData(listBook: List<Book>) {
     mListBook.clear()
@@ -28,7 +29,7 @@ class InternalBookAdapter(
     notifyDataSetChanged()
   }
 
-  fun setItemInternalBookListener(itemInternalBookListener: ItemInternalBookListener) {
+  fun setItemInternalBookListener(itemInternalBookListener: onItemRecyclerViewClickListener) {
     mItemClickListener = itemInternalBookListener
   }
 
@@ -50,7 +51,7 @@ class InternalBookAdapter(
    * ItemViewHolder
    */
   class ItemViewHolder(private val mBinding: FragmentInternalBookItemBinding,
-      private val mItemClickListener: ItemInternalBookListener?) : RecyclerView.ViewHolder(
+      private val mItemClickListener: onItemRecyclerViewClickListener?) : RecyclerView.ViewHolder(
       mBinding.root) {
 
     fun bindData(book: Book) {

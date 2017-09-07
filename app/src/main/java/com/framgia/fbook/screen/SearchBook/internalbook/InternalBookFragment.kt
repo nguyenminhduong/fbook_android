@@ -11,6 +11,7 @@ import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.databinding.FragmentInternalbookBinding
 import com.framgia.fbook.screen.BaseFragment
+import com.framgia.fbook.screen.onItemRecyclerViewClickListener
 import com.framgia.fbook.screen.SearchBook.SearchBookActivity
 import com.framgia.fbook.utils.common.StringUtils
 import com.fstyle.structure_android.widget.dialog.DialogManager
@@ -19,7 +20,7 @@ import javax.inject.Inject
 /**
  * InternalBook Screen.
  */
-class InternalBookFragment : BaseFragment(), InternalBookContract.ViewModel, ItemInternalBookListener {
+class InternalBookFragment : BaseFragment(), InternalBookContract.ViewModel, onItemRecyclerViewClickListener {
 
   companion object {
     val TAG: String = InternalBookFragment::class.java.name
@@ -83,8 +84,8 @@ class InternalBookFragment : BaseFragment(), InternalBookContract.ViewModel, Ite
     mDialogManager.dialogError(e.getMessageError())
   }
 
-  override fun onItemClickListener(book: Book) {
-
+  override fun onItemClickListener(any: Any) {
+    //TODO edit later
   }
 
   override fun onSearchBookSuccess(listBook: List<Book>?) {
