@@ -27,4 +27,7 @@ interface FBookApi {
 
   @GET("/api/v0/user-profile")
   fun getUser(@Header("Authorization") authorization: String?): Single<BaseResponse<User>>
+
+  @GET("/api/v0/users/book/{user_id}/sharing")
+  fun getMyBook(@Path("user_id") userId: Int): Single<BaseResponse<BaseBookRespone<List<Book>>>>
 }

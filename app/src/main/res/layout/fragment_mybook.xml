@@ -2,6 +2,7 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools"
     >
 
     <data>
@@ -16,6 +17,8 @@
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layoutManager="LinearLayoutManager"
+        bind:recyclerAdapter="@{viewModel.mMyBookAdapter}"
         >
 
     </android.support.v7.widget.RecyclerView>

@@ -16,6 +16,9 @@ interface BookDataSource {
    * RemoteData For Book
    */
   interface BookRemoteDataSource {
-    fun searchBook(searchBookRequest: SearchBookRequest): Single<BaseResponse<BaseBookRespone<List<Book>>>>
+    fun searchBook(
+        searchBookRequest: SearchBookRequest): Single<BaseResponse<BaseBookRespone<List<Book>>>>
+
+    fun getMyBook(userId: Int): Single<BaseResponse<BaseBookRespone<List<Book>>>>
   }
 }
