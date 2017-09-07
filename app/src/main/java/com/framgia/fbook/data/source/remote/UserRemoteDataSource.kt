@@ -5,7 +5,7 @@ import com.framgia.fbook.data.source.UserDataSource
 import com.framgia.fbook.data.source.remote.api.request.SignInRequest
 import com.framgia.fbook.data.source.remote.api.response.BaseResponse
 import com.framgia.fbook.data.source.remote.api.response.SignInResponse
-import com.framgia.fbook.data.source.remote.api.service.NameApi
+import com.framgia.fbook.data.source.remote.api.service.FBookApi
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -14,15 +14,15 @@ import javax.inject.Inject
  */
 
 class UserRemoteDataSource @Inject
-constructor(nameApi: NameApi) : BaseRemoteDataSource(nameApi), UserDataSource.RemoteDataSource {
+constructor(nameApi: FBookApi) : BaseRemoteDataSource(nameApi), UserDataSource.RemoteDataSource {
   override fun login(email: String?, password: String?): Single<SignInResponse> {
     val signInRequest = SignInRequest()
     signInRequest.email = email
     signInRequest.password = password
-    return nameApi.login(signInRequest)
+    return fbookApi.login(signInRequest)
   }
 
   override fun getUser(authorization: String?): Single<BaseResponse<User>> {
-    return nameApi.getUser(authorization)
+    return fbookApi.getUser(authorization)
   }
 }

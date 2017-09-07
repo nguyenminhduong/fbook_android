@@ -3,7 +3,7 @@ package com.framgia.fbook
 import android.content.Context
 import com.framgia.fbook.data.source.local.sharedprf.SharedPrefsApi
 import com.framgia.fbook.data.source.remote.api.NetworkModule
-import com.framgia.fbook.data.source.remote.api.service.NameApi
+import com.framgia.fbook.data.source.remote.api.service.FBookApi
 import com.framgia.fbook.utils.dagger.AppScope
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
 import dagger.Component
@@ -19,7 +19,7 @@ interface AppComponent {
 
   //============== Region for Repository ================//
 
-  fun nameApi(): NameApi
+  fun fbookApi(): FBookApi
 
   fun sharedPrefsApi(): SharedPrefsApi
 
