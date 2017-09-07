@@ -44,6 +44,7 @@ class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBookClick
     binding.viewModel = this
 
     mMyBookAdapter.setItemMyBookListener(this)
+    mPresenter.getUser()
 
     return binding.root
   }
@@ -64,6 +65,7 @@ class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBookClick
       return
     }
     mPresenter.getMyBook(mUser.id!!)
+
   }
 
   override fun onError(e: BaseException) {

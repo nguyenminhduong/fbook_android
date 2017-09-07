@@ -1,5 +1,6 @@
 package com.framgia.fbook.data.source.remote.api.middleware
 
+import com.framgia.fbook.data.source.TokenRepository
 import java.io.IOException
 import java.net.HttpURLConnection
 
@@ -11,7 +12,9 @@ import okhttp3.Response
  * Created by Sun on 3/18/2017.
  */
 
-class InterceptorImpl : Interceptor {
+class InterceptorImpl(private val mTokenRepository: TokenRepository) : Interceptor {
+
+  private val KEY_TOKEN = "Authorization"
 
   @Throws(IOException::class)
   override fun intercept(chain: Interceptor.Chain): Response {
@@ -33,7 +36,7 @@ class InterceptorImpl : Interceptor {
         .header("Accept", "application/json")
         .addHeader("Cache-Control", "no-cache")
         .addHeader("Cache-Control", "no-store")
-        //                .header("Authorization", "Bearer " + accessToken)
+        .addHeader(KEY_TOKEN, mTokenRepository.getToken())
         .method(originRequest.method(), originRequest.body())
   }
 }
