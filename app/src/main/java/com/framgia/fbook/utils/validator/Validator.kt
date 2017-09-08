@@ -149,6 +149,26 @@ open class Validator(@param:ApplicationContext private val mContext: Context, cl
     return isValid
   }
 
+  @Throws(IllegalAccessException::class)
+  fun <T : Any> validateAll(objectInput: T): Boolean {
+    var isValid = true
+
+    for (field in objectInput.javaClass.declaredFields) {
+      val annotation = field.getAnnotation(Validation::class.java) ?: continue
+      val rules = annotation.value
+      val optional = field.getAnnotation(Optional::class.java)
+      val isOptional = optional != null
+      field.isAccessible = true
+
+      val obj = field.get(objectInput)
+      val valid = validate(obj, rules, isOptional)
+      if (!valid) {
+        isValid = false
+      }
+    }
+    return isValid
+  }
+
   fun initNGWordPattern(): Disposable {
     return Observable.create(ObservableOnSubscribe<Pattern> { emitter ->
       val reader = BufferedReader(
