@@ -16,7 +16,7 @@ interface UserDataSource {
   interface LocalDataSource {
     fun saveUser(user: User?)
 
-    fun getUserLocal(): Single<User>
+    fun getUserLocal(): User?
 
     fun clearData()
 
@@ -28,6 +28,6 @@ interface UserDataSource {
   interface RemoteDataSource {
     fun login(email: String?, password: String?): Single<SignInResponse>
 
-    fun getUser(authorization: String?): Single<BaseResponse<User>>
+    fun getUser(): Single<BaseResponse<User>>
   }
 }

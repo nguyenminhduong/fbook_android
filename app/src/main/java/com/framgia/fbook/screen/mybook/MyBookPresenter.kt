@@ -1,7 +1,6 @@
 package com.framgia.fbook.screen.mybook
 
 import com.framgia.fbook.data.source.BookRepository
-import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
@@ -13,8 +12,7 @@ import io.reactivex.disposables.Disposable
  */
 class MyBookPresenter constructor(
     private val mBookRepository: BookRepository,
-    private val mBaseSchedulerProvider: BaseSchedulerProvider,
-    private val mUserRepository: UserRepository) : MyBookContract.Presenter {
+    private val mBaseSchedulerProvider: BaseSchedulerProvider) : MyBookContract.Presenter {
 
   private var mViewModel: MyBookContract.ViewModel? = null
   private val mCompositeDisposable: CompositeDisposable by lazy { CompositeDisposable() }
@@ -25,7 +23,7 @@ class MyBookPresenter constructor(
     mCompositeDisposable.clear()
   }
 
-  override fun getMyBook(userId: Int) {
+  override fun getMyBook(userId: Int?) {
     val disposable: Disposable = mBookRepository.getMyBook(userId)
         .subscribeOn(mBaseSchedulerProvider.io())
         .observeOn(mBaseSchedulerProvider.ui())
@@ -34,22 +32,6 @@ class MyBookPresenter constructor(
         .subscribe(
             { listBook ->
               mViewModel?.onGetMyBookSuccess(listBook.items?.data)
-            },
-            { error ->
-              mViewModel?.onError(error as BaseException)
-            })
-    mCompositeDisposable.add(disposable)
-  }
-
-  override fun getUser() {
-    val disposable: Disposable = mUserRepository.getUserLocal()
-        .subscribeOn(mBaseSchedulerProvider.io())
-        .observeOn(mBaseSchedulerProvider.ui())
-        .doOnSubscribe { mViewModel?.onShowProgressDialog() }
-        .doAfterTerminate { mViewModel?.onDismissProgressDialog() }
-        .subscribe(
-            { user ->
-              mViewModel?.onGetuserSuccess(user)
             },
             { error ->
               mViewModel?.onError(error as BaseException)

@@ -7,8 +7,8 @@ import com.framgia.fbook.data.source.UserDataSource
 import com.framgia.fbook.data.source.local.sharedprf.SharedPrefsApi
 import com.framgia.fbook.data.source.local.sharedprf.SharedPrefsKey
 import com.framgia.fbook.data.source.local.sqlite.UserDbHelper
+import com.framgia.fbook.utils.common.StringUtils
 import com.google.gson.Gson
-import io.reactivex.Single
 import javax.inject.Inject
 
 /**
@@ -27,9 +27,13 @@ constructor(context: Context,
     mSharedPrefsApi.put(SharedPrefsKey.KEY_USER, data)
   }
 
-  override fun getUserLocal(): Single<User> {
+  override fun getUserLocal(): User? {
     val data = mSharedPrefsApi[SharedPrefsKey.KEY_USER, String::class.java]
-    return Single.just(Gson().fromJson(data, User::class.java))
+    return if (StringUtils.isBlank(data)) {
+      null
+    } else {
+      Gson().fromJson(data, User::class.java)
+    }
   }
 
   override fun clearData() {

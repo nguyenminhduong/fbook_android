@@ -17,7 +17,7 @@ import javax.inject.Inject
  */
 class BookRemoteDataSource @Inject constructor(nameApi: FBookApi) : BaseRemoteDataSource(
     nameApi), BookDataSource.BookRemoteDataSource {
-  override fun getMyBook(userId : Int): Single<BaseResponse<BaseBookRespone<List<Book>>>> {
+  override fun getMyBook(userId: Int?): Single<BaseResponse<BaseBookRespone<List<Book>>>> {
     return fbookApi.getMyBook(userId)
   }
 

@@ -22,7 +22,7 @@ constructor(nameApi: FBookApi) : BaseRemoteDataSource(nameApi), UserDataSource.R
     return fbookApi.login(signInRequest)
   }
 
-  override fun getUser(authorization: String?): Single<BaseResponse<User>> {
-    return fbookApi.getUser(authorization)
+  override fun getUser(): Single<BaseResponse<User>> {
+    return fbookApi.getUser()
   }
 }
