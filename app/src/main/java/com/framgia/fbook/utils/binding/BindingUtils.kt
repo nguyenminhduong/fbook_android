@@ -12,6 +12,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.framgia.fbook.R
 import com.framgia.fbook.utils.common.StringUtils
 
 
@@ -56,6 +57,7 @@ object BindingUtils {
     val uri = Uri.parse(url)
     Glide.with(imageView.context)
         .load(uri)
+        .placeholder(R.drawable.ic_book_place_holder)
         .dontAnimate()
         .into(imageView)
   }
@@ -93,11 +95,13 @@ object BindingUtils {
   fun setUpViewPager(tabLayout: TabLayout, viewPager: ViewPager) {
     tabLayout.setupWithViewPager(viewPager)
   }
+
   @JvmStatic
   @BindingAdapter("pager")
   fun setViewPagerTabs(tabLayout: TabLayout, viewPager: ViewPager) {
     tabLayout.setupWithViewPager(viewPager, true)
   }
+
   @JvmStatic
   @BindingAdapter("currentFragment")
   fun setCurrentViewPager(viewPager: ViewPager, currentPage: Int) {

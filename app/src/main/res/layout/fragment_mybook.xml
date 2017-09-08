@@ -17,9 +17,11 @@
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layoutManager="LinearLayoutManager"
+        android:orientation="vertical"
+        app:layoutManager="GridLayoutManager"
+        app:reverseLayout="false"
+        app:spanCount="3"
         bind:recyclerAdapter="@{viewModel.mMyBookAdapter}"
-        >
+        />
 
-    </android.support.v7.widget.RecyclerView>
 </layout>

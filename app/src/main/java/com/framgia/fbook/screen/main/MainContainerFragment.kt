@@ -63,6 +63,6 @@ class MainContainerFragment : BaseFragment() {
     }
     val fragment: Fragment = childFragmentManager.findFragmentById(
         R.id.layout_content_main) ?: return
-    fragment.userVisibleHint
+    fragment.userVisibleHint = isVisibleToUser
   }
 }
