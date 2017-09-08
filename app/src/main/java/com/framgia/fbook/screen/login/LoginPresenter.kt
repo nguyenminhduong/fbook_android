@@ -79,7 +79,7 @@ class LoginPresenter(private val mUserRepository: UserRepository,
         .doAfterTerminate { mViewModel?.onDismissProgressDialog() }
         .flatMap({ signInResponse ->
           mTokenRepository.saveToken(signInResponse.signInData?.accessToken)
-          mUserRepository.getUser(signInResponse.signInData?.accessToken)
+          mUserRepository.getUser()
         })
         .observeOn(mSchedulerProvider.ui())
         .subscribe({ user ->

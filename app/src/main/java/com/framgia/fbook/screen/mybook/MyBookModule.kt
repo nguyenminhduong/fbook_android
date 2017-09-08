@@ -25,9 +25,8 @@ class MyBookModule(private val mFragment: Fragment) {
   @FragmentScope
   @Provides
   fun providePresenter(bookRepository: BookRepository,
-      basesShedulerProvider: BaseSchedulerProvider,
-      userRepository: UserRepository): MyBookContract.Presenter {
-    val presenter = MyBookPresenter(bookRepository, basesShedulerProvider, userRepository)
+      basesShedulerProvider: BaseSchedulerProvider): MyBookContract.Presenter {
+    val presenter = MyBookPresenter(bookRepository, basesShedulerProvider)
     presenter.setViewModel(mFragment as MyBookContract.ViewModel)
     return presenter
   }

@@ -20,15 +20,15 @@ open class UserRepositoryImpl(private val mRemoteDataSource: UserRemoteDataSourc
     return mRemoteDataSource.login(email, password)
   }
 
-  override fun getUser(authorization: String?): Single<BaseResponse<User>> {
-    return mRemoteDataSource.getUser(authorization)
+  override fun getUser(): Single<BaseResponse<User>> {
+    return mRemoteDataSource.getUser()
   }
 
   override fun saveUser(user: User?) {
     mLocalDataSource.saveUser(user)
   }
 
-  override fun getUserLocal(): Single<User> {
+  override fun getUserLocal(): User? {
     return mLocalDataSource.getUserLocal()
   }
 

@@ -20,7 +20,7 @@ interface BookDataSource {
     fun searchBook(
         searchBookRequest: SearchBookRequest): Single<BaseResponse<BaseBookRespone<List<Book>>>>
 
-    fun getMyBook(userId: Int): Single<BaseResponse<BaseBookRespone<List<Book>>>>
+    fun getMyBook(userId: Int?): Single<BaseResponse<BaseBookRespone<List<Book>>>>
 
     fun searchBookWithGoogleApi(
         bookName: String?): Single<BaseResponse<List<GoogleBook>>>

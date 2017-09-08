@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.framgia.fbook.R
 import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.model.User
+import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.databinding.FragmentMybookBinding
 import com.framgia.fbook.screen.BaseFragment
@@ -27,8 +28,9 @@ class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBookClick
   internal lateinit var mDialogManager: DialogManager
   @Inject
   internal lateinit var mMyBookAdapter: MyBookAdapter
-
-  private lateinit var mUser: User
+  @Inject
+  lateinit var mUserRepository: UserRepository
+  private var mUser: User? = null
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
@@ -44,7 +46,8 @@ class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBookClick
     binding.viewModel = this
 
     mMyBookAdapter.setItemMyBookListener(this)
-    mPresenter.getUser()
+
+    mUser = mUserRepository.getUserLocal()
 
     return binding.root
   }
@@ -64,8 +67,7 @@ class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBookClick
     if (!isVisibleToUser) {
       return
     }
-    mPresenter.getMyBook(mUser.id!!)
-
+    mUser?.let { mPresenter.getMyBook(mUser?.id) }
   }
 
   override fun onError(e: BaseException) {
@@ -74,10 +76,6 @@ class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBookClick
 
   override fun onGetMyBookSuccess(listBook: List<Book>?) {
     listBook?.let { mMyBookAdapter.updateData(it) }
-  }
-
-  override fun onGetuserSuccess(user: User?) {
-    user?.let { mUser = user }
   }
 
   override fun onShowProgressDialog() {
