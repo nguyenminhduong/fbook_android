@@ -11,8 +11,10 @@ import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.databinding.FragmentInternalbookBinding
 import com.framgia.fbook.screen.BaseFragment
-import com.framgia.fbook.screen.onItemRecyclerViewClickListener
 import com.framgia.fbook.screen.SearchBook.SearchBookActivity
+import com.framgia.fbook.screen.SearchBook.TypeSearch
+import com.framgia.fbook.screen.SearchBook.adaptersearchbook.SearchBookAdapter
+import com.framgia.fbook.screen.onItemRecyclerViewClickListener
 import com.framgia.fbook.utils.common.StringUtils
 import com.fstyle.structure_android.widget.dialog.DialogManager
 import javax.inject.Inject
@@ -35,7 +37,7 @@ class InternalBookFragment : BaseFragment(), InternalBookContract.ViewModel, onI
   @Inject
   internal lateinit var mDialogManager: DialogManager
   @Inject
-  internal lateinit var mInternalBookAdapter: InternalBookAdapter
+  internal lateinit var mInternalBookAdapter: SearchBookAdapter
   var mKeyWord: ObservableField<String> = ObservableField()
   var mKeyWordErrorMsg: ObservableField<String> = ObservableField()
   private var mTypeSearch: String? = null
@@ -84,12 +86,12 @@ class InternalBookFragment : BaseFragment(), InternalBookContract.ViewModel, onI
     mDialogManager.dialogError(e.getMessageError())
   }
 
-  override fun onItemClickListener(any: Any) {
+  override fun onItemClickListener(any: Any?) {
     //TODO edit later
   }
 
   override fun onSearchBookSuccess(listBook: List<Book>?) {
-    listBook?.let { mInternalBookAdapter.updateData(it) }
+    listBook?.let { mInternalBookAdapter.updateData(it, TypeSearch.INTERNAL_BOOK) }
   }
 
   fun onClickSearch() {

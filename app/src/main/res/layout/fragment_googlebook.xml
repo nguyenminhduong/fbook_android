@@ -59,7 +59,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textInputLayoutGoogleBook"
-
+            bind:recyclerAdapter="@{viewModel.mGoogleBookAdapter}"
             />
     </android.support.constraint.ConstraintLayout>
 </layout>

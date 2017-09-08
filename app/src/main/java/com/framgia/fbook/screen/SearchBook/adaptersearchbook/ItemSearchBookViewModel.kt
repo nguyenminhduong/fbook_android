@@ -1,7 +1,8 @@
-package com.framgia.fbook.screen.SearchBook.internalbook
+package com.framgia.fbook.screen.SearchBook.adaptersearchbook
 
 import android.databinding.BaseObservable
 import com.framgia.fbook.data.model.Book
+import com.framgia.fbook.data.model.GoogleBook
 import com.framgia.fbook.screen.onItemRecyclerViewClickListener
 
 /**
@@ -9,10 +10,11 @@ import com.framgia.fbook.screen.onItemRecyclerViewClickListener
  * Contact me thuanpx1710@gmail.com.
  * Thank you !
  */
-class ItemInternalBookViewModel(val book: Book,
+class ItemSearchBookViewModel(val book: Book?, val googleBook: GoogleBook?,
     private val mItemClickListener: onItemRecyclerViewClickListener?) : BaseObservable() {
 
   fun onItemClicked() {
     mItemClickListener?.onItemClickListener(book)
+    mItemClickListener?.onItemClickListener(googleBook)
   }
 }

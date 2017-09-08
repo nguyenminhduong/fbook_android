@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment
 import com.framgia.fbook.data.source.BookRepository
 import com.framgia.fbook.data.source.BookRepositoryImpl
 import com.framgia.fbook.data.source.remote.BookRemoteDataSource
+import com.framgia.fbook.screen.SearchBook.adaptersearchbook.SearchBookAdapter
 import com.framgia.fbook.utils.dagger.FragmentScope
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
 import com.fstyle.structure_android.widget.dialog.DialogManager
@@ -38,5 +39,12 @@ class GoogleBookModule(private val mFragment: Fragment) {
   @Provides
   fun provideDialogManager(): DialogManager {
     return DialogManagerImpl(mFragment.context)
+  }
+
+  @FragmentScope
+  @Provides
+  fun provideGoogleBookAdapter(): SearchBookAdapter {
+    return SearchBookAdapter(
+        mFragment.activity)
   }
 }

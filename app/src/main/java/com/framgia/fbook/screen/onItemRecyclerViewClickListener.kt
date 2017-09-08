@@ -6,5 +6,5 @@ package com.framgia.fbook.screen
  * Thank you !
  */
 interface onItemRecyclerViewClickListener {
-  fun onItemClickListener(any: Any)
+  fun onItemClickListener(any: Any?)
 }
