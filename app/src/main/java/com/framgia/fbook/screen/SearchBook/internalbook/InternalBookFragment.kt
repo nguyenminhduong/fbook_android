@@ -22,7 +22,7 @@ import javax.inject.Inject
 /**
  * InternalBook Screen.
  */
-class InternalBookFragment : BaseFragment(), InternalBookContract.ViewModel, onItemRecyclerViewClickListener {
+open class InternalBookFragment : BaseFragment(), InternalBookContract.ViewModel, onItemRecyclerViewClickListener {
 
   companion object {
     val TAG: String = InternalBookFragment::class.java.name

@@ -22,7 +22,7 @@ import javax.inject.Inject
 /**
  * GoogleBook Screen.
  */
-class GoogleBookFragment : BaseFragment(), GoogleBookContract.ViewModel, onItemRecyclerViewClickListener {
+open class GoogleBookFragment : BaseFragment(), GoogleBookContract.ViewModel, onItemRecyclerViewClickListener {
 
   @Inject
   internal lateinit var mPresenter: GoogleBookContract.Presenter

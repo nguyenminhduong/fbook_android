@@ -31,7 +31,12 @@ class BookRemoteDataSource @Inject constructor(nameApi: FBookApi) : BaseRemoteDa
   }
 
   override fun searchBook(
-      searchBookRequest: SearchBookRequest): Single<BaseResponse<BaseBookRespone<List<Book>>>> {
+      keyword: String?, field: String?): Single<BaseResponse<BaseBookRespone<List<Book>>>> {
+    val searchData = SearchBookRequest.SearchBookData()
+    val searchBookRequest = SearchBookRequest()
+    searchData.keyWord = keyword
+    searchData.field = field
+    searchBookRequest.searchBookData = searchData
     return fbookApi.searchBook(searchBookRequest)
   }
 
