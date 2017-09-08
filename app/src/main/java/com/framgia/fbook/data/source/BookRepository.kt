@@ -3,7 +3,6 @@ package com.framgia.fbook.data.source
 import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.model.GoogleBook
 import com.framgia.fbook.data.source.remote.BookRemoteDataSource
-import com.framgia.fbook.data.source.remote.api.request.SearchBookRequest
 import com.framgia.fbook.data.source.remote.api.response.BaseBookRespone
 import com.framgia.fbook.data.source.remote.api.response.BaseResponse
 import io.reactivex.Single
@@ -23,8 +22,8 @@ class BookRepositoryImpl @Inject constructor(
   }
 
   override fun searchBook(
-      searchBookRequest: SearchBookRequest): Single<BaseResponse<BaseBookRespone<List<Book>>>> {
-    return bookRemoteDataSource.searchBook(searchBookRequest)
+      keyword: String?, field: String?): Single<BaseResponse<BaseBookRespone<List<Book>>>> {
+    return bookRemoteDataSource.searchBook(keyword, field)
   }
 
   override fun searchBookWithGoogleApi(

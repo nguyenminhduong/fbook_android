@@ -10,7 +10,7 @@ import io.reactivex.disposables.Disposable
  * Listens to user actions from the UI ([GoogleBookFragment]), retrieves the data and updates
  * the UI as required.
  */
-class GoogleBookPresenter(
+open class GoogleBookPresenter(
     private val mBookRepository: BookRepository) : GoogleBookContract.Presenter {
 
   private var mViewModel: GoogleBookContract.ViewModel? = null

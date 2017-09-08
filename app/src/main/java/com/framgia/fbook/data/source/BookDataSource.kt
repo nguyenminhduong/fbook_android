@@ -2,7 +2,6 @@ package com.framgia.fbook.data.source
 
 import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.model.GoogleBook
-import com.framgia.fbook.data.source.remote.api.request.SearchBookRequest
 import com.framgia.fbook.data.source.remote.api.response.BaseBookRespone
 import com.framgia.fbook.data.source.remote.api.response.BaseResponse
 import io.reactivex.Single
@@ -18,7 +17,7 @@ interface BookDataSource {
    */
   interface BookRemoteDataSource {
     fun searchBook(
-        searchBookRequest: SearchBookRequest): Single<BaseResponse<BaseBookRespone<List<Book>>>>
+        keyword: String?, field: String?): Single<BaseResponse<BaseBookRespone<List<Book>>>>
 
     fun getMyBook(userId: Int?): Single<BaseResponse<BaseBookRespone<List<Book>>>>
 

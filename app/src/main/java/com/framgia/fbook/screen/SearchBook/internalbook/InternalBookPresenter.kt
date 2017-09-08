@@ -2,7 +2,6 @@ package com.framgia.fbook.screen.SearchBook.internalbook
 
 import com.framgia.fbook.data.source.BookRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException
-import com.framgia.fbook.data.source.remote.api.request.SearchBookRequest
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -26,12 +25,7 @@ class InternalBookPresenter(
   }
 
   override fun searchBook(keyword: String?, field: String?) {
-    var searchData = SearchBookRequest.SearchBookData()
-    val searchBookRequest = SearchBookRequest()
-    searchData.keyWord = keyword
-    searchData.field = field
-    searchBookRequest.searchBookData = searchData
-    val disposable: Disposable = mBookRepository.searchBook(searchBookRequest)
+    val disposable: Disposable = mBookRepository.searchBook(keyword, field)
         .subscribeOn(mSchedulerProvider.io())
         .doOnSubscribe { mViewModel?.onShowProgressDialog() }
         .doAfterTerminate { mViewModel?.onDismissProgressDialog() }
