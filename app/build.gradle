@@ -81,6 +81,7 @@ dependencies {
   compile dependencies.cardView
   compile dependencies.glide
   compile dependencies.bottombar
+  compile dependencies.imageCircle
 
   kapt dependencies.dagger2Compile
   compile dependencies.dagger2

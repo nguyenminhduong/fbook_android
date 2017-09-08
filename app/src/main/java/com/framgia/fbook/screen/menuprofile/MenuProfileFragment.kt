@@ -1,11 +1,14 @@
 package com.framgia.fbook.screen.menuprofile
 
 import android.databinding.DataBindingUtil
+import android.databinding.ObservableField
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.framgia.fbook.R
+import com.framgia.fbook.data.model.User
+import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.databinding.FragmentMenuProfileBinding
 import com.framgia.fbook.screen.BaseFragment
 import com.framgia.fbook.screen.main.MainActivity
@@ -15,7 +18,7 @@ import javax.inject.Inject
 /**
  * Menuprofile Screen.
  */
-class MenuProfileFragment : BaseFragment() {
+class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
 
   @Inject
   internal lateinit var mPresenter: MenuProfileContract.Presenter
@@ -23,6 +26,10 @@ class MenuProfileFragment : BaseFragment() {
   @Inject
   lateinit var menuProfileAdapter: MenuProfileAdapter
   private lateinit var mMenuProfileComponent: MenuProfileComponent
+  @Inject
+  lateinit var mUserRepository: UserRepository
+  var mUser: ObservableField<User> = ObservableField()
+
   override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
 
@@ -35,6 +42,7 @@ class MenuProfileFragment : BaseFragment() {
     val binding = DataBindingUtil.inflate<FragmentMenuProfileBinding>(inflater,
         R.layout.fragment_menu_profile, container, false)
     binding.viewModel = this
+    mUser.set(mUserRepository.getUserLocal())
     return binding.root
   }
 
@@ -59,10 +67,6 @@ class MenuProfileFragment : BaseFragment() {
     return mMenuProfileComponent
   }
 
-  fun onClickArrow() {
-    mNavigator.goBackChildFragment()
-  }
-
   fun onClickShareBook() {
     //Todo navigation Activity Share Book
   }
@@ -73,5 +77,9 @@ class MenuProfileFragment : BaseFragment() {
 
   fun onClickSetting() {
     //Todo navigation Activity Setting
+  }
+
+  fun onClickLogout() {
+    //Todo navigation Logout
   }
 }
