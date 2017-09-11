@@ -31,6 +31,9 @@
     <string name="publish_date">Publish date</string>
     <string name="create_book">Create book</string>
     <string name="import_data_from_google_book">Import data from google books</string>
+    <string name="can_find_data">Can\'t find data</string>
+    <string name="you_must_be_login_into_perform_this_function">You must be login in to perform this function. Please login !</string>
+    <string name="inform">Inform</string>
 
     <!-- Dialog -->
     <string name="agree">Agree</string>

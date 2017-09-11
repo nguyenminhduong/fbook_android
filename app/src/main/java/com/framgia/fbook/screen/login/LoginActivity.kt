@@ -1,5 +1,6 @@
 package com.framgia.fbook.screen.login;
 
+import android.app.Activity
 import android.databinding.DataBindingUtil
 import android.databinding.ObservableField
 import android.os.Bundle
@@ -81,8 +82,7 @@ open class LoginActivity : BaseActivity(), LoginContract.ViewModel {
   }
 
   override fun onUserLoggedIn() {
-    mNavigator.startActivity(MainActivity::class.java)
-    mNavigator.finishActivity()
+    mNavigator.finishActivityWithResult(Activity.RESULT_OK)
   }
 
   override fun onShowProgressDialog() {

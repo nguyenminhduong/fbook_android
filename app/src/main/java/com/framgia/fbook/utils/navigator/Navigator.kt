@@ -63,6 +63,13 @@ open class Navigator {
     startActivityForResult(intent, requestCode)
   }
 
+  fun startActivityForResultFromFragment(clazz: Class<out Activity>, requestCode: Int) {
+    val intent = Intent(mActivity, clazz)
+    mFragment!!.startActivityForResult(intent, requestCode)
+    setActivityTransactionAnimation(ActivityTransition.START)
+  }
+
+
   fun finishActivity() {
     mActivity.finish()
     setActivityTransactionAnimation(ActivityTransition.FINISH)
@@ -70,6 +77,11 @@ open class Navigator {
 
   fun finishActivityWithResult(intent: Intent, resultCode: Int) {
     mActivity.setResult(resultCode, intent)
+    finishActivity()
+  }
+
+  fun finishActivityWithResult(resultCode: Int) {
+    mActivity.setResult(resultCode)
     finishActivity()
   }
 
