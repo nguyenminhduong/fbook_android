@@ -8,10 +8,6 @@ object Constant {
 
   val END_POINT_URL = "http://api-book.framgia.vn"
 
-  // For bundle
-  val ARGUMENT_LIST_USER = "ARGUMENT_LIST_USER"
-  val ARGUMENT_USER_LOGIN = "ARGUMENT_USER_LOGIN"
-
   val BREAK_LINE = "\n"
 
   object Tab {
@@ -19,5 +15,10 @@ object Constant {
     val TAB_MY_BOOK: Int = 1
     val TAB_NOTIFICATION: Int = 2
     val TAB_ACCOUNT: Int = 3
+  }
+
+  object RequestCode {
+    val TAB_MY_BOOK_REQUEST: Int = 101;
+    val TAB_PROFILE_REQUEST: Int = 102;
   }
 }

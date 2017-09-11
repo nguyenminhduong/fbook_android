@@ -1,6 +1,9 @@
 package com.framgia.fbook.screen.mybook
 
+import android.app.Activity
+import android.content.Intent
 import android.databinding.DataBindingUtil
+import android.databinding.ObservableField
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,7 +16,11 @@ import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.databinding.FragmentMybookBinding
 import com.framgia.fbook.screen.BaseFragment
+import com.framgia.fbook.screen.login.LoginActivity
 import com.framgia.fbook.screen.main.MainActivity
+import com.framgia.fbook.utils.Constant
+import com.framgia.fbook.utils.navigator.Navigator
+import com.fstyle.library.MaterialDialog
 import com.fstyle.structure_android.widget.dialog.DialogManager
 import javax.inject.Inject
 
@@ -29,8 +36,13 @@ class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBookClick
   @Inject
   internal lateinit var mMyBookAdapter: MyBookAdapter
   @Inject
-  lateinit var mUserRepository: UserRepository
-  private var mUser: User? = null
+  internal lateinit var mUserRepository: UserRepository
+  @Inject
+  internal lateinit var mNavigator: Navigator
+  private var mIsLoadDataFirstTime: Boolean = true
+  val mIsVisiableLayoutNodata: ObservableField<Boolean> = ObservableField()
+  val mIsVisibleLayoutNotLoggedIn: ObservableField<Boolean> = ObservableField()
+
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
@@ -47,8 +59,6 @@ class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBookClick
 
     mMyBookAdapter.setItemMyBookListener(this)
 
-    mUser = mUserRepository.getUserLocal()
-
     return binding.root
   }
 
@@ -62,20 +72,49 @@ class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBookClick
     super.onStop()
   }
 
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    if (resultCode == Activity.RESULT_OK && requestCode == Constant.RequestCode.TAB_MY_BOOK_REQUEST) {
+      mIsVisibleLayoutNotLoggedIn.set(false)
+      mPresenter.getMyBook(mUserRepository.getUserLocal()?.id)
+    }
+  }
+
   override fun setUserVisibleHint(isVisibleToUser: Boolean) {
     super.setUserVisibleHint(isVisibleToUser)
     if (!isVisibleToUser) {
       return
     }
-    mUser?.let { mPresenter.getMyBook(mUser?.id) }
+    if (mIsLoadDataFirstTime) {
+      val user = mUserRepository.getUserLocal()
+      if (user == null) {
+
+        mDialogManager.dialogBasic(getString(R.string.inform),
+            getString(R.string.you_must_be_login_into_perform_this_function),
+            MaterialDialog.SingleButtonCallback { materialDialog, dialogAction ->
+              mNavigator.startActivityForResultFromFragment(LoginActivity::class.java,
+                  Constant.RequestCode.TAB_MY_BOOK_REQUEST)
+            })
+
+        mIsVisibleLayoutNotLoggedIn.set(true)
+        return
+      }
+      mIsVisibleLayoutNotLoggedIn.set(false)
+      user.let { mPresenter.getMyBook(userId = user.id) }
+    }
   }
 
   override fun onError(e: BaseException) {
+    mIsLoadDataFirstTime = false
     Log.e(TAG, e.getMessageError())
   }
 
   override fun onGetMyBookSuccess(listBook: List<Book>?) {
-    listBook?.let { mMyBookAdapter.updateData(it) }
+    mIsLoadDataFirstTime = false
+    listBook?.let {
+      mMyBookAdapter.updateData(it)
+      checkSizeListBook(listBook.size)
+    }
   }
 
   override fun onShowProgressDialog() {
@@ -88,6 +127,14 @@ class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBookClick
 
   override fun onItemMyBookClick(book: Book) {
     //TODO edit later
+  }
+
+  private fun checkSizeListBook(size: Int?) {
+    if (size == 0) {
+      mIsVisiableLayoutNodata.set(true)
+      return
+    }
+    mIsVisiableLayoutNodata.set(false)
   }
 
   companion object {

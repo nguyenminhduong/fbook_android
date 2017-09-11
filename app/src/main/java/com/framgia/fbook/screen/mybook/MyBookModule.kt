@@ -9,6 +9,7 @@ import com.framgia.fbook.data.source.local.UserLocalDataSource
 import com.framgia.fbook.data.source.remote.BookRemoteDataSource
 import com.framgia.fbook.data.source.remote.UserRemoteDataSource
 import com.framgia.fbook.utils.dagger.FragmentScope
+import com.framgia.fbook.utils.navigator.Navigator
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
 import com.fstyle.structure_android.widget.dialog.DialogManager
 import com.fstyle.structure_android.widget.dialog.DialogManagerImpl
@@ -54,5 +55,11 @@ class MyBookModule(private val mFragment: Fragment) {
   @Provides
   fun provideDialogManager(): DialogManager {
     return DialogManagerImpl(mFragment.context)
+  }
+
+  @FragmentScope
+  @Provides
+  fun provideNavigator(): Navigator {
+    return Navigator(mFragment)
   }
 }
