@@ -10,12 +10,13 @@ import io.reactivex.disposables.Disposable
  * Listens to user actions from the UI ([MyBookFragment]), retrieves the data and updates
  * the UI as required.
  */
-class MyBookPresenter constructor(
-    private val mBookRepository: BookRepository,
-    private val mBaseSchedulerProvider: BaseSchedulerProvider) : MyBookContract.Presenter {
+open class MyBookPresenter constructor(
+    private val mBookRepository: BookRepository) : MyBookContract.Presenter {
 
   private var mViewModel: MyBookContract.ViewModel? = null
   private val mCompositeDisposable: CompositeDisposable by lazy { CompositeDisposable() }
+  private lateinit var mBaseSchedulerProvider: BaseSchedulerProvider
+
 
   override fun onStart() {}
 
@@ -41,6 +42,11 @@ class MyBookPresenter constructor(
 
   override fun setViewModel(viewModel: MyBookContract.ViewModel) {
     mViewModel = viewModel
+  }
+
+
+  fun setSchedulerProvider(baseSchedulerProvider: BaseSchedulerProvider) {
+    mBaseSchedulerProvider = baseSchedulerProvider
   }
 
   companion object {
