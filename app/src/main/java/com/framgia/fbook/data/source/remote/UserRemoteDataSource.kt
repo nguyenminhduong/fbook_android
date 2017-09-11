@@ -1,5 +1,6 @@
 package com.framgia.fbook.data.source.remote
 
+import com.framgia.fbook.data.model.Office
 import com.framgia.fbook.data.model.User
 import com.framgia.fbook.data.source.UserDataSource
 import com.framgia.fbook.data.source.remote.api.request.SignInRequest
@@ -24,5 +25,9 @@ constructor(nameApi: FBookApi) : BaseRemoteDataSource(nameApi), UserDataSource.R
 
   override fun getUser(): Single<BaseResponse<User>> {
     return fbookApi.getUser()
+  }
+
+  override fun getOffices(): Single<BaseResponse<List<Office>>> {
+    return fbookApi.getOffices()
   }
 }

@@ -1,5 +1,6 @@
 package com.framgia.fbook.data.source
 
+import com.framgia.fbook.data.model.Office
 import com.framgia.fbook.data.model.User
 import com.framgia.fbook.data.source.local.UserLocalDataSource
 import com.framgia.fbook.data.source.remote.UserRemoteDataSource
@@ -15,6 +16,9 @@ interface UserRepository : UserDataSource.RemoteDataSource, UserDataSource.Local
 
 open class UserRepositoryImpl(private val mRemoteDataSource: UserRemoteDataSource,
     private val mLocalDataSource: UserLocalDataSource) : UserRepository {
+  override fun getOffices(): Single<BaseResponse<List<Office>>> {
+    return mRemoteDataSource.getOffices()
+  }
 
   override fun login(email: String?, password: String?): Single<SignInResponse> {
     return mRemoteDataSource.login(email, password)

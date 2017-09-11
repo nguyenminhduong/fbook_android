@@ -150,7 +150,8 @@
                                 android:editable="false"
                                 android:focusable="false"
                                 android:hint="@string/office"
-
+                                android:onClick="@{() -> viewModel.onPickOffice()}"
+                                android:text="@{viewModel.currentOffice}"
                                 />
                         </android.support.design.widget.TextInputLayout>
                         <ImageView
