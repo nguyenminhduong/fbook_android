@@ -21,10 +21,12 @@ interface FBookApi {
   fun login(@Body signInRequest: SignInRequest?): Single<SignInResponse>
 
   @POST("/api/v0/search")
-  fun searchBook(@Body searchBookRequest: SearchBookRequest): Single<BaseResponse<BaseBookRespone<List<Book>>>>
+  fun searchBook(
+      @Body searchBookRequest: SearchBookRequest): Single<BaseResponse<BaseBookRespone<List<Book>>>>
 
   @GET("api/v0/search-books")
-  fun searchBookWithGoogleApi(@QueryMap map: Map<String, String?>): Single<BaseResponse<List<GoogleBook>>>
+  fun searchBookWithGoogleApi(
+      @QueryMap map: Map<String, String?>): Single<BaseResponse<List<GoogleBook>>>
 
   @GET("/api/v0/user-profile")
   fun getUser(): Single<BaseResponse<User>>
@@ -38,4 +40,7 @@ interface FBookApi {
   @GET("/api/v0/books/")
   fun getSectionListTopRating(@Query("field") field: String?, @Query(
       "page") page: Int?): Single<BaseResponse<BaseBookRespone<List<Book>>>>
+
+  @GET("/api/v0/categories")
+  fun getCategory(): Single<BaseResponse<List<Category>>>
 }
