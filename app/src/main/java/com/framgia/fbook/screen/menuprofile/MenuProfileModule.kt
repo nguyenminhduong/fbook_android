@@ -7,6 +7,8 @@ import com.framgia.fbook.data.source.local.UserLocalDataSource
 import com.framgia.fbook.data.source.remote.UserRemoteDataSource
 import com.framgia.fbook.utils.dagger.FragmentScope
 import com.framgia.fbook.utils.navigator.Navigator
+import com.fstyle.structure_android.widget.dialog.DialogManager
+import com.fstyle.structure_android.widget.dialog.DialogManagerImpl
 import dagger.Module
 import dagger.Provides
 
@@ -43,5 +45,11 @@ class MenuProfileModule(private val mFragment: Fragment) {
   fun providerUserRepository(userRemoteDataSource: UserRemoteDataSource,
       userLocalDataSource: UserLocalDataSource): UserRepository {
     return UserRepositoryImpl(userRemoteDataSource, userLocalDataSource)
+  }
+
+  @FragmentScope
+  @Provides
+  fun providerDialogManager(): DialogManager {
+    return DialogManagerImpl(mFragment.context)
   }
 }
