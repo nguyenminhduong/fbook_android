@@ -1,5 +1,7 @@
 package com.framgia.fbook.screen.menuprofile
 
+import android.app.Activity
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.databinding.ObservableField
 import android.os.Bundle
@@ -11,9 +13,13 @@ import com.framgia.fbook.data.model.User
 import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.databinding.FragmentMenuProfileBinding
 import com.framgia.fbook.screen.BaseFragment
+import com.framgia.fbook.screen.login.LoginActivity
 import com.framgia.fbook.screen.main.MainActivity
 import com.framgia.fbook.screen.sharebook.ShareBookActivity
+import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.navigator.Navigator
+import com.fstyle.library.MaterialDialog
+import com.fstyle.structure_android.widget.dialog.DialogManager
 import javax.inject.Inject
 
 /**
@@ -25,25 +31,26 @@ class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
   internal lateinit var mPresenter: MenuProfileContract.Presenter
   private val mNavigator: Navigator by lazy { Navigator(this) }
   @Inject
-  lateinit var menuProfileAdapter: MenuProfileAdapter
+  internal lateinit var menuProfileAdapter: MenuProfileAdapter
   private lateinit var mMenuProfileComponent: MenuProfileComponent
   @Inject
-  lateinit var mUserRepository: UserRepository
-  var mUser: ObservableField<User> = ObservableField()
+  internal lateinit var mUserRepository: UserRepository
+  @Inject
+  internal lateinit var mDialogManager: DialogManager
+  private var mIsLoadDataFirstTime: Boolean = true
+  val mUser: ObservableField<User> = ObservableField()
+  val mIsVisibleLayoutNotLoggedIn: ObservableField<Boolean> = ObservableField()
 
   override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
-
     DaggerMenuProfileComponent.builder()
         .mainComponent((activity as MainActivity).getMainComponent())
         .menuProfileModule(MenuProfileModule(this))
         .build()
         .inject(this)
-
     val binding = DataBindingUtil.inflate<FragmentMenuProfileBinding>(inflater,
         R.layout.fragment_menu_profile, container, false)
     binding.viewModel = this
-    mUser.set(mUserRepository.getUserLocal())
     return binding.root
   }
 
@@ -61,6 +68,36 @@ class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
     val TAG: String = "MenuProfileFragment"
     fun newInstance(): MenuProfileFragment {
       return MenuProfileFragment()
+    }
+  }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    if (resultCode == Activity.RESULT_OK && requestCode == Constant.RequestCode.TAB_PROFILE_REQUEST) {
+      mIsVisibleLayoutNotLoggedIn.set(false)
+      mUser.set(mUserRepository.getUserLocal())
+    }
+  }
+
+  override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+    super.setUserVisibleHint(isVisibleToUser)
+    if (!isVisibleToUser) {
+      return
+    }
+    if (mIsLoadDataFirstTime) {
+      val user = mUserRepository.getUserLocal()
+      if (user == null) {
+        mDialogManager.dialogBasic(getString(R.string.inform),
+            getString(R.string.you_must_be_login_into_perform_this_function),
+            MaterialDialog.SingleButtonCallback { materialDialog, dialogAction ->
+              mNavigator.startActivityForResultFromFragment(LoginActivity::class.java,
+                  Constant.RequestCode.TAB_PROFILE_REQUEST)
+            })
+        mIsVisibleLayoutNotLoggedIn.set(true)
+        return
+      }
+      mIsVisibleLayoutNotLoggedIn.set(false)
+      mUser.set(user)
     }
   }
 
@@ -83,4 +120,9 @@ class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
   fun onClickLogout() {
     //Todo navigation Logout
   }
+
+  override fun getUserVisibleHint(): Boolean {
+    return super.getUserVisibleHint()
+  }
+
 }

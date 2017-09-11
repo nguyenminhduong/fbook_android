@@ -21,6 +21,7 @@ import javax.inject.Inject
 class MainActivity : BaseActivity(), MainContract.ViewModel {
 
   private val DELAY_TIME_TWO_TAP_BACK_BUTTON = 2000
+  private val PAGE_LIMIT = 3
 
   @Inject
   lateinit var presenter: MainContract.Presenter
@@ -30,6 +31,7 @@ class MainActivity : BaseActivity(), MainContract.ViewModel {
   lateinit var mAdapter: MainContainerPagerAdapter
   lateinit var mMainComponent: MainComponent
   val mCurrentTab: ObservableField<Int> = ObservableField()
+  val mPageLimit: ObservableField<Int> = ObservableField(PAGE_LIMIT)
   private var mIsDoubleTapBack = false
   private lateinit var mHandler: Handler
   private lateinit var mRunnable: Runnable

@@ -63,6 +63,24 @@ object BindingUtils {
   }
 
   /**
+   * Load image user from url
+   */
+  @JvmStatic
+  @BindingAdapter("imageUserUrl")
+  fun loadImageUser(imageView: ImageView, url: String?) {
+    var url = url
+    if (StringUtils.isBlank(url)) {
+      url = ""
+    }
+    val uri = Uri.parse(url)
+    Glide.with(imageView.context)
+        .load(uri)
+        .placeholder(R.drawable.ic_user_xml)
+        .dontAnimate()
+        .into(imageView)
+  }
+
+  /**
    * setAdapter For RecyclerView
    */
   @JvmStatic

@@ -116,6 +116,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/bottom_navigation"
+                app:offscreenPageLimit="@{viewModel.mPageLimit}"
                 bind:adapter="@{viewModel.mAdapter}"
                 bind:currentFragment="@{viewModel.mCurrentTab}"
                 />
