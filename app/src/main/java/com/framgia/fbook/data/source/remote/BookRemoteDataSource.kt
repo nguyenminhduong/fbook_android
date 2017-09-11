@@ -40,4 +40,9 @@ class BookRemoteDataSource @Inject constructor(nameApi: FBookApi) : BaseRemoteDa
     return fbookApi.searchBook(searchBookRequest)
   }
 
+  override fun getSectionListTopRating(field: String?,
+      page: Int?): Single<BaseResponse<BaseBookRespone<List<Book>>>> {
+    return fbookApi.getSectionListTopRating(field, page)
+  }
+
 }

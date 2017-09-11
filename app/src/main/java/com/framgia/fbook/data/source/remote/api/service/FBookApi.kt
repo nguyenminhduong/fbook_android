@@ -35,4 +35,7 @@ interface FBookApi {
   @GET("/api/v0/offices")
   fun getOffices(): Single<BaseResponse<List<Office>>>
 
+  @GET("/api/v0/books/")
+  fun getSectionListTopRating(@Query("field") field: String?, @Query(
+      "page") page: Int?): Single<BaseResponse<BaseBookRespone<List<Book>>>>
 }

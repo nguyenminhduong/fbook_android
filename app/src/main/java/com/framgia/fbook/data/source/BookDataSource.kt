@@ -23,5 +23,8 @@ interface BookDataSource {
 
     fun searchBookWithGoogleApi(
         bookName: String?): Single<BaseResponse<List<GoogleBook>>>
+
+    fun getSectionListTopRating(field: String?,
+        page: Int?): Single<BaseResponse<BaseBookRespone<List<Book>>>>
   }
 }
