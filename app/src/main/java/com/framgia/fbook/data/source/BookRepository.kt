@@ -30,4 +30,9 @@ class BookRepositoryImpl @Inject constructor(
       bookName: String?): Single<BaseResponse<List<GoogleBook>>> {
     return bookRemoteDataSource.searchBookWithGoogleApi(bookName)
   }
+
+  override fun getSectionListTopRating(field: String?,
+      page: Int?): Single<BaseResponse<BaseBookRespone<List<Book>>>> {
+    return bookRemoteDataSource.getSectionListTopRating(field, page)
+  }
 }
