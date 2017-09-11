@@ -6,10 +6,14 @@ import android.databinding.ObservableField
 import android.os.Bundle
 import com.framgia.fbook.MainApplication
 import com.framgia.fbook.R
+import com.framgia.fbook.data.model.Office
+import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.data.source.remote.api.request.BookRequest
 import com.framgia.fbook.databinding.ActivitySharebookBinding
 import com.framgia.fbook.screen.BaseActivity
 import com.framgia.fbook.utils.navigator.Navigator
+import com.fstyle.library.MaterialDialog
+import com.fstyle.structure_android.widget.dialog.DialogManager
 import pl.aprilapps.easyphotopicker.DefaultCallback
 import pl.aprilapps.easyphotopicker.EasyImage
 import java.io.File
@@ -25,12 +29,17 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
   @Inject
   lateinit var mNavigator: Navigator
   @Inject
+  internal lateinit var mDialogManager: DialogManager
+  @Inject
   internal lateinit var mImageSelectedAdapter: ImageSelectedAdapter
   val mBookRequest = BookRequest()
+  private val mListOffice = mutableListOf<Office>()
 
   val titleError: ObservableField<String> = ObservableField()
   val authorError: ObservableField<String> = ObservableField()
   val descriptionError: ObservableField<String> = ObservableField()
+  var currentOffice: ObservableField<String> = ObservableField()
+  private var currentOfficePosition: Int = 0
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -47,6 +56,7 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
     EasyImage.configuration(this).setAllowMultiplePickInGallery(true)
     mImageSelectedAdapter.setItemImageSelectedListener(this)
     mBookRequest.listImage = mImageSelectedAdapter.mListImage
+    mPresenter.getData()
   }
 
   override fun onInputAuthorError(errorMsg: String?) {
@@ -88,6 +98,27 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
     mImageSelectedAdapter.removeOneItem(image)
   }
 
+  override fun onShowProgressDialog() {
+    mDialogManager.showIndeterminateProgressDialog()
+  }
+
+  override fun onDismissProgressDialog() {
+    mDialogManager.dismissProgressDialog()
+  }
+
+  override fun onGetOfficeSuccess(listOffice: List<Office>?) {
+    mListOffice.addAll(listOffice!!)
+    updateCurrentOffice(currentOfficePosition)
+  }
+
+  override fun onError(baseException: BaseException) {
+  }
+
+  private fun updateCurrentOffice(position: Int) {
+    currentOffice.set(mListOffice[position].name)
+    mBookRequest.officeId = mListOffice[position].id
+  }
+
   private fun updateDataImage(images: List<File>) {
     val listImage = mutableListOf<BookRequest.Image>()
     for (image in images) {
@@ -114,4 +145,18 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
         0)
   }
 
+  fun onPickOffice() {
+    mListOffice.let {
+      val workSpace: MutableList<String> = mutableListOf()
+      mListOffice.mapTo(workSpace) { it.name!! }
+      mDialogManager.dialogListSingleChoice(getString(R.string.select_office), workSpace,
+          currentOfficePosition,
+          MaterialDialog.ListCallbackSingleChoice { _, _, position, _ ->
+            currentOfficePosition = position
+            updateCurrentOffice(currentOfficePosition)
+            true
+          })
+    }
+
+  }
 }

@@ -1,5 +1,6 @@
 package com.framgia.fbook.data.source
 
+import com.framgia.fbook.data.model.Office
 import com.framgia.fbook.data.model.User
 import com.framgia.fbook.data.source.remote.api.response.BaseResponse
 import com.framgia.fbook.data.source.remote.api.response.SignInResponse
@@ -29,5 +30,7 @@ interface UserDataSource {
     fun login(email: String?, password: String?): Single<SignInResponse>
 
     fun getUser(): Single<BaseResponse<User>>
+
+    fun getOffices(): Single<BaseResponse<List<Office>>>
   }
 }

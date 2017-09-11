@@ -72,6 +72,9 @@ interface DialogManager {
   fun dialogListSingleChoice(title: String, @ArrayRes arrayId: Int, selectedIndex: Int,
       callback: MaterialDialog.ListCallbackSingleChoice)
 
+  fun dialogListSingleChoice(title: String,strings :MutableList<String>, selectedIndex: Int,
+      callback: MaterialDialog.ListCallbackSingleChoice)
+
   /**
    * <h1>ListMultiChoice Dialog</h1>
    * <img width="400" height="372" src="https://github.com/daolq3012/DialogManager/blob/master/image/ListMultiChoice.png?raw=true" alt=""></img>

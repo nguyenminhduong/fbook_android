@@ -1,23 +1,34 @@
 package com.framgia.fbook.screen.sharebook;
 
+import com.framgia.fbook.data.source.UserRepository
+import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.data.source.remote.api.request.BookRequest
 import com.framgia.fbook.utils.common.StringUtils
+import com.framgia.fbook.utils.rx.BaseSchedulerProvider
 import com.framgia.fbook.utils.validator.Validator
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 
 /**
  * Listens to user actions from the UI ({@link ShareBookActivity}), retrieves the data and updates
  * the UI as required.
  */
-class ShareBookPresenter(private val mValidator: Validator) : ShareBookContract.Presenter {
+class ShareBookPresenter(private val mValidator: Validator,
+    private val mUserRepository: UserRepository,
+    private val mBaseSchedulerProvider: BaseSchedulerProvider) : ShareBookContract.Presenter {
   companion object {
     private val TAG = ShareBookPresenter::class.java.name
   }
+
+  private val mCompositeDisposable: CompositeDisposable by lazy { CompositeDisposable() }
 
   private var mViewModel: ShareBookContract.ViewModel? = null
 
   override fun onStart() {}
 
-  override fun onStop() {}
+  override fun onStop() {
+    mCompositeDisposable.clear()
+  }
 
   override fun setViewModel(viewModel: ShareBookContract.ViewModel) {
     mViewModel = viewModel
@@ -28,6 +39,22 @@ class ShareBookPresenter(private val mValidator: Validator) : ShareBookContract.
     validateAuthorInput(bookRequest.author)
     validateDescriptionInput(bookRequest.description)
     return mValidator.validateAll(bookRequest)
+  }
+
+  override fun getData() {
+    val disposable: Disposable = mUserRepository.getOffices()
+        .subscribeOn(mBaseSchedulerProvider.io())
+        .observeOn(mBaseSchedulerProvider.ui())
+        .doOnSubscribe { mViewModel?.onShowProgressDialog() }
+        .doAfterTerminate { mViewModel?.onDismissProgressDialog() }
+        .subscribe(
+            { listWorkSpace ->
+              mViewModel?.onGetOfficeSuccess(listWorkSpace.items)
+            },
+            { error ->
+              mViewModel?.onError(error as BaseException)
+            })
+    mCompositeDisposable.add(disposable)
   }
 
   private fun validateTitleInput(title: String?) {
