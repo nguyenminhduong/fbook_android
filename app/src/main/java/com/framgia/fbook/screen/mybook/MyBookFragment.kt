@@ -26,7 +26,7 @@ import javax.inject.Inject
 /**
  * MyBook Screen.
  */
-class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBookClickListener {
+open class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBookClickListener {
 
   @Inject
   internal lateinit var mPresenter: MyBookContract.Presenter
@@ -41,7 +41,6 @@ class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBookClick
   private var mIsLoadDataFirstTime: Boolean = true
   val mIsVisiableLayoutNodata: ObservableField<Boolean> = ObservableField()
   val mIsVisibleLayoutNotLoggedIn: ObservableField<Boolean> = ObservableField()
-
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
