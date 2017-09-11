@@ -12,6 +12,7 @@ import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.databinding.FragmentMenuProfileBinding
 import com.framgia.fbook.screen.BaseFragment
 import com.framgia.fbook.screen.main.MainActivity
+import com.framgia.fbook.screen.sharebook.ShareBookActivity
 import com.framgia.fbook.utils.navigator.Navigator
 import javax.inject.Inject
 
@@ -68,7 +69,7 @@ class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
   }
 
   fun onClickShareBook() {
-    //Todo navigation Activity Share Book
+    mNavigator.startActivity(ShareBookActivity::class.java)
   }
 
   fun onClickApproveRequest() {

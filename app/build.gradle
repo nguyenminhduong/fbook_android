@@ -63,7 +63,6 @@ dependencies {
 
   Map<String, String> dependencies = rootProject.ext.dependencies;
 
-  compile 'com.android.support.constraint:constraint-layout:1.0.2'
   kapt dependencies.dataBinding
 
   compile dependencies.supportDesign
@@ -83,13 +82,14 @@ dependencies {
   compile dependencies.bottombar
   compile dependencies.imageCircle
 
+  compile dependencies.easyimage
   kapt dependencies.dagger2Compile
   compile dependencies.dagger2
   provided dependencies.annotation
 
   testCompile dependencies.junit
   testCompile dependencies.mockito
-
+  
   androidTestCompile 'info.cukes:cucumber-android:1.2.5@jar'
   androidTestCompile 'info.cukes:cucumber-picocontainer:1.2.5'
   androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
