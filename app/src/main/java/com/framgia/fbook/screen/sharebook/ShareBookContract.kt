@@ -1,5 +1,6 @@
 package com.framgia.fbook.screen.sharebook;
 
+import com.framgia.fbook.data.model.Category
 import com.framgia.fbook.data.model.Office
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.data.source.remote.api.request.BookRequest
@@ -22,6 +23,8 @@ interface ShareBookContract {
     fun onInputDescriptionError(errorMsg: String?)
 
     fun onGetOfficeSuccess(listOffice: List<Office>?)
+
+    fun onGetCategorySuccess(listCategory: List<Category>?)
 
     fun onError(baseException: BaseException)
 

@@ -1,13 +1,20 @@
 package com.framgia.fbook.screen.sharebook;
 
+import com.framgia.fbook.data.model.Category
+import com.framgia.fbook.data.model.Office
+import com.framgia.fbook.data.model.OfficesAndCategories
+import com.framgia.fbook.data.source.CategoryRepository
 import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.data.source.remote.api.request.BookRequest
+import com.framgia.fbook.data.source.remote.api.response.BaseResponse
 import com.framgia.fbook.utils.common.StringUtils
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
 import com.framgia.fbook.utils.validator.Validator
+import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import io.reactivex.functions.BiFunction
 
 /**
  * Listens to user actions from the UI ({@link ShareBookActivity}), retrieves the data and updates
@@ -15,6 +22,7 @@ import io.reactivex.disposables.Disposable
  */
 class ShareBookPresenter(private val mValidator: Validator,
     private val mUserRepository: UserRepository,
+    private val mCategoryRepository: CategoryRepository,
     private val mBaseSchedulerProvider: BaseSchedulerProvider) : ShareBookContract.Presenter {
   companion object {
     private val TAG = ShareBookPresenter::class.java.name
@@ -42,14 +50,19 @@ class ShareBookPresenter(private val mValidator: Validator,
   }
 
   override fun getData() {
-    val disposable: Disposable = mUserRepository.getOffices()
-        .subscribeOn(mBaseSchedulerProvider.io())
+    val disposable: Disposable = Single.zip(mUserRepository.getOffices(),
+        mCategoryRepository.getCategory(),
+        BiFunction<BaseResponse<List<Office>>, BaseResponse<List<Category>>, OfficesAndCategories>
+        { listOffice, listCategory ->
+          OfficesAndCategories(listCategory.items, listOffice.items)
+        }).subscribeOn(mBaseSchedulerProvider.io())
         .observeOn(mBaseSchedulerProvider.ui())
         .doOnSubscribe { mViewModel?.onShowProgressDialog() }
         .doAfterTerminate { mViewModel?.onDismissProgressDialog() }
         .subscribe(
-            { listWorkSpace ->
-              mViewModel?.onGetOfficeSuccess(listWorkSpace.items)
+            { officeAndCategory ->
+              mViewModel?.onGetCategorySuccess(officeAndCategory.categories)
+              mViewModel?.onGetOfficeSuccess(officeAndCategory.offices)
             },
             { error ->
               mViewModel?.onError(error as BaseException)
