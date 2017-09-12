@@ -9,7 +9,6 @@ import com.framgia.fbook.R
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.databinding.ActivityLoginBinding
 import com.framgia.fbook.screen.BaseActivity
-import com.framgia.fbook.screen.main.MainActivity
 import com.framgia.fbook.utils.navigator.Navigator
 import com.framgia.fbook.utils.validator.Rule
 import com.framgia.fbook.utils.validator.ValidType

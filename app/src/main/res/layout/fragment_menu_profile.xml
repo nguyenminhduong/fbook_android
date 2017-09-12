@@ -48,16 +48,6 @@
                             android:layout_height="@dimen/dp_250"
                             app:layout_collapseMode="parallax"
                             >
-                            <ImageView
-                                android:layout_width="@dimen/dp_30"
-                                android:layout_height="@dimen/dp_30"
-                                android:layout_margin="@dimen/dp_16"
-                                android:background="@drawable/ic_logout"
-                                android:onClick="@{() -> viewModel.onClickLogout()}"
-                                app:layout_constraintRight_toRightOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                tools:ignore="ContentDescription"
-                                />
                             <FrameLayout
                                 android:id="@+id/frame_layout_image"
                                 android:layout_width="match_parent"
@@ -150,6 +140,30 @@
                                     tools:ignore="ButtonStyle"
                                     />
                             </LinearLayout>
+                            <ImageView
+                                android:layout_width="@dimen/dp_40"
+                                android:layout_height="@dimen/dp_40"
+                                android:layout_margin="@dimen/dp_16"
+                                android:background="@drawable/ic_edit"
+                                android:onClick="@{() -> viewModel.onClickEdit()}"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:ignore="ContentDescription"
+                                />
+
+                            <ImageView
+                                android:layout_width="@dimen/dp_40"
+                                android:layout_height="@dimen/dp_40"
+                                android:layout_margin="@dimen/dp_16"
+                                android:background="@drawable/ic_logout"
+                                android:onClick="@{() -> viewModel.onClickLogout()}"
+                                android:rotation="180"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:ignore="ContentDescription"
+                                />
                         </android.support.constraint.ConstraintLayout>
                         <android.support.v7.widget.Toolbar
                             android:layout_width="match_parent"
