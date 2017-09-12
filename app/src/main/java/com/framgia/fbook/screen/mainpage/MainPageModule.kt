@@ -4,13 +4,14 @@ import android.support.v4.app.Fragment
 import com.framgia.fbook.data.source.BookRepository
 import com.framgia.fbook.data.source.BookRepositoryImpl
 import com.framgia.fbook.data.source.remote.BookRemoteDataSource
-import com.framgia.fbook.screen.mainpage.adapter.MainPageTopRatingAdapter
+import com.framgia.fbook.screen.mainpage.adapter.MainPageAdapter
 import com.framgia.fbook.utils.dagger.FragmentScope
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
 import com.fstyle.structure_android.widget.dialog.DialogManager
 import com.fstyle.structure_android.widget.dialog.DialogManagerImpl
 import dagger.Module
 import dagger.Provides
+import javax.inject.Named
 
 /**
  * This is a Dagger module. We use this to pass in the View dependency to
@@ -43,7 +44,36 @@ class MainPageModule(private val mFragment: Fragment) {
 
   @FragmentScope
   @Provides
-  fun provideMainPageAdapter(): MainPageTopRatingAdapter {
-    return MainPageTopRatingAdapter(mFragment.context)
+  @Named("AdapterRating")
+  fun provideMainPageAdapter(): MainPageAdapter {
+    return MainPageAdapter(mFragment.context)
+  }
+
+  @FragmentScope
+  @Provides
+  @Named("AdapterLate")
+  fun provideMainPageAdapterLate(): MainPageAdapter {
+    return MainPageAdapter(mFragment.context)
+  }
+
+  @FragmentScope
+  @Provides
+  @Named("AdapterView")
+  fun provideMainPageAdapterView(): MainPageAdapter {
+    return MainPageAdapter(mFragment.context)
+  }
+
+  @FragmentScope
+  @Provides
+  @Named("AdapterWaiting")
+  fun provideMainPageAdapterWaiting(): MainPageAdapter {
+    return MainPageAdapter(mFragment.context)
+  }
+
+  @FragmentScope
+  @Provides
+  @Named("AdapterRead")
+  fun provideMainPageAdapterRead(): MainPageAdapter {
+    return MainPageAdapter(mFragment.context)
   }
 }
