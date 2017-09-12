@@ -135,6 +135,10 @@ open class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBook
     mIsVisiableLayoutNodata.set(false)
   }
 
+  fun onClickReloadData(view: View) {
+    mPresenter.getMyBook(mUserRepository.getUserLocal()?.id)
+  }
+
   companion object {
 
     val TAG: String = MyBookFragment::class.java.name
