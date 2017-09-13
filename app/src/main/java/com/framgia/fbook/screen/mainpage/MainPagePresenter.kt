@@ -2,6 +2,7 @@ package com.framgia.fbook.screen.mainpage
 
 import com.framgia.fbook.data.source.BookRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException
+import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -23,29 +24,29 @@ class MainPagePresenter(private val mBookRepository: BookRepository) : MainPageC
   }
 
   override fun getSectionListBook() {
-    val disposable: Disposable = mBookRepository.getSectionListBook(LATE, PAGE)
+    val disposable: Disposable = mBookRepository.getSectionListBook(Constant.LATE, Constant.PAGE)
         .subscribeOn(mSchedulerProvider.io())
         .doOnSubscribe { mViewModel.onShowProgressDialog() }
         .doAfterTerminate { mViewModel.onDismissProgressDialog() }
         .flatMap { listBookLateResponse ->
           mViewModel.onGetSectionListBookSuccess(TypeBook.LATE_BOOK,
               listBookLateResponse.item?.data)
-          mBookRepository.getSectionListBook(RATING, PAGE)
+          mBookRepository.getSectionListBook(Constant.RATING, Constant.PAGE)
         }
         .flatMap { listBookRatingResponse ->
           mViewModel.onGetSectionListBookSuccess(TypeBook.RATING_BOOK,
               listBookRatingResponse.item?.data)
-          mBookRepository.getSectionListBook(VIEW, PAGE)
+          mBookRepository.getSectionListBook(Constant.VIEW, Constant.PAGE)
         }
         .flatMap { listBookViewResponse ->
           mViewModel.onGetSectionListBookSuccess(TypeBook.VIEW_BOOK,
               listBookViewResponse.item?.data)
-          mBookRepository.getSectionListBook(WAITING, PAGE)
+          mBookRepository.getSectionListBook(Constant.WAITING, Constant.PAGE)
         }
         .flatMap { listBookWaitingResponse ->
           mViewModel.onGetSectionListBookSuccess(TypeBook.WAITING_BOOK,
               listBookWaitingResponse.item?.data)
-          mBookRepository.getSectionListBook(READ, PAGE)
+          mBookRepository.getSectionListBook(Constant.READ, Constant.PAGE)
         }
         .observeOn(mSchedulerProvider.ui())
         .subscribe({ listBookReadResponse ->
@@ -67,12 +68,5 @@ class MainPagePresenter(private val mBookRepository: BookRepository) : MainPageC
 
   companion object {
     private val TAG = MainPagePresenter::class.java.name
-
-    private val LATE = "latest"
-    private val VIEW = "view"
-    private val RATING = "rating"
-    private val WAITING = "waiting"
-    private val READ = "read"
-    private val PAGE = 1
   }
 }

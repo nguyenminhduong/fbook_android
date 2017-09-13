@@ -9,6 +9,13 @@ object Constant {
   val END_POINT_URL = "http://api-book.framgia.vn"
 
   val BREAK_LINE = "\n"
+  val LIST_BOOK_EXTRA = "LIST_BOOK_EXTRA"
+  val LATE = "latest"
+  val VIEW = "view"
+  val RATING = "rating"
+  val WAITING = "waiting"
+  val READ = "read"
+  val PAGE = 1
 
   val BOOK_DETAIL_EXTRA = "book_detail"
 

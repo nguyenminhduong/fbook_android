@@ -6,6 +6,7 @@ import com.framgia.fbook.data.source.BookRepositoryImpl
 import com.framgia.fbook.data.source.remote.BookRemoteDataSource
 import com.framgia.fbook.screen.mainpage.adapter.MainPageAdapter
 import com.framgia.fbook.utils.dagger.FragmentScope
+import com.framgia.fbook.utils.navigator.Navigator
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
 import com.fstyle.structure_android.widget.dialog.DialogManager
 import com.fstyle.structure_android.widget.dialog.DialogManagerImpl
@@ -75,5 +76,11 @@ class MainPageModule(private val mFragment: Fragment) {
   @Named("AdapterRead")
   fun provideMainPageAdapterRead(): MainPageAdapter {
     return MainPageAdapter(mFragment.context)
+  }
+
+  @FragmentScope
+  @Provides
+  fun provideNavigator(): Navigator {
+    return Navigator(mFragment.parentFragment)
   }
 }
