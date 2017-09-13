@@ -16,15 +16,16 @@ import com.framgia.fbook.screen.onItemRecyclerViewClickListener
  * Contact me thuanpx1710@gmail.com.
  * Thank you !
  */
-class MainPageTopRatingAdapter(
-    context: Context) : BaseRecyclerViewAdapter<MainPageTopRatingAdapter.ItemViewHolder>(context) {
+class MainPageAdapter(
+    context: Context) : BaseRecyclerViewAdapter<MainPageAdapter.ItemViewHolderBook>(
+    context) {
   private lateinit var mItemClickListener: onItemRecyclerViewClickListener
-  private val mListBook = mutableListOf<Book>()
+  private val mListLateBook = mutableListOf<Book>()
+
 
   fun updateData(listBook: List<Book>?) {
     listBook?.let {
-      mListBook.addAll(it)
-      notifyDataSetChanged()
+      mListLateBook.addAll(listBook)
     }
   }
 
@@ -32,20 +33,26 @@ class MainPageTopRatingAdapter(
     mItemClickListener = itemInternalBookListener
   }
 
-  override fun getItemCount(): Int = mListBook.size
+  override fun getItemCount(): Int {
+    return mListLateBook.size
+  }
 
-  override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ItemViewHolder {
+  override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ItemViewHolderBook? {
     val binding = DataBindingUtil.inflate<FragmentMainpageItemBinding>(
-        LayoutInflater.from(parent?.context),
-        R.layout.fragment_mainpage_item, parent, false)
-    return ItemViewHolder(binding, mItemClickListener)
+        LayoutInflater.from(parent?.context), R.layout.fragment_mainpage_item, parent,
+        false)
+    return ItemViewHolderBook(binding, mItemClickListener)
+
   }
 
-  override fun onBindViewHolder(holder: ItemViewHolder?, position: Int) {
-    holder?.binData(mListBook[position])
+  override fun onBindViewHolder(holder: ItemViewHolderBook?, position: Int) {
+    holder?.binData(mListLateBook[position])
   }
 
-  inner class ItemViewHolder(
+  /**
+   * Item  Book
+   */
+  inner class ItemViewHolderBook(
       private val mBinding: FragmentMainpageItemBinding,
       private val mItemClickListener: onItemRecyclerViewClickListener?) : RecyclerView.ViewHolder(
       mBinding.root) {
@@ -54,4 +61,5 @@ class MainPageTopRatingAdapter(
       mBinding.executePendingBindings()
     }
   }
+
 }

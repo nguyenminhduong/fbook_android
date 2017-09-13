@@ -11,10 +11,11 @@ import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.databinding.FragmentMainPageBinding
 import com.framgia.fbook.screen.BaseFragment
 import com.framgia.fbook.screen.main.MainActivity
-import com.framgia.fbook.screen.mainpage.adapter.MainPageTopRatingAdapter
+import com.framgia.fbook.screen.mainpage.adapter.MainPageAdapter
 import com.framgia.fbook.screen.onItemRecyclerViewClickListener
 import com.fstyle.structure_android.widget.dialog.DialogManager
 import javax.inject.Inject
+import javax.inject.Named
 
 /**
  * MainPage Screen.
@@ -25,8 +26,17 @@ class MainPageFragment : BaseFragment(), MainPageContract.ViewModel, onItemRecyc
   internal lateinit var mPresenter: MainPageContract.Presenter
   @Inject
   lateinit var mDialogManager: DialogManager
-  @Inject
-  lateinit var mMainPageAdapter: MainPageTopRatingAdapter
+
+  @field:[Inject Named("AdapterLate")]
+  lateinit var mMainPageAdapterLateBook: MainPageAdapter
+  @field:[Inject Named("AdapterRating")]
+  lateinit var mMainPageAdapterRatingBook: MainPageAdapter
+  @field:[Inject Named("AdapterView")]
+  lateinit var mMainPageAdapterViewBook: MainPageAdapter
+  @field:[Inject Named("AdapterWaiting")]
+  lateinit var mMainPageAdapterWaitingBook: MainPageAdapter
+  @field:[Inject Named("AdapterRead")]
+  lateinit var mMainPageAdapterReadBook: MainPageAdapter
 
   override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
@@ -39,8 +49,12 @@ class MainPageFragment : BaseFragment(), MainPageContract.ViewModel, onItemRecyc
     val binding = DataBindingUtil.inflate<FragmentMainPageBinding>(inflater,
         R.layout.fragment_main_page, container, false)
     binding.viewModel = this
-    mPresenter.getSectionListTopRating(RATING, PAGE)
-    mMainPageAdapter.setItemInternalBookListener(this)
+    mPresenter.getSectionListBook()
+    mMainPageAdapterLateBook.setItemInternalBookListener(this)
+    mMainPageAdapterRatingBook.setItemInternalBookListener(this)
+    mMainPageAdapterViewBook.setItemInternalBookListener(this)
+    mMainPageAdapterWaitingBook.setItemInternalBookListener(this)
+    mMainPageAdapterReadBook.setItemInternalBookListener(this)
     return binding.root
   }
 
@@ -66,12 +80,26 @@ class MainPageFragment : BaseFragment(), MainPageContract.ViewModel, onItemRecyc
     mDialogManager.dialogError(error.getMessageError())
   }
 
-  override fun onGetSectionListTopRatingSuccess(listBook: List<Book>?) {
-    mMainPageAdapter.updateData(listBook)
+  override fun onGetSectionListBookSuccess(typeBook: Int, listBook: List<Book>?) {
+    when (typeBook) {
+      TypeBook.LATE_BOOK -> mMainPageAdapterLateBook.updateData(listBook)
+      TypeBook.RATING_BOOK -> mMainPageAdapterRatingBook.updateData(listBook)
+      TypeBook.VIEW_BOOK -> mMainPageAdapterViewBook.updateData(listBook)
+      TypeBook.WAITING_BOOK -> mMainPageAdapterWaitingBook.updateData(listBook)
+    }
+    //when to final adapter
+    if (typeBook == TypeBook.READ_BOOK) {
+      mMainPageAdapterReadBook.updateData(listBook)
+      mMainPageAdapterLateBook.notifyDataSetChanged()
+      mMainPageAdapterViewBook.notifyDataSetChanged()
+      mMainPageAdapterRatingBook.notifyDataSetChanged()
+      mMainPageAdapterWaitingBook.notifyDataSetChanged()
+      mMainPageAdapterReadBook.notifyDataSetChanged()
+    }
   }
 
   override fun onItemClickListener(any: Any?) {
-    //TODO edit later
+    //TODO dev later
   }
 
   companion object {
@@ -81,8 +109,5 @@ class MainPageFragment : BaseFragment(), MainPageContract.ViewModel, onItemRecyc
     fun newInstance(): MainPageFragment {
       return MainPageFragment()
     }
-
-    private val RATING = "rating"
-    private val PAGE = 1
   }
 }

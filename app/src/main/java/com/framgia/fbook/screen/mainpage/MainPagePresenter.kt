@@ -22,14 +22,35 @@ class MainPagePresenter(private val mBookRepository: BookRepository) : MainPageC
     mCompositeDisposable.clear()
   }
 
-  override fun getSectionListTopRating(field: String?, page: Int?) {
-    val disposable: Disposable = mBookRepository.getSectionListTopRating(field, page)
+  override fun getSectionListBook() {
+    val disposable: Disposable = mBookRepository.getSectionListBook(LATE, PAGE)
         .subscribeOn(mSchedulerProvider.io())
         .doOnSubscribe { mViewModel.onShowProgressDialog() }
         .doAfterTerminate { mViewModel.onDismissProgressDialog() }
+        .flatMap { listBookLateResponse ->
+          mViewModel.onGetSectionListBookSuccess(TypeBook.LATE_BOOK,
+              listBookLateResponse.item?.data)
+          mBookRepository.getSectionListBook(RATING, PAGE)
+        }
+        .flatMap { listBookRatingResponse ->
+          mViewModel.onGetSectionListBookSuccess(TypeBook.RATING_BOOK,
+              listBookRatingResponse.item?.data)
+          mBookRepository.getSectionListBook(VIEW, PAGE)
+        }
+        .flatMap { listBookViewResponse ->
+          mViewModel.onGetSectionListBookSuccess(TypeBook.VIEW_BOOK,
+              listBookViewResponse.item?.data)
+          mBookRepository.getSectionListBook(WAITING, PAGE)
+        }
+        .flatMap { listBookWaitingResponse ->
+          mViewModel.onGetSectionListBookSuccess(TypeBook.WAITING_BOOK,
+              listBookWaitingResponse.item?.data)
+          mBookRepository.getSectionListBook(READ, PAGE)
+        }
         .observeOn(mSchedulerProvider.ui())
-        .subscribe({ listBookResponse ->
-          mViewModel.onGetSectionListTopRatingSuccess(listBookResponse.item?.data)
+        .subscribe({ listBookReadResponse ->
+          mViewModel.onGetSectionListBookSuccess(TypeBook.READ_BOOK,
+              listBookReadResponse.item?.data)
         }, { error ->
           mViewModel.onError(error as BaseException)
         })
@@ -46,5 +67,12 @@ class MainPagePresenter(private val mBookRepository: BookRepository) : MainPageC
 
   companion object {
     private val TAG = MainPagePresenter::class.java.name
+
+    private val LATE = "latest"
+    private val VIEW = "view"
+    private val RATING = "rating"
+    private val WAITING = "waiting"
+    private val READ = "read"
+    private val PAGE = 1
   }
 }
