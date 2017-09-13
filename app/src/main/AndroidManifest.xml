@@ -14,7 +14,8 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="afa5b4969ced7faced055aca28be45ea3adfaa5f" />
+            android:value="afa5b4969ced7faced055aca28be45ea3adfaa5f"/>
+
         <activity
             android:name=".screen.main.MainActivity"
             android:screenOrientation="portrait"
@@ -34,6 +35,10 @@
             android:theme="@style/AppTheme"/>
         <activity
             android:name=".screen.sharebook.ShareBookActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".screen.bookdetail.BookDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"/>
     </application>

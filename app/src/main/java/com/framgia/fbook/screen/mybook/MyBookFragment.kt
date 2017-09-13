@@ -15,6 +15,7 @@ import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.databinding.FragmentMybookBinding
 import com.framgia.fbook.screen.BaseFragment
+import com.framgia.fbook.screen.bookdetail.BookDetailActivity
 import com.framgia.fbook.screen.login.LoginActivity
 import com.framgia.fbook.screen.main.MainActivity
 import com.framgia.fbook.utils.Constant
@@ -124,7 +125,9 @@ open class MyBookFragment : BaseFragment(), MyBookContract.ViewModel, ItemMyBook
   }
 
   override fun onItemMyBookClick(book: Book) {
-    //TODO edit later
+    val bundle = Bundle()
+    bundle.putParcelable(Constant.BOOK_DETAIL_EXTRA, book)
+    mNavigator.startActivity(BookDetailActivity::class.java, bundle)
   }
 
   private fun checkSizeListBook(size: Int?) {

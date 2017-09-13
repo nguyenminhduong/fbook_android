@@ -10,6 +10,8 @@ object Constant {
 
   val BREAK_LINE = "\n"
 
+  val BOOK_DETAIL_EXTRA = "book_detail"
+
   object Tab {
     val TAB_HOME: Int = 0
     val TAB_MY_BOOK: Int = 1
