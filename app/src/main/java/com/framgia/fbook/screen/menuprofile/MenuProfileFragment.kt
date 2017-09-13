@@ -15,7 +15,9 @@ import com.framgia.fbook.databinding.FragmentMenuProfileBinding
 import com.framgia.fbook.screen.BaseFragment
 import com.framgia.fbook.screen.login.LoginActivity
 import com.framgia.fbook.screen.main.MainActivity
+import com.framgia.fbook.screen.personalinfor.PersonalInforFragment
 import com.framgia.fbook.screen.sharebook.ShareBookActivity
+import com.framgia.fbook.screen.updateProfile.UpdateProfileActivity
 import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.navigator.Navigator
 import com.fstyle.library.MaterialDialog
@@ -76,6 +78,9 @@ class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
     if (resultCode == Activity.RESULT_OK && requestCode == Constant.RequestCode.TAB_PROFILE_REQUEST) {
       mIsVisibleLayoutNotLoggedIn.set(false)
       mUser.set(mUserRepository.getUserLocal())
+      val fragment = menuProfileAdapter.getFragment(
+          0)?.childFragmentManager?.fragments?.get(0) as PersonalInforFragment
+      fragment.setUser(mUserRepository.getUserLocal())
     }
   }
 
@@ -101,6 +106,7 @@ class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
     }
   }
 
+
   fun getMenuProfileComponent(): MenuProfileComponent {
     return mMenuProfileComponent
   }
@@ -118,7 +124,17 @@ class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
   }
 
   fun onClickLogout() {
-    //Todo navigation Logout
+    mDialogManager.dialogBasic(getString(R.string.inform),
+        getString(R.string.are_u_want_to_sign_out),
+        MaterialDialog.SingleButtonCallback { materialDialog, dialogAction ->
+          mUserRepository.clearData()
+          mNavigator.startActivityAtRoot(MainActivity::class.java)
+        })
+    return
+  }
+
+  fun onClickEdit() {
+    mNavigator.startActivity(UpdateProfileActivity::class.java)
   }
 
   override fun getUserVisibleHint(): Boolean {

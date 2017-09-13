@@ -52,12 +52,12 @@ class PersonalInforFragment : BaseFragment(), PersonalInforContract.ViewModel {
   }
 
 
-  fun setUser(user: User) {
+  fun setUser(user: User?) {
     mUser.set(user)
   }
 
   companion object {
-    val TAG: String = "PersonalInforFragment"
+    val TAG: String = PersonalInforFragment::class.java.name
     fun newInstance(): PersonalInforFragment {
       return PersonalInforFragment()
     }

@@ -40,7 +40,7 @@ open class DialogManagerImpl(private val mContext: Context) : DialogManager {
       positiveButtonListener: MaterialDialog.SingleButtonCallback) {
     MaterialDialog.Builder(mContext).content(content)
         .positiveText(R.string.agree)
-        .negativeText(R.string.disagree)
+        .negativeText(R.string.cancel)
         .onPositive(positiveButtonListener)
         .show()
   }
@@ -50,7 +50,7 @@ open class DialogManagerImpl(private val mContext: Context) : DialogManager {
     MaterialDialog.Builder(mContext).title(title)
         .content(content)
         .positiveText(R.string.agree)
-        .negativeText(R.string.disagree)
+        .negativeText(R.string.cancel)
         .onPositive(positiveButtonListener)
         .show()
   }
@@ -62,7 +62,7 @@ open class DialogManagerImpl(private val mContext: Context) : DialogManager {
         .iconRes(icon)
         .limitIconToDefaultSize()
         .positiveText(R.string.agree)
-        .negativeText(R.string.disagree)
+        .negativeText(R.string.cancel)
         .onPositive(positiveButtonListener)
         .show()
   }
@@ -84,7 +84,7 @@ open class DialogManagerImpl(private val mContext: Context) : DialogManager {
     MaterialDialog.Builder(mContext).title(title)
         .content(content)
         .positiveText(R.string.agree)
-        .negativeText(R.string.disagree)
+        .negativeText(R.string.cancel)
         .neutralText(R.string.more_info)
         .onAny(callback)
         .show()
