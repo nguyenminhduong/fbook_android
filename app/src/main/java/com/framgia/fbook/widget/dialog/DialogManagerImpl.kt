@@ -1,10 +1,14 @@
 package com.fstyle.structure_android.widget.dialog
 
+import android.app.DatePickerDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.support.annotation.ArrayRes
 import android.support.annotation.DrawableRes
+import android.widget.DatePicker
 import com.framgia.fbook.R
 import com.fstyle.library.MaterialDialog
+import java.util.*
 
 /**
  * Created by le.quang.dao on 14/03/2017.
@@ -12,6 +16,7 @@ import com.fstyle.library.MaterialDialog
 
 open class DialogManagerImpl(private val mContext: Context) : DialogManager {
   private var mProgressDialog: MaterialDialog? = null
+  private var mDatePickerDialog: DatePickerDialog? = null
 
   override fun showIndeterminateProgressDialog() {
     if (mProgressDialog == null) {
@@ -112,7 +117,8 @@ open class DialogManagerImpl(private val mContext: Context) : DialogManager {
         .show()
   }
 
-  override fun dialogListSingleChoice(title: String, strings :MutableList<String>, selectedIndex: Int,
+  override fun dialogListSingleChoice(title: String, strings: MutableList<String>,
+      selectedIndex: Int,
       callback: MaterialDialog.ListCallbackSingleChoice) {
     MaterialDialog.Builder(mContext).title(title)
         .items(strings)
@@ -132,5 +138,25 @@ open class DialogManagerImpl(private val mContext: Context) : DialogManager {
         .onNeutral { materialDialog, _ -> materialDialog.clearSelectedIndices() }
         .onPositive { materialDialog, _ -> materialDialog.dismiss() }
         .show()
+  }
+
+  override fun dialogDatePicker(
+      onDateSetListener: DatePickerDialog.OnDateSetListener, calendar: Calendar): DialogManager {
+    mDatePickerDialog = DatePickerDialog(mContext, onDateSetListener, calendar.get(Calendar.YEAR),
+        calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
+    mDatePickerDialog?.let {
+      mDatePickerDialog!!.setButton(DialogInterface.BUTTON_NEUTRAL,
+          mContext.getText(R.string.clear), { _, _ ->
+        val datePicker = DatePicker(mContext)
+        onDateSetListener.onDateSet(datePicker, 0, 0, 0)
+      })
+    }
+    return this
+  }
+
+  override fun showDatePickerDialog() {
+    mDatePickerDialog?.let {
+      mDatePickerDialog!!.show()
+    }
   }
 }

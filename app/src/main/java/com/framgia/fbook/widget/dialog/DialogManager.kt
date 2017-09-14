@@ -1,8 +1,10 @@
 package com.fstyle.structure_android.widget.dialog
 
+import android.app.DatePickerDialog
 import android.support.annotation.ArrayRes
 import android.support.annotation.DrawableRes
 import com.fstyle.library.MaterialDialog
+import java.util.*
 
 /**
  * Created by le.quang.dao on 14/03/2017.
@@ -72,7 +74,7 @@ interface DialogManager {
   fun dialogListSingleChoice(title: String, @ArrayRes arrayId: Int, selectedIndex: Int,
       callback: MaterialDialog.ListCallbackSingleChoice)
 
-  fun dialogListSingleChoice(title: String,strings :MutableList<String>, selectedIndex: Int,
+  fun dialogListSingleChoice(title: String, strings: MutableList<String>, selectedIndex: Int,
       callback: MaterialDialog.ListCallbackSingleChoice)
 
   /**
@@ -81,4 +83,10 @@ interface DialogManager {
    */
   fun dialogListMultiChoice(title: String, @ArrayRes arrayId: Int, selectedIndices: Array<Int>,
       callback: MaterialDialog.ListCallbackMultiChoice)
+
+  fun dialogDatePicker(onDateSetListener: DatePickerDialog.OnDateSetListener,
+      calendar: Calendar): DialogManager
+
+  fun showDatePickerDialog()
+
 }

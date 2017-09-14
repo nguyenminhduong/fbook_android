@@ -111,7 +111,7 @@
                     android:orientation="horizontal"
                     >
                     <FrameLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         >
@@ -122,10 +122,17 @@
                             <EditText
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:layout_weight="1"
                                 android:editable="false"
                                 android:focusable="false"
                                 android:hint="@string/category"
-
+                                android:inputType="text"
+                                android:maxLines="1"
+                                android:onClick="@{() -> viewModel.onPickCategory()}"
+                                android:paddingEnd="@dimen/dp_20"
+                                android:paddingRight="@dimen/dp_20"
+                                android:text="@{viewModel.currentCategory}"
+                                bind:ignore="RtlSymmetry"
                                 />
                         </android.support.design.widget.TextInputLayout>
                         <ImageView
@@ -136,7 +143,7 @@
                             />
                     </FrameLayout>
                     <FrameLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         >
@@ -147,11 +154,17 @@
                             <EditText
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:layout_weight="1"
                                 android:editable="false"
                                 android:focusable="false"
                                 android:hint="@string/office"
+                                android:inputType="text"
+                                android:maxLines="1"
                                 android:onClick="@{() -> viewModel.onPickOffice()}"
+                                android:paddingEnd="@dimen/dp_20"
+                                android:paddingRight="@dimen/dp_20"
                                 android:text="@{viewModel.currentOffice}"
+                                bind:ignore="RtlSymmetry"
                                 />
                         </android.support.design.widget.TextInputLayout>
                         <ImageView
@@ -172,7 +185,8 @@
                         android:editable="false"
                         android:focusable="false"
                         android:hint="@string/publish_date"
-                        android:text="@={viewModel.mBookRequest.publishDate}"
+                        android:onClick="@{() -> viewModel.onPickPublishDate()}"
+                        android:text="@={viewModel.publishDate}"
                         />
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
