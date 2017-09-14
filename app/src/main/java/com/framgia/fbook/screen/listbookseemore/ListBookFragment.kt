@@ -20,7 +20,7 @@ import javax.inject.Inject
 /**
  * ListBook Screen.
  */
-class ListBookFragment : BaseFragment(), ListBookContract.ViewModel, onItemRecyclerViewClickListener {
+open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel, onItemRecyclerViewClickListener {
 
   @Inject
   internal lateinit var mPresenter: ListBookContract.Presenter

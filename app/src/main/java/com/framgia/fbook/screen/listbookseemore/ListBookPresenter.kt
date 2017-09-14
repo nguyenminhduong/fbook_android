@@ -12,7 +12,7 @@ import io.reactivex.disposables.Disposable
  * Listens to user actions from the UI ([ListBookFragment]), retrieves the data and updates
  * the UI as required.
  */
-class ListBookPresenter(private val mBookRepository: BookRepository) : ListBookContract.Presenter {
+open class ListBookPresenter(private val mBookRepository: BookRepository) : ListBookContract.Presenter {
 
   private var mViewModel: ListBookContract.ViewModel? = null
   private lateinit var mSchedulerProvider: BaseSchedulerProvider
