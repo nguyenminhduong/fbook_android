@@ -10,11 +10,14 @@ import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.databinding.FragmentMainPageBinding
 import com.framgia.fbook.screen.BaseFragment
+import com.framgia.fbook.screen.bookdetail.BookDetailActivity
 import com.framgia.fbook.screen.listbookseemore.ListBookFragment
 import com.framgia.fbook.screen.main.MainActivity
 import com.framgia.fbook.screen.mainpage.adapter.MainPageAdapter
 import com.framgia.fbook.screen.onItemRecyclerViewClickListener
+import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.navigator.NavigateAnim
+
 import com.framgia.fbook.utils.navigator.Navigator
 import com.fstyle.structure_android.widget.dialog.DialogManager
 import javax.inject.Inject
@@ -104,7 +107,9 @@ class MainPageFragment : BaseFragment(), MainPageContract.ViewModel, onItemRecyc
   }
 
   override fun onItemClickListener(any: Any?) {
-    //TODO edit later
+    val bundle = Bundle()
+    bundle.putParcelable(Constant.BOOK_DETAIL_EXTRA, any as Book)
+    mNavigator.startActivity(BookDetailActivity::class.java, bundle)
   }
 
   fun onClickMoreLateBook() {

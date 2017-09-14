@@ -10,8 +10,10 @@ import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.Editable
+import android.text.Html
 import android.text.TextWatcher
 import android.widget.ImageView
+import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.framgia.fbook.R
 import com.framgia.fbook.utils.common.StringUtils
@@ -131,5 +133,15 @@ object BindingUtils {
   @BindingAdapter("gridLayoutManager")
   fun setLayoutManagerRecycler(recyclerView: RecyclerView, spanCount: Int) {
     recyclerView.layoutManager = GridLayoutManager(recyclerView.context, spanCount)
+  }
+
+  @JvmStatic
+  @BindingAdapter("parseHtlmToText")
+  fun setFromHtlmToText(text: TextView, description: String?) {
+    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+      text.setText(Html.fromHtml(description, Html.FROM_HTML_MODE_LEGACY))
+      return
+    }
+    text.setText(Html.fromHtml(description))
   }
 }
