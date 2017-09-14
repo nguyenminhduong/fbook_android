@@ -12,7 +12,11 @@
     <color name="color_red_translate">#90FF3328</color>
     <color name="color_red_click">#70BA000C</color>
     <color name="color_dark_gray">#707070</color>
+    <color name="color_gray_view">#98b6b3b3</color>
     <color name="color_white_translate_light">#73F1F1F1</color>
     <color name="color_red_mos">#D22725</color>
     <color name="color_dark_gray_mos">#4b4a4a</color>
+    <color name="color_yellow">#ef8c07</color>
+    <color name="color_blue">#2158c7</color>
+
 </resources>

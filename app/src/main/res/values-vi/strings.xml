@@ -29,6 +29,12 @@
     <string name="following">Đang theo dõi</string>
     <string name="add_your_book">Thêm sách của bạn</string>
     <string name="can_find_data">Không tìm thấy dữ liệu</string>
+    <string name="want_to_read">Muốn đọc</string>
+    <string name="author_two_dots">Tác giả:</string>
+    <string name="view_count">Lượt xem:</string>
+    <string name="i_have_this_book">Tôi có cuốn sách này</string>
+    <string name="remove_owner_this_book">Xóa chủ sở hữu cuốn sách này</string>
+    <string name="cancel_waiting_this_book">Hủy chờ đợi cuốn sách này</string>
     <string name="you_must_be_login_into_perform_this_function">Bạn phải đăng nhập để thực hiện chức năng này. Vui lòng hãy đăng nhập !</string>
     <string name="inform">Thông báo</string>
     <string name="are_u_want_to_sign_out">Bạn có chắc chắn muốn đăng xuất không?</string>
@@ -42,4 +48,14 @@
     <string name="more_info">Xem thêm thông tin</string>
     <string name="choose">Chọn</string>
     <string name="clear">Xoá</string>
+    <string name="activities">Hoạt động</string>
+    <string name="review">Đã xem</string>
+    <string name="waiting">Đang chờ</string>
+    <string name="reading">Đang đọc</string>
+    <string name="returning">Đang trả lại</string>
+    <string name="returned">Đã trả lại</string>
+    <string name="shared_by">Chia sẻ bởi</string>
+    <string name="publish_date_two_dots">Ngày xuất bản</string>
+
+
 </resources>
