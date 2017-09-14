@@ -138,6 +138,9 @@ object BindingUtils {
   @JvmStatic
   @BindingAdapter("parseHtlmToText")
   fun setFromHtlmToText(text: TextView, description: String?) {
+    if (StringUtils.isBlank(description)) {
+      return
+    }
     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
       text.setText(Html.fromHtml(description, Html.FROM_HTML_MODE_LEGACY))
       return
