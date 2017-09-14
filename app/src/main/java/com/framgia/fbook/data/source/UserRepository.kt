@@ -40,4 +40,7 @@ open class UserRepositoryImpl(private val mRemoteDataSource: UserRemoteDataSourc
     mLocalDataSource.clearData()
   }
 
+  override fun updateUser(): User? {
+    return mLocalDataSource.updateUser()
+  }
 }

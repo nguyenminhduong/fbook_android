@@ -47,6 +47,12 @@ class User() : BaseModel(), Parcelable {
   @SerializedName("avatar")
   @Expose
   var avatar: String? = null
+  @SerializedName("tags")
+  @Expose
+  var tag: String? = null
+  @SerializedName("favorite_categories")
+  @Expose
+  var categories: List<Category>? = null
 
   constructor(parcel: Parcel) : this() {
     id = parcel.readValue(Int::class.java.classLoader) as? Int
@@ -61,6 +67,8 @@ class User() : BaseModel(), Parcelable {
     updatedAt = parcel.readString()
     deletedAt = parcel.readString()
     avatar = parcel.readString()
+    tag = parcel.readString()
+    categories = parcel.createTypedArrayList(Category.CREATOR)
   }
 
   override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -76,6 +84,8 @@ class User() : BaseModel(), Parcelable {
     parcel.writeString(updatedAt)
     parcel.writeString(deletedAt)
     parcel.writeString(avatar)
+    parcel.writeString(tag)
+    parcel.writeTypedList(categories)
   }
 
   override fun describeContents(): Int {

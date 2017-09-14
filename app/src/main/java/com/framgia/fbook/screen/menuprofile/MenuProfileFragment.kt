@@ -13,6 +13,7 @@ import com.framgia.fbook.data.model.User
 import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.databinding.FragmentMenuProfileBinding
 import com.framgia.fbook.screen.BaseFragment
+import com.framgia.fbook.screen.categoryfavorite.CategoryFavoriteFragment
 import com.framgia.fbook.screen.login.LoginActivity
 import com.framgia.fbook.screen.main.MainActivity
 import com.framgia.fbook.screen.personalinfor.PersonalInforFragment
@@ -28,6 +29,7 @@ import javax.inject.Inject
  * Menuprofile Screen.
  */
 class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
+  private val PAGE_LIMIT = 1
 
   @Inject
   internal lateinit var mPresenter: MenuProfileContract.Presenter
@@ -42,6 +44,7 @@ class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
   private var mIsLoadDataFirstTime: Boolean = true
   val mUser: ObservableField<User> = ObservableField()
   val mIsVisibleLayoutNotLoggedIn: ObservableField<Boolean> = ObservableField()
+  val mPageLimit: ObservableField<Int> = ObservableField(PAGE_LIMIT)
 
   override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
@@ -78,9 +81,16 @@ class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
     if (resultCode == Activity.RESULT_OK && requestCode == Constant.RequestCode.TAB_PROFILE_REQUEST) {
       mIsVisibleLayoutNotLoggedIn.set(false)
       mUser.set(mUserRepository.getUserLocal())
-      val fragment = menuProfileAdapter.getFragment(
-          0)?.childFragmentManager?.fragments?.get(0) as PersonalInforFragment
-      fragment.setUser(mUserRepository.getUserLocal())
+      val fragmentPersonalInformation = menuProfileAdapter.getFragment(
+          0)?.childFragmentManager?.fragments?.get(0)
+      val fragmentCategoryFavorite = menuProfileAdapter.getFragment(
+          1)?.childFragmentManager?.fragments?.get(0)
+      if (fragmentPersonalInformation is PersonalInforFragment) {
+        fragmentPersonalInformation.setUser(mUserRepository.updateUser())
+      }
+      if (fragmentCategoryFavorite is CategoryFavoriteFragment) {
+        fragmentCategoryFavorite.setUser(mUserRepository.updateUser())
+      }
     }
   }
 
@@ -140,5 +150,4 @@ class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
   override fun getUserVisibleHint(): Boolean {
     return super.getUserVisibleHint()
   }
-
 }
