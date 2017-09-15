@@ -5,7 +5,6 @@ import com.framgia.fbook.data.source.BookRepository
 import com.framgia.fbook.data.source.BookRepositoryImpl
 import com.framgia.fbook.data.source.remote.BookRemoteDataSource
 import com.framgia.fbook.screen.listbookseemore.adapter.ListBookAdapter
-import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.dagger.FragmentScope
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
 import com.fstyle.structure_android.widget.dialog.DialogManager
@@ -25,10 +24,8 @@ class ListBookModule(private val mFragment: Fragment) {
   fun providePresenter(bookRepository: BookRepository,
       schedulerProvider: BaseSchedulerProvider): ListBookContract.Presenter {
     val presenter = ListBookPresenter(bookRepository)
-    val typeBook = mFragment.arguments.getInt(Constant.LIST_BOOK_EXTRA)
     presenter.setViewModel(mFragment as ListBookContract.ViewModel)
     presenter.setSchedulerProvider(schedulerProvider)
-    presenter.getListBook(typeBook)
     return presenter
   }
 

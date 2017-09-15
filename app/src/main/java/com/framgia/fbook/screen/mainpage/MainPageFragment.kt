@@ -94,15 +94,15 @@ open class MainPageFragment : BaseFragment(), MainPageContract.ViewModel, onItem
       TypeBook.RATING_BOOK -> mMainPageAdapterRatingBook.updateData(listBook)
       TypeBook.VIEW_BOOK -> mMainPageAdapterViewBook.updateData(listBook)
       TypeBook.WAITING_BOOK -> mMainPageAdapterWaitingBook.updateData(listBook)
-    }
     //when to final adapter
-    if (typeBook == TypeBook.READ_BOOK) {
-      mMainPageAdapterReadBook.updateData(listBook)
-      mMainPageAdapterLateBook.notifyDataSetChanged()
-      mMainPageAdapterViewBook.notifyDataSetChanged()
-      mMainPageAdapterRatingBook.notifyDataSetChanged()
-      mMainPageAdapterWaitingBook.notifyDataSetChanged()
-      mMainPageAdapterReadBook.notifyDataSetChanged()
+      TypeBook.READ_BOOK -> {
+        mMainPageAdapterReadBook.updateData(listBook)
+        mMainPageAdapterLateBook.notifyDataSetChanged()
+        mMainPageAdapterViewBook.notifyDataSetChanged()
+        mMainPageAdapterRatingBook.notifyDataSetChanged()
+        mMainPageAdapterWaitingBook.notifyDataSetChanged()
+        mMainPageAdapterReadBook.notifyDataSetChanged()
+      }
     }
   }
 
@@ -114,31 +114,31 @@ open class MainPageFragment : BaseFragment(), MainPageContract.ViewModel, onItem
 
   fun onClickMoreLateBook() {
     mNavigator.goNextChildFragment(R.id.contentMainPage,
-        ListBookFragment.newInstance(TypeBook.LATE_BOOK), true,
+        ListBookFragment.newInstance(Constant.LATE), true,
         NavigateAnim.NONE, ListBookFragment.TAG)
   }
 
   fun onClickMoreViewBook() {
     mNavigator.goNextChildFragment(R.id.contentMainPage,
-        ListBookFragment.newInstance(TypeBook.VIEW_BOOK), true,
+        ListBookFragment.newInstance(Constant.VIEW), true,
         NavigateAnim.NONE, ListBookFragment.TAG)
   }
 
   fun onClickMoreRatingBook() {
     mNavigator.goNextChildFragment(R.id.contentMainPage,
-        ListBookFragment.newInstance(TypeBook.RATING_BOOK), true,
+        ListBookFragment.newInstance(Constant.RATING), true,
         NavigateAnim.NONE, ListBookFragment.TAG)
   }
 
   fun onClickMoreWaitingBook() {
     mNavigator.goNextChildFragment(R.id.contentMainPage,
-        ListBookFragment.newInstance(TypeBook.WAITING_BOOK), true,
+        ListBookFragment.newInstance(Constant.WAITING), true,
         NavigateAnim.NONE, ListBookFragment.TAG)
   }
 
   fun onClickMoreReadBook() {
     mNavigator.goNextChildFragment(R.id.contentMainPage,
-        ListBookFragment.newInstance(TypeBook.READ_BOOK), true,
+        ListBookFragment.newInstance(Constant.READ), true,
         NavigateAnim.NONE, ListBookFragment.TAG)
   }
 
