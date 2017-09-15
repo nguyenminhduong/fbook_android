@@ -202,6 +202,7 @@
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tab_layout"
+                        app:offscreenPageLimit="@{viewModel.mPageLimit}"
                         bind:viewPageAdapter="@{viewModel.menuProfileAdapter}"
                         />
                 </android.support.v4.widget.NestedScrollView>

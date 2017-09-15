@@ -3,13 +3,12 @@ package com.framgia.fbook.screen.categoryfavorite
 import android.databinding.DataBindingUtil
 import android.databinding.ObservableField
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.framgia.fbook.R
-import com.framgia.fbook.data.model.Category
-import com.framgia.fbook.data.source.remote.api.error.BaseException
+import com.framgia.fbook.data.model.User
+import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.databinding.FragmentCategoryFavoriteBinding
 import com.framgia.fbook.screen.BaseFragment
 import com.framgia.fbook.screen.main.MainActivity
@@ -24,7 +23,9 @@ class CategoryFavoriteFragment : BaseFragment(), CategoryFavoriteContract.ViewMo
   internal lateinit var mPresenter: CategoryFavoriteContract.Presenter
   @Inject
   internal lateinit var mAdapter: CategoryAdapter
-  val mIsVisiableProgressBarListCategory: ObservableField<Boolean> = ObservableField(false)
+  @Inject
+  internal lateinit var mUserRepository: UserRepository
+  val mUser: ObservableField<User>? = ObservableField()
 
   override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
@@ -39,7 +40,7 @@ class CategoryFavoriteFragment : BaseFragment(), CategoryFavoriteContract.ViewMo
         R.layout.fragment_category_favorite, container,
         false)
     binding.viewModel = this
-    mPresenter.getCategory()
+    fillData()
     return binding.root
   }
 
@@ -53,20 +54,14 @@ class CategoryFavoriteFragment : BaseFragment(), CategoryFavoriteContract.ViewMo
     super.onStop()
   }
 
-  override fun onGetCategorySuccess(listCategory: List<Category>?) {
-    mAdapter.updateData(listCategory)
+  private fun fillData() {
+    mUser?.let { mUserRepository.getUserLocal() }
+    mAdapter.updateData(mUser?.get()?.categories)
   }
 
-  override fun onShowProgressBar() {
-    mIsVisiableProgressBarListCategory.set(true)
-  }
-
-  override fun onDismisProgressBar() {
-    mIsVisiableProgressBarListCategory.set(false)
-  }
-
-  override fun onError(exception: BaseException) {
-    Log.e(TAG, exception.getMessageError())
+  fun setUser(user: User?) {
+    mUser?.set(user)
+    fillData()
   }
 
   companion object {

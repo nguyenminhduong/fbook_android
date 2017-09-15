@@ -21,6 +21,8 @@ interface UserDataSource {
 
     fun clearData()
 
+    fun updateUser(): User?
+
   }
 
   /**

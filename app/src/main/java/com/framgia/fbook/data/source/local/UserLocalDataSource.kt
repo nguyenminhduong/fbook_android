@@ -39,4 +39,9 @@ constructor(context: Context,
   override fun clearData() {
     mSharedPrefsApi.clear()
   }
+
+  override fun updateUser(): User? {
+    val data = mSharedPrefsApi[SharedPrefsKey.KEY_USER, String::class.java]
+    return Gson().fromJson(data, User::class.java)
+  }
 }
