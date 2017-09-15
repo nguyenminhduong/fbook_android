@@ -45,6 +45,10 @@
             android:name=".screen.bookdetail.BookDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".screen.addCategoryFavorite.AddCategoryFavoriteActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>

@@ -38,6 +38,8 @@
     <string name="you_must_be_login_into_perform_this_function">Bạn phải đăng nhập để thực hiện chức năng này. Vui lòng hãy đăng nhập !</string>
     <string name="inform">Thông báo</string>
     <string name="are_u_want_to_sign_out">Bạn có chắc chắn muốn đăng xuất không?</string>
+    <string name="update">Cập nhật</string>
+    <string name="edit_category_favorite">Chỉnh sửa thể loại yêu thích</string>
 
     <!-- Dialog -->
     <string name="agree">Đồng ý</string>
@@ -56,6 +58,4 @@
     <string name="returned">Đã trả lại</string>
     <string name="shared_by">Chia sẻ bởi</string>
     <string name="publish_date_two_dots">Ngày xuất bản</string>
-
-
 </resources>

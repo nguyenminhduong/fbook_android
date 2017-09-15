@@ -6,6 +6,7 @@ import com.framgia.fbook.data.source.UserRepositoryImpl
 import com.framgia.fbook.data.source.local.UserLocalDataSource
 import com.framgia.fbook.data.source.remote.UserRemoteDataSource
 import com.framgia.fbook.utils.dagger.FragmentScope
+import com.framgia.fbook.utils.navigator.Navigator
 import dagger.Module
 import dagger.Provides
 
@@ -26,6 +27,12 @@ class CategoryFavoriteModule(private val fragment: Fragment) {
   @Provides
   fun provideCategoryAdapter(): CategoryAdapter {
     return CategoryAdapter(fragment.context)
+  }
+
+  @FragmentScope
+  @Provides
+  fun provideNavigator(): Navigator {
+    return Navigator(fragment)
   }
 
   @FragmentScope

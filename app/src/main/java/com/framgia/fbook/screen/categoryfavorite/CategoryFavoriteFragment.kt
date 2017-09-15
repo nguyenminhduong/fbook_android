@@ -11,7 +11,9 @@ import com.framgia.fbook.data.model.User
 import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.databinding.FragmentCategoryFavoriteBinding
 import com.framgia.fbook.screen.BaseFragment
+import com.framgia.fbook.screen.addCategoryFavorite.AddCategoryFavoriteActivity
 import com.framgia.fbook.screen.main.MainActivity
+import com.framgia.fbook.utils.navigator.Navigator
 import javax.inject.Inject
 
 /**
@@ -26,6 +28,8 @@ class CategoryFavoriteFragment : BaseFragment(), CategoryFavoriteContract.ViewMo
   @Inject
   internal lateinit var mUserRepository: UserRepository
   val mUser: ObservableField<User>? = ObservableField()
+  @Inject
+  internal lateinit var mNavigator: Navigator
 
   override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
@@ -55,13 +59,19 @@ class CategoryFavoriteFragment : BaseFragment(), CategoryFavoriteContract.ViewMo
   }
 
   private fun fillData() {
-    mUser?.let { mUserRepository.getUserLocal() }
-    mAdapter.updateData(mUser?.get()?.categories)
+    mUser.let {
+      it?.set(mUserRepository.getUserLocal())
+      mAdapter.updateData(it?.get()?.categories)
+    }
   }
 
   fun setUser(user: User?) {
     mUser?.set(user)
     fillData()
+  }
+
+  fun onClickEditCategoryFavorite() {
+    mNavigator.startActivity(AddCategoryFavoriteActivity::class.java)
   }
 
   companion object {

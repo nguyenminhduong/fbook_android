@@ -48,6 +48,8 @@
     <string name="view_count">Count view:</string>
     <string name="publish_date_two_dots">Publish date:</string>
     <string name="inform">Inform</string>
+    <string name="edit_category_favorite">Edit Category Favorite</string>
+    <string name="update">Update</string>
 
     <!-- Dialog -->
     <string name="agree">Agree</string>
