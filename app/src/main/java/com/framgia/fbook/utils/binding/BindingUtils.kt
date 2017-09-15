@@ -147,4 +147,10 @@ object BindingUtils {
     }
     text.setText(Html.fromHtml(description))
   }
+
+  @JvmStatic
+  @BindingAdapter("setSize")
+  fun setSize(textView: TextView, size: Int?) {
+    textView.setText(size.toString())
+  }
 }

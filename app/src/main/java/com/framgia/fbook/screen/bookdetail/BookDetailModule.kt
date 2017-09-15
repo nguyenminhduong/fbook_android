@@ -57,4 +57,10 @@ class BookDetailModule(private val mActivity: Activity) {
   fun provideNavigator(): Navigator {
     return Navigator(mActivity)
   }
+
+  @ActivityScope
+  @Provides
+  fun provideOwnerAdapter(): OwnerAdapter {
+    return OwnerAdapter(mActivity)
+  }
 }

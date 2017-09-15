@@ -17,6 +17,7 @@ interface BookRepository : BookDataSource.BookRemoteDataSource
 
 class BookRepositoryImpl @Inject constructor(
     private val bookRemoteDataSource: BookRemoteDataSource) : BookRepository {
+
   override fun getMyBook(userId: Int?): Single<BaseResponse<BaseBookRespone<List<Book>>>> {
     return bookRemoteDataSource.getMyBook(userId)
   }
@@ -34,5 +35,9 @@ class BookRepositoryImpl @Inject constructor(
   override fun getSectionListBook(type: String?,
       page: Int?): Single<BaseResponse<BaseBookRespone<List<Book>>>> {
     return bookRemoteDataSource.getSectionListBook(type, page)
+  }
+
+  override fun getBookDetail(bookId: Int?): Single<BaseResponse<Book>> {
+    return bookRemoteDataSource.getBookDetail(bookId)
   }
 }
