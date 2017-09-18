@@ -26,5 +26,7 @@ interface BookDataSource {
 
     fun getSectionListBook(type: String?,
         page: Int?): Single<BaseResponse<BaseBookRespone<List<Book>>>>
+
+    fun getBookDetail(bookId: Int?): Single<BaseResponse<Book>>
   }
 }

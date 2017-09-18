@@ -17,6 +17,10 @@ interface BookDetailContract {
     fun onError(e: BaseException)
 
     fun onGetBookDetailSuccess(book: Book?)
+
+    fun onShowProgressDialog()
+
+    fun onDismissProgressDialog()
   }
 
   /**

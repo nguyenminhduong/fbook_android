@@ -129,7 +129,7 @@
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintVertical_bias="0.0"
-                            bind:imageUrl="@{viewModel.mBook.Image.mobileImage.smallPath}"
+                            bind:imageUrl="@{viewModel.mCoverBook}"
                             tools:ignore="ContentDescription"
                             />
                         <android.support.constraint.ConstraintLayout
@@ -223,6 +223,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dp_8"
                                 android:layout_marginStart="@dimen/dp_8"
+                                android:text="@{viewModel.mBook.publishDate}"
                                 app:layout_constraintLeft_toRightOf="@+id/text_tile_publish_date"
                                 app:layout_constraintRight_toRightOf="parent"
                                 app:layout_constraintTop_toTopOf="@+id/text_tile_publish_date"
@@ -348,6 +349,7 @@
                                 android:gravity="center"
                                 android:textColor="@color/color_white"
                                 android:textSize="@dimen/sp_13"
+                                bind:setSize="@{viewModel.mNumberOfReViewDetail}"
                                 />
                             <TextView
                                 android:layout_width="wrap_content"
@@ -370,6 +372,7 @@
                                 android:gravity="center"
                                 android:textColor="@color/color_white"
                                 android:textSize="@dimen/sp_13"
+                                bind:setSize="@{viewModel.mNumberOfWaiting}"
                                 />
                             <TextView
                                 android:layout_width="wrap_content"
@@ -392,6 +395,7 @@
                                 android:gravity="center"
                                 android:textColor="@color/color_white"
                                 android:textSize="@dimen/sp_13"
+                                bind:setSize="@{viewModel.mNumberOfReading}"
                                 />
                             <TextView
                                 android:layout_width="wrap_content"
@@ -414,6 +418,7 @@
                                 android:gravity="center"
                                 android:textColor="@color/color_white"
                                 android:textSize="@dimen/sp_13"
+                                bind:setSize="@{viewModel.mNumberOfReturning}"
                                 />
                             <TextView
                                 android:layout_width="wrap_content"
@@ -436,6 +441,7 @@
                                 android:gravity="center"
                                 android:textColor="@color/color_white"
                                 android:textSize="@dimen/sp_13"
+                                bind:setSize="@{viewModel.mNumberOfReturned}"
                                 />
                             <TextView
                                 android:layout_width="wrap_content"
@@ -510,6 +516,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         app:layoutManager="LinearLayoutManager"
+                        bind:recyclerAdapter="@{viewModel.mOwnerAdapter}"
                         />
                 </LinearLayout>
             </LinearLayout>

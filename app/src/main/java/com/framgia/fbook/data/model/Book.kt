@@ -44,6 +44,42 @@ class Book() : BaseModel(), Parcelable {
   @Expose
   @SerializedName("owners")
   var owners: List<Owner>? = arrayListOf()
+  @Expose
+  @SerializedName("media")
+  var images: List<Image>? = arrayListOf()
+  @Expose
+  @SerializedName("users_waiting")
+  var usersWaitings: List<User>? = arrayListOf()
+  @Expose
+  @SerializedName("users_reading")
+  var usersReadings: List<User>? = arrayListOf()
+  @Expose
+  @SerializedName("users_returning")
+  var usersReturnings: List<User>? = arrayListOf()
+  @Expose
+  @SerializedName("users_returned")
+  var usersReturneds: List<User>? = arrayListOf()
+  @Expose
+  @SerializedName("reviews_detail")
+  var reviewDetails: List<ReviewDetail>? = arrayListOf()
+
+  inner class ReviewDetail {
+    @Expose
+    @SerializedName("id")
+    var id: Int? = null
+    @Expose
+    @SerializedName("content")
+    var content: String? = null
+    @Expose
+    @SerializedName("star")
+    var star: Int? = null
+    @Expose
+    @SerializedName("created_at")
+    var createdAt: String? = null
+    @Expose
+    @SerializedName("user")
+    var user: User? = null
+  }
 
   constructor(parcel: Parcel) : this() {
     id = parcel.readValue(Int::class.java.classLoader) as? Int
@@ -82,6 +118,4 @@ class Book() : BaseModel(), Parcelable {
       return arrayOfNulls(size)
     }
   }
-
-
 }

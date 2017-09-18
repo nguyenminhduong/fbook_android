@@ -45,4 +45,9 @@ class BookRemoteDataSource @Inject constructor(nameApi: FBookApi) : BaseRemoteDa
     return fbookApi.getSectionListBook(type, page)
   }
 
+  override fun getBookDetail(bookId: Int?): Single<BaseResponse<Book>> {
+    return fbookApi.getBookDetail(bookId)
+  }
+
+
 }

@@ -43,4 +43,7 @@ interface FBookApi {
 
   @GET("/api/v0/categories")
   fun getCategory(): Single<BaseResponse<List<Category>>>
+
+  @GET("api/v0/books/{book_id}")
+  fun getBookDetail(@Path("book_id") bookId: Int?): Single<BaseResponse<Book>>
 }
