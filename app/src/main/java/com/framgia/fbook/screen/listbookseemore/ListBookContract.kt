@@ -26,6 +26,6 @@ interface ListBookContract {
    * Presenter.
    */
   interface Presenter : BasePresenter<ViewModel> {
-    fun getListBook(typeBook: Int?)
+    fun getListBook(typeBook: String?, page: Int?)
   }
 }

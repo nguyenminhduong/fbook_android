@@ -7,7 +7,6 @@ import android.support.design.widget.TextInputLayout
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.Editable
 import android.text.Html
@@ -127,12 +126,6 @@ object BindingUtils {
   @BindingAdapter("currentFragment")
   fun setCurrentViewPager(viewPager: ViewPager, currentPage: Int) {
     viewPager.currentItem = currentPage
-  }
-
-  @JvmStatic
-  @BindingAdapter("gridLayoutManager")
-  fun setLayoutManagerRecycler(recyclerView: RecyclerView, spanCount: Int) {
-    recyclerView.layoutManager = GridLayoutManager(recyclerView.context, spanCount)
   }
 
   @JvmStatic
