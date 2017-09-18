@@ -11,7 +11,8 @@ import io.reactivex.disposables.Disposable
  * Listens to user actions from the UI ([MainPageFragment]), retrieves the data and updates
  * the UI as required.
  */
-class MainPagePresenter(private val mBookRepository: BookRepository) : MainPageContract.Presenter {
+open class MainPagePresenter(
+    private val mBookRepository: BookRepository) : MainPageContract.Presenter {
 
   private lateinit var mViewModel: MainPageContract.ViewModel
   private lateinit var mSchedulerProvider: BaseSchedulerProvider
@@ -53,7 +54,9 @@ class MainPagePresenter(private val mBookRepository: BookRepository) : MainPageC
           mViewModel.onGetSectionListBookSuccess(TypeBook.READ_BOOK,
               listBookReadResponse.item?.data)
         }, { error ->
-          mViewModel.onError(error as BaseException)
+          if(error is BaseException) {
+            mViewModel.onError(error)
+          }
         })
     mCompositeDisposable.add(disposable)
   }

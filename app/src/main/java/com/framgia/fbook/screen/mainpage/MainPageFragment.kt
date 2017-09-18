@@ -26,7 +26,7 @@ import javax.inject.Named
 /**
  * MainPage Screen.
  */
-class MainPageFragment : BaseFragment(), MainPageContract.ViewModel, onItemRecyclerViewClickListener {
+open class MainPageFragment : BaseFragment(), MainPageContract.ViewModel, onItemRecyclerViewClickListener {
 
   @Inject
   internal lateinit var mPresenter: MainPageContract.Presenter
