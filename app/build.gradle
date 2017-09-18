@@ -81,6 +81,7 @@ dependencies {
   compile dependencies.glide
   compile dependencies.bottombar
   compile dependencies.imageCircle
+  compile dependencies.animationbutton
 
   compile dependencies.easyimage
   kapt dependencies.dagger2Compile
