@@ -1,5 +1,6 @@
 package com.framgia.fbook.screen.sharebook;
 
+import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.model.Category
 import com.framgia.fbook.data.model.Office
 import com.framgia.fbook.data.source.remote.api.error.BaseException
@@ -26,6 +27,8 @@ interface ShareBookContract {
 
     fun onGetCategorySuccess(listCategory: List<Category>?)
 
+    fun onAddBookSuccess(book: Book?)
+
     fun onError(baseException: BaseException)
 
     fun onShowProgressDialog()
@@ -40,5 +43,7 @@ interface ShareBookContract {
     fun validateDataInput(bookRequest: BookRequest): Boolean
 
     fun getData()
+
+    fun addBook(bookRequest: BookRequest)
   }
 }

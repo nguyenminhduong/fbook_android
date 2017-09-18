@@ -7,6 +7,7 @@ import com.framgia.fbook.data.source.remote.api.response.BaseBookRespone
 import com.framgia.fbook.data.source.remote.api.response.BaseResponse
 import com.framgia.fbook.data.source.remote.api.response.SignInResponse
 import io.reactivex.Single
+import okhttp3.RequestBody
 import retrofit2.http.*
 
 /**
@@ -46,4 +47,9 @@ interface FBookApi {
 
   @GET("api/v0/books/{book_id}")
   fun getBookDetail(@Path("book_id") bookId: Int?): Single<BaseResponse<Book>>
+
+  @Multipart
+  @POST("/api/v0/books")
+  fun addBook(@PartMap params: Map<String, @JvmSuppressWildcards RequestBody?>): Single<BaseResponse<Book>>
+
 }

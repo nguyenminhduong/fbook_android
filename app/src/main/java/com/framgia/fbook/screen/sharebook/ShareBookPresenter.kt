@@ -3,6 +3,7 @@ package com.framgia.fbook.screen.sharebook;
 import com.framgia.fbook.data.model.Category
 import com.framgia.fbook.data.model.Office
 import com.framgia.fbook.data.model.OfficesAndCategories
+import com.framgia.fbook.data.source.BookRepository
 import com.framgia.fbook.data.source.CategoryRepository
 import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException
@@ -23,6 +24,7 @@ import io.reactivex.functions.BiFunction
 class ShareBookPresenter(private val mValidator: Validator,
     private val mUserRepository: UserRepository,
     private val mCategoryRepository: CategoryRepository,
+    private val mBookRepository: BookRepository,
     private val mBaseSchedulerProvider: BaseSchedulerProvider) : ShareBookContract.Presenter {
   companion object {
     private val TAG = ShareBookPresenter::class.java.name
@@ -63,6 +65,22 @@ class ShareBookPresenter(private val mValidator: Validator,
             { officeAndCategory ->
               mViewModel?.onGetCategorySuccess(officeAndCategory.categories)
               mViewModel?.onGetOfficeSuccess(officeAndCategory.offices)
+            },
+            { error ->
+              mViewModel?.onError(error as BaseException)
+            })
+    mCompositeDisposable.add(disposable)
+  }
+
+  override fun addBook(bookRequest: BookRequest) {
+    val disposable: Disposable = mBookRepository.addBook(bookRequest)
+        .subscribeOn(mBaseSchedulerProvider.io())
+        .observeOn(mBaseSchedulerProvider.ui())
+        .doOnSubscribe { mViewModel?.onShowProgressDialog() }
+        .doAfterTerminate { mViewModel?.onDismissProgressDialog() }
+        .subscribe(
+            { response ->
+              mViewModel?.onAddBookSuccess(response.item)
             },
             { error ->
               mViewModel?.onError(error as BaseException)

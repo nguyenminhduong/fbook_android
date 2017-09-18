@@ -2,11 +2,9 @@ package com.framgia.fbook.screen.sharebook;
 
 import android.app.Activity
 import android.content.Context
-import com.framgia.fbook.data.source.CategoryRepository
-import com.framgia.fbook.data.source.CategoryRepositoryImpl
-import com.framgia.fbook.data.source.UserRepository
-import com.framgia.fbook.data.source.UserRepositoryImpl
+import com.framgia.fbook.data.source.*
 import com.framgia.fbook.data.source.local.UserLocalDataSource
+import com.framgia.fbook.data.source.remote.BookRemoteDataSource
 import com.framgia.fbook.data.source.remote.CategoryRemoteDataSource
 import com.framgia.fbook.data.source.remote.UserRemoteDataSource
 import com.framgia.fbook.screen.login.LoginActivity
@@ -30,8 +28,10 @@ class ShareBookModule(private val activity: Activity) {
   @Provides
   fun providePresenter(validator: Validator,
       userRepository: UserRepository, categoryRepository: CategoryRepository,
+      bookRepository: BookRepository,
       baseSchedulerProvider: BaseSchedulerProvider): ShareBookContract.Presenter {
     val presenter = ShareBookPresenter(validator, userRepository, categoryRepository,
+        bookRepository,
         baseSchedulerProvider)
     presenter.setViewModel(activity as ShareBookContract.ViewModel)
     return presenter
@@ -73,5 +73,11 @@ class ShareBookModule(private val activity: Activity) {
   fun provideCategoryRepository(
       categoryRemoteDataSource: CategoryRemoteDataSource): CategoryRepository {
     return CategoryRepositoryImpl(categoryRemoteDataSource)
+  }
+
+  @ActivityScope
+  @Provides
+  fun provideBookRepository(bookRemoteDataSource: BookRemoteDataSource): BookRepository {
+    return BookRepositoryImpl(bookRemoteDataSource)
   }
 }
