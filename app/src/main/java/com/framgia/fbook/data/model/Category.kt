@@ -19,6 +19,7 @@ class Category() : BaseModel(), Parcelable {
   @SerializedName("description")
   @Expose
   var description: String? = null
+  var favorite: Boolean? = false
 
   constructor(parcel: Parcel) : this() {
     id = parcel.readValue(Int::class.java.classLoader) as? Int
