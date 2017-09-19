@@ -1,7 +1,6 @@
 package com.framgia.fbook.screen.addCategoryFavorite;
 
 import android.databinding.DataBindingUtil
-import android.databinding.ObservableField
 import android.os.Bundle
 import android.util.Log
 import com.framgia.fbook.MainApplication

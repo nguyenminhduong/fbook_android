@@ -26,8 +26,9 @@ class AddCategoryFavoriteModule(private val mActivity: Activity) {
   @ActivityScope
   @Provides
   fun providePresenter(categoryRepository: CategoryRepository,
-      baseSchedulerProvider: BaseSchedulerProvider): AddCategoryFavoriteContract.Presenter {
-    val presenter = AddCategoryFavoritePresenter(categoryRepository)
+      baseSchedulerProvider: BaseSchedulerProvider,
+      userRepository: UserRepository): AddCategoryFavoriteContract.Presenter {
+    val presenter = AddCategoryFavoritePresenter(categoryRepository, userRepository)
     presenter.setSchedulerProvider(baseSchedulerProvider)
     presenter.setViewModel(mActivity as AddCategoryFavoriteContract.ViewModel)
     return presenter

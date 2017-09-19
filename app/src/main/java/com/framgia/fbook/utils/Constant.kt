@@ -16,6 +16,7 @@ object Constant {
   val WAITING = "waiting"
   val READ = "read"
   val PAGE = 1
+  val EXTRA_COMMA = ","
 
   val BOOK_DETAIL_EXTRA = "book_detail"
 
