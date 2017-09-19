@@ -2,6 +2,7 @@ package com.framgia.fbook.data.source
 
 import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.model.GoogleBook
+import com.framgia.fbook.data.model.ReadingBook
 import com.framgia.fbook.data.source.remote.BookRemoteDataSource
 import com.framgia.fbook.data.source.remote.api.request.BookRequest
 import com.framgia.fbook.data.source.remote.api.response.BaseBookRespone
@@ -44,5 +45,17 @@ class BookRepositoryImpl @Inject constructor(
 
   override fun addBook(bookRequest: BookRequest): Single<BaseResponse<Book>> {
     return bookRemoteDataSource.addBook(bookRequest)
+  }
+
+  override fun addUserHaveThisBook(bookId: Int?): Single<Any> {
+    return bookRemoteDataSource.addUserHaveThisBook(bookId)
+  }
+
+  override fun removeOwnerThisBook(bookId: Int?): Single<Any> {
+    return bookRemoteDataSource.removeOwnerThisBook(bookId)
+  }
+
+  override fun wantToReadingBook(readingBook: ReadingBook?): Single<Any> {
+    return bookRemoteDataSource.wantToReadingBook(readingBook)
   }
 }

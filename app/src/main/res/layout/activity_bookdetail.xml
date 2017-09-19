@@ -12,6 +12,7 @@
             name="viewModel"
             type="com.framgia.fbook.screen.bookdetail.BookDetailActivity"
             />
+        <import type="android.view.View"/>
 
     </data>
 
@@ -262,14 +263,17 @@
                                     android:text="@string/cancel_waiting_this_book"
                                     android:textColor="@color/color_yellow"
                                     android:textSize="@dimen/sp_12"
+                                    android:visibility="@{viewModel.mIsUserWaitingThisBook ? View.VISIBLE : View.GONE}"
                                     />
                                 <Button
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:background="@drawable/border_button_stroke_blue"
+                                    android:onClick="@{viewModel::onClickWantToReadingBook}"
                                     android:text="@string/want_to_read"
                                     android:textColor="@color/color_blue"
                                     android:textSize="@dimen/sp_12"
+                                    android:visibility="@{viewModel.mIsUserWaitingThisBook ? View.GONE : View.VISIBLE}"
                                     />
                             </FrameLayout>
                             <FrameLayout
@@ -283,17 +287,21 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="@dimen/dp_40"
                                     android:background="@drawable/border_button_background_red"
+                                    android:onClick="@{viewModel::onClickRemoveOwnerThisBook}"
                                     android:text="@string/remove_owner_this_book"
                                     android:textColor="@color/color_white"
                                     android:textSize="@dimen/sp_12"
+                                    android:visibility="@{viewModel.mIsUserHaveThisBook ? View.VISIBLE : View.GONE}"
                                     />
                                 <Button
                                     android:layout_width="match_parent"
                                     android:layout_height="@dimen/dp_40"
                                     android:background="@drawable/border_button_backround_blue"
+                                    android:onClick="@{viewModel::onClickUserHaveThisBook}"
                                     android:text="@string/i_have_this_book"
                                     android:textColor="@color/color_white"
                                     android:textSize="@dimen/sp_12"
+                                    android:visibility="@{viewModel.mIsUserHaveThisBook ? View.GONE : View.VISIBLE}"
                                     />
                             </FrameLayout>
                         </LinearLayout>

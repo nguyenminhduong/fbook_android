@@ -2,8 +2,10 @@ package com.framgia.fbook.data.source.remote
 
 import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.model.GoogleBook
+import com.framgia.fbook.data.model.ReadingBook
 import com.framgia.fbook.data.source.BookDataSource
 import com.framgia.fbook.data.source.remote.api.request.BookRequest
+import com.framgia.fbook.data.source.remote.api.request.ReadingBookRequest
 import com.framgia.fbook.data.source.remote.api.request.SearchBookRequest
 import com.framgia.fbook.data.source.remote.api.response.BaseBookRespone
 import com.framgia.fbook.data.source.remote.api.response.BaseResponse
@@ -21,6 +23,7 @@ import javax.inject.Inject
  */
 class BookRemoteDataSource @Inject constructor(nameApi: FBookApi) : BaseRemoteDataSource(
     nameApi), BookDataSource.BookRemoteDataSource {
+
   override fun getMyBook(userId: Int?): Single<BaseResponse<BaseBookRespone<List<Book>>>> {
     return fbookApi.getMyBook(userId)
   }
@@ -80,5 +83,19 @@ class BookRemoteDataSource @Inject constructor(nameApi: FBookApi) : BaseRemoteDa
       params.put(PARAM_CATEGORY_ID, RetrofitUtils.toRequestBody(it.toString()))
     }
     return fbookApi.addBook(params)
+  }
+
+  override fun addUserHaveThisBook(bookId: Int?): Single<Any> {
+    return fbookApi.addUserHaveThisBook(bookId)
+  }
+
+  override fun removeOwnerThisBook(bookId: Int?): Single<Any> {
+    return fbookApi.removeOwnerThisBook(bookId)
+  }
+
+  override fun wantToReadingBook(readingBook: ReadingBook?): Single<Any> {
+    val readingBookRequest = ReadingBookRequest()
+    readingBookRequest.readingBook = readingBook
+    return fbookApi.wantToReadingBook(readingBookRequest)
   }
 }

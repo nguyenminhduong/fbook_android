@@ -1,6 +1,7 @@
 package com.framgia.fbook.data.source.remote.api.service
 
 import com.framgia.fbook.data.model.*
+import com.framgia.fbook.data.source.remote.api.request.ReadingBookRequest
 import com.framgia.fbook.data.source.remote.api.request.SearchBookRequest
 import com.framgia.fbook.data.source.remote.api.request.SignInRequest
 import com.framgia.fbook.data.source.remote.api.response.BaseBookRespone
@@ -52,4 +53,12 @@ interface FBookApi {
   @POST("/api/v0/books")
   fun addBook(@PartMap params: Map<String, @JvmSuppressWildcards RequestBody?>): Single<BaseResponse<Book>>
 
+  @GET("api/v0/books/add-owner/{book_id}")
+  fun addUserHaveThisBook(@Path("book_id") bookId: Int?): Single<Any>
+
+  @GET("api/v0/books/remove-owner/{book_id}")
+  fun removeOwnerThisBook(@Path("book_id") bookId: Int?): Single<Any>
+
+  @POST("api/v0/books/booking")
+  fun wantToReadingBook(@Body readingBookRequest: ReadingBookRequest?): Single<Any>
 }

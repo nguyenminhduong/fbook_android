@@ -40,6 +40,9 @@
     <string name="are_u_want_to_sign_out">Bạn có chắc chắn muốn đăng xuất không?</string>
     <string name="update">Cập nhật</string>
     <string name="edit_category_favorite">Chỉnh sửa thể loại yêu thích</string>
+    <string name="are_you_sure_remove_owner_this_book">Bạn có chắc chắn xóa chủ sở hữu cuốn sách này?</string>
+    <string name="are_you_sure_add_owner_this_book">Bạn có chắc chắn thêm chủ sở hữu cuốn sách này?</string>
+    <string name="do_you_want_to_read_this_book">Bạn có muốn đọc cuốn sách này?</string>
 
     <!-- Dialog -->
     <string name="agree">Đồng ý</string>
