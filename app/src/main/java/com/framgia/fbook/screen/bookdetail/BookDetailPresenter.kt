@@ -1,5 +1,6 @@
 package com.framgia.fbook.screen.bookdetail;
 
+import com.framgia.fbook.data.model.ReadingBook
 import com.framgia.fbook.data.source.BookRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
@@ -42,6 +43,55 @@ class BookDetailPresenter(
             })
     mCompositeDisposable.add(disposable)
   }
+
+  override fun addUserHaveThisBook(bookId: Int?) {
+    val disposable: Disposable = mBookRepository.addUserHaveThisBook(bookId)
+        .subscribeOn(mBaseSchedulerProvider.io())
+        .observeOn(mBaseSchedulerProvider.ui())
+        .doOnSubscribe { mViewModel?.onShowProgressDialog() }
+        .doAfterTerminate { mViewModel?.onDismissProgressDialog() }
+        .subscribe(
+            { book ->
+              mViewModel?.onAddUserHaveThisBookSuccess()
+            },
+            { error ->
+              mViewModel?.onError(error as BaseException)
+            })
+    mCompositeDisposable.add(disposable)
+  }
+
+  override fun removeOwnerThisBook(bookId: Int?) {
+    val disposable: Disposable = mBookRepository.removeOwnerThisBook(bookId)
+        .subscribeOn(mBaseSchedulerProvider.io())
+        .observeOn(mBaseSchedulerProvider.ui())
+        .doOnSubscribe { mViewModel?.onShowProgressDialog() }
+        .doAfterTerminate { mViewModel?.onDismissProgressDialog() }
+        .subscribe(
+            { book ->
+              mViewModel?.onRemoveOwnerThisBookSuccess()
+            },
+            { error ->
+              mViewModel?.onError(error as BaseException)
+            })
+    mCompositeDisposable.add(disposable)
+  }
+
+  override fun wantToReadingBook(readingBook: ReadingBook?) {
+    val disposable: Disposable = mBookRepository.wantToReadingBook(readingBook)
+        .subscribeOn(mBaseSchedulerProvider.io())
+        .observeOn(mBaseSchedulerProvider.ui())
+        .doOnSubscribe { mViewModel?.onShowProgressDialog() }
+        .doAfterTerminate { mViewModel?.onDismissProgressDialog() }
+        .subscribe(
+            { book ->
+              mViewModel?.onWantToReadingBookSuccess()
+            },
+            { error ->
+              mViewModel?.onError(error as BaseException)
+            })
+    mCompositeDisposable.add(disposable)
+  }
+
 
   fun setSchedulerProvider(baseSchedulerProvider: BaseSchedulerProvider) {
     mBaseSchedulerProvider = baseSchedulerProvider
