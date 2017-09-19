@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.view.View
 import com.framgia.fbook.MainApplication
 import com.framgia.fbook.R
+import com.framgia.fbook.data.model.ActionBookDetail
 import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.model.Owner
-import com.framgia.fbook.data.model.ReadingBook
 import com.framgia.fbook.data.model.User
 import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException
@@ -25,7 +25,7 @@ import javax.inject.Inject
 /**
  * BookDetail Screen.
  */
-class BookDetailActivity : BaseActivity(), BookDetailContract.ViewModel, ItemOwnerClickListener {
+open class BookDetailActivity : BaseActivity(), BookDetailContract.ViewModel, ItemOwnerClickListener {
 
   companion object {
     val TAG: String = LoginActivity::class.java.name
@@ -54,8 +54,8 @@ class BookDetailActivity : BaseActivity(), BookDetailContract.ViewModel, ItemOwn
   private var mUserId: Int? = null
   private var mBookId: Int? = null
   private var mOwners = arrayListOf<Owner>()
-  private var mReadingBook = ReadingBook()
-  private var mStatusWaitingBook: Int = 1
+  private var mUserWaitings = arrayListOf<User>()
+  private var mActionBookDetail = ActionBookDetail()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -98,10 +98,14 @@ class BookDetailActivity : BaseActivity(), BookDetailContract.ViewModel, ItemOwn
       }
 
       book.owners?.let {
+        mOwners.clear()
+        mOwners.addAll(it)
         checkUserIsHaveThisBook(it)
       }
 
       book.usersWaitings?.let {
+        mUserWaitings.clear()
+        mUserWaitings.addAll(it)
         checkUserIsWaitingThisBook(it)
       }
     }
@@ -119,16 +123,19 @@ class BookDetailActivity : BaseActivity(), BookDetailContract.ViewModel, ItemOwn
     mDialogManager.showIndeterminateProgressDialog()
   }
 
-  override fun onWantToReadingBookSuccess() {
+  override fun onReadOrCancelBookSuccess() {
     mIsUserWaitingThisBook.set(true)
+    presenter.getBookDetail(mBookId)
   }
 
   override fun onRemoveOwnerThisBookSuccess() {
     mIsUserHaveThisBook.set(false)
+    presenter.getBookDetail(mBookId)
   }
 
   override fun onAddUserHaveThisBookSuccess() {
     mIsUserHaveThisBook.set(true)
+    presenter.getBookDetail(mBookId)
   }
 
   override fun onItemOwnerClick(owner: Owner?) {
@@ -138,8 +145,7 @@ class BookDetailActivity : BaseActivity(), BookDetailContract.ViewModel, ItemOwn
   private fun initData() {
     val book: Book = intent.getParcelableExtra(Constant.BOOK_DETAIL_EXTRA)
     mBookId = book.id
-    mReadingBook.bookId = mBookId
-    mReadingBook.status = mStatusWaitingBook
+    mActionBookDetail.bookId = mBookId
     presenter.getBookDetail(mBookId)
     mOwnerAdapter.setItemUserClickListener(this)
     mUserRepository.getUserLocal()?.let {
@@ -150,7 +156,6 @@ class BookDetailActivity : BaseActivity(), BookDetailContract.ViewModel, ItemOwn
   private fun checkUserIsHaveThisBook(owners: List<Owner>) {
     var userHaveThisBook = false
     if (owners.isNotEmpty()) {
-      mOwners.addAll(owners)
       for (owner in owners.iterator()) {
         if (owner.id == mUserId) {
           userHaveThisBook = true
@@ -199,15 +204,37 @@ class BookDetailActivity : BaseActivity(), BookDetailContract.ViewModel, ItemOwn
   }
 
   fun onClickWantToReadingBook(view: View) {
-    val ownerNames = arrayListOf<String>()
-    for (owner in mOwners) {
-      owner.name?.let { ownerNames.add(it) }
-    }
+    mActionBookDetail.status = Status.WANT_TO_READ_THIS_BOOK.value
+
+    val ownerNames: MutableList<String?> = mutableListOf()
+    mOwners.mapTo(ownerNames) { it.name }
+
     mDialogManager.dialogListSingleChoice(getString(R.string.do_you_want_to_read_this_book),
         ownerNames, 0, MaterialDialog.ListCallbackSingleChoice({ _, _, position, _ ->
-      mReadingBook.ownerId = (mOwners[position] as Owner).id
-      presenter.wantToReadingBook(mReadingBook)
+      mActionBookDetail.ownerId = (mOwners[position]).id
+      presenter.readOrCancelBook(mActionBookDetail)
       true
     }))
+  }
+
+  fun onClickCancelWaitingBook(view: View) {
+    mActionBookDetail.status = Status.CANCEL_WAITING_THIS_BOOK.value
+
+    mUserWaitings.forEach { userWaiting ->
+      if (mUserId == userWaiting.id) {
+        mActionBookDetail.ownerId = userWaiting.ownerId
+      }
+    }
+
+    mDialogManager.dialogBasic(getString(R.string.inform),
+        getString(R.string.do_you_want_cancel_waiting_this_book),
+        MaterialDialog.SingleButtonCallback { materialDialog, dialogAction ->
+          presenter.readOrCancelBook(mActionBookDetail)
+        })
+  }
+
+  enum class Status(val value: Int) {
+    WANT_TO_READ_THIS_BOOK(1),
+    CANCEL_WAITING_THIS_BOOK(5)
   }
 }

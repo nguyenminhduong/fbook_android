@@ -1,7 +1,7 @@
 package com.framgia.fbook.data.source.remote.api.service
 
 import com.framgia.fbook.data.model.*
-import com.framgia.fbook.data.source.remote.api.request.ReadingBookRequest
+import com.framgia.fbook.data.source.remote.api.request.ReadingOrCancelBookRequest
 import com.framgia.fbook.data.source.remote.api.request.SearchBookRequest
 import com.framgia.fbook.data.source.remote.api.request.SignInRequest
 import com.framgia.fbook.data.source.remote.api.response.BaseBookRespone
@@ -60,5 +60,5 @@ interface FBookApi {
   fun removeOwnerThisBook(@Path("book_id") bookId: Int?): Single<Any>
 
   @POST("api/v0/books/booking")
-  fun wantToReadingBook(@Body readingBookRequest: ReadingBookRequest?): Single<Any>
+  fun readOrCancelBook(@Body readingOrCancelBookRequest: ReadingOrCancelBookRequest?): Single<Any>
 }
