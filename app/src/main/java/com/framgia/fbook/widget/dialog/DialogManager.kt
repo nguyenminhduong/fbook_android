@@ -74,7 +74,7 @@ interface DialogManager {
   fun dialogListSingleChoice(title: String, @ArrayRes arrayId: Int, selectedIndex: Int,
       callback: MaterialDialog.ListCallbackSingleChoice)
 
-  fun dialogListSingleChoice(title: String, strings: MutableList<String>, selectedIndex: Int,
+  fun dialogListSingleChoice(title: String, strings: MutableList<String?>, selectedIndex: Int,
       callback: MaterialDialog.ListCallbackSingleChoice)
 
   /**

@@ -11,12 +11,14 @@ import com.framgia.fbook.MainApplication
 import com.framgia.fbook.R
 import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.model.Category
+import com.framgia.fbook.data.model.GoogleBook
 import com.framgia.fbook.data.model.Office
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.data.source.remote.api.request.BookRequest
 import com.framgia.fbook.databinding.ActivitySharebookBinding
 import com.framgia.fbook.screen.BaseActivity
 import com.framgia.fbook.utils.common.DateTimeUtils
+import com.framgia.fbook.utils.common.StringUtils
 import com.framgia.fbook.utils.navigator.Navigator
 import com.fstyle.library.MaterialDialog
 import com.fstyle.structure_android.widget.dialog.DialogManager
@@ -39,7 +41,7 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
   internal lateinit var mDialogManager: DialogManager
   @Inject
   internal lateinit var mImageSelectedAdapter: ImageSelectedAdapter
-  val mBookRequest = BookRequest()
+  val mBookRequest: ObservableField<BookRequest> = ObservableField()
   private val mListOffice = mutableListOf<Office>()
   private val mListCategory = mutableListOf<Category>()
 
@@ -67,7 +69,8 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
     mDialogManager.dialogDatePicker(this, Calendar.getInstance())
     EasyImage.configuration(this).setAllowMultiplePickInGallery(true)
     mImageSelectedAdapter.setItemImageSelectedListener(this)
-    mBookRequest.listImage = mImageSelectedAdapter.mListImage
+    mBookRequest.set(BookRequest())
+    mBookRequest.get().listImage = mImageSelectedAdapter.mListImage
     mPresenter.getData()
   }
 
@@ -137,6 +140,29 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
     finish()
   }
 
+  override fun onSearchBookFromInternalSuccess(listBook: List<Book>?) {
+    val listBookString: MutableList<String?> = mutableListOf()
+    listBook?.mapTo(listBookString) { it.title }
+    mDialogManager.dialogListSingleChoice(getString(R.string.import_data_from_internal_book),
+        listBookString, 0,
+        MaterialDialog.ListCallbackSingleChoice { _, _, position, _ ->
+          updateFromInternalBook(listBook?.get(position))
+          true
+        })
+  }
+
+  override fun onSearchBookFromGoogleBookSuccess(listGoogleBook: List<GoogleBook>?) {
+    val listBookString: MutableList<String?> = mutableListOf()
+    listGoogleBook?.mapTo(listBookString) { it.volumeInfo?.title }
+    mDialogManager.dialogListSingleChoice(getString(R.string.import_data_from_google_book),
+        listBookString, 0,
+        MaterialDialog.ListCallbackSingleChoice { _, _, position, _ ->
+          updateFromGoogleBook(listGoogleBook?.get(position))
+          true
+        })
+  }
+
+
   override fun onDateSet(datePicker: DatePicker?, year: Int, month: Int, day: Int) {
     // when year = 0 clear publish date
     if (year == 0) {
@@ -149,6 +175,7 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
   }
 
   override fun onError(baseException: BaseException) {
+    mDialogManager.dialogError(baseException.getMessageError())
   }
 
   fun onClickArrowBack() {
@@ -156,10 +183,10 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
   }
 
   fun onClickCreateBook() {
-    if (!mPresenter.validateDataInput(mBookRequest)) {
+    if (!mPresenter.validateDataInput(mBookRequest.get())) {
       return
     }
-    mPresenter.addBook(mBookRequest)
+    mPresenter.addBook(mBookRequest.get())
   }
 
   fun onClickAddImage() {
@@ -168,8 +195,8 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
   }
 
   fun onPickOffice() {
-    val workSpace: MutableList<String> = mutableListOf()
-    mListOffice.mapTo(workSpace) { it.name!! }
+    val workSpace: MutableList<String?> = mutableListOf()
+    mListOffice.mapTo(workSpace) { it.name }
     mDialogManager.dialogListSingleChoice(getString(R.string.select_office), workSpace,
         currentOfficePosition,
         MaterialDialog.ListCallbackSingleChoice { _, _, position, _ ->
@@ -180,8 +207,8 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
   }
 
   fun onPickCategory() {
-    val listCategory: MutableList<String> = mutableListOf()
-    mListCategory.mapTo(listCategory) { it.name!! }
+    val listCategory: MutableList<String?> = mutableListOf()
+    mListCategory.mapTo(listCategory) { it.name }
     mDialogManager.dialogListSingleChoice(getString(R.string.select_category), listCategory,
         currentCategoryPosition,
         MaterialDialog.ListCallbackSingleChoice { _, _, position, _ ->
@@ -195,12 +222,30 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
     mDialogManager.showDatePickerDialog()
   }
 
+  fun onClickImportFromInternalBook() {
+    if (StringUtils.isBlank(mBookRequest.get().title)) {
+      Toast.makeText(applicationContext, getString(R.string.please_enter_title),
+          Toast.LENGTH_SHORT).show()
+      return
+    }
+    mPresenter.searchBookFromInternal(mBookRequest.get().title, getString(R.string.title))
+  }
+
+  fun onClickImportFromGoogleBook() {
+    if (StringUtils.isBlank(mBookRequest.get().title)) {
+      Toast.makeText(applicationContext, getString(R.string.please_enter_title),
+          Toast.LENGTH_SHORT).show()
+      return
+    }
+    mPresenter.searchBookFromGoogleBook(mBookRequest.get().title)
+  }
+
   private fun updateCurrentOffice(position: Int) {
     if (mListOffice.isEmpty()) {
       return
     }
     currentOffice.set(mListOffice[position].name)
-    mBookRequest.officeId = mListOffice[position].id
+    mBookRequest.get().officeId = mListOffice[position].id
   }
 
   private fun updateCurrentCategory(position: Int) {
@@ -208,12 +253,12 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
       return
     }
     currentCategory.set(mListCategory[position].name)
-    mBookRequest.categoryId = mListCategory[position].id
+    mBookRequest.get().categoryId = mListCategory[position].id
   }
 
   private fun updatePublishDate(date: String) {
     publishDate.set(date)
-    mBookRequest.publishDate = date
+    mBookRequest.get().publishDate = date
   }
 
   private fun updateDataImage(images: List<File>) {
@@ -224,5 +269,25 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
       listImage.add(imageSelected)
     }
     mImageSelectedAdapter.updateData(listImage)
+  }
+
+  private fun updateFromInternalBook(book: Book?) {
+    book?.let {
+      mBookRequest.get().title = book.title
+      mBookRequest.get().description = book.description
+      mBookRequest.get().author = book.author
+      book.publishDate?.let { updatePublishDate(it) }
+      mBookRequest.notifyChange()
+    }
+  }
+
+  private fun updateFromGoogleBook(book: GoogleBook?) {
+    book?.let {
+      mBookRequest.get().title = book.volumeInfo?.title
+      mBookRequest.get().description = book.volumeInfo?.description
+      book.volumeInfo?.publishedDate?.let { updatePublishDate(it) }
+      mBookRequest.get().author = book.volumeInfo?.listAuthor.toString()
+      mBookRequest.notifyChange()
+    }
   }
 }

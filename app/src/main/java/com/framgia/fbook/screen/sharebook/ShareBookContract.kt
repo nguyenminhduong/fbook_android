@@ -2,6 +2,7 @@ package com.framgia.fbook.screen.sharebook;
 
 import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.model.Category
+import com.framgia.fbook.data.model.GoogleBook
 import com.framgia.fbook.data.model.Office
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.data.source.remote.api.request.BookRequest
@@ -34,6 +35,10 @@ interface ShareBookContract {
     fun onShowProgressDialog()
 
     fun onDismissProgressDialog()
+
+    fun onSearchBookFromInternalSuccess(listBook: List<Book>?)
+
+    fun onSearchBookFromGoogleBookSuccess(listGoogleBook: List<GoogleBook>?)
   }
 
   /**
@@ -45,5 +50,9 @@ interface ShareBookContract {
     fun getData()
 
     fun addBook(bookRequest: BookRequest)
+
+    fun searchBookFromInternal(keyword: String?, field: String?)
+
+    fun searchBookFromGoogleBook(title: String?)
   }
 }

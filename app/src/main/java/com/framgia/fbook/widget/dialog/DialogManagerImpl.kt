@@ -117,7 +117,7 @@ open class DialogManagerImpl(private val mContext: Context) : DialogManager {
         .show()
   }
 
-  override fun dialogListSingleChoice(title: String, strings: MutableList<String>,
+  override fun dialogListSingleChoice(title: String, strings: MutableList<String?>,
       selectedIndex: Int,
       callback: MaterialDialog.ListCallbackSingleChoice) {
     MaterialDialog.Builder(mContext).title(title)
