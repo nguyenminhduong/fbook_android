@@ -80,6 +80,7 @@
     <string name="select_office">Select office</string>
     <string name="are_u_want_to_sign_out">Are you sure want to sign out?</string>
     <string name="select_category">Select category</string>
+    <string name="add_successful">Add successful</string>
 
     <!-- date format -->
     <string name="date_format_yyyy_MM_dd">yyyy-MM-dd</string>

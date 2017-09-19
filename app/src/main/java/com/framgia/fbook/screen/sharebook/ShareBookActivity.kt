@@ -6,8 +6,10 @@ import android.databinding.DataBindingUtil
 import android.databinding.ObservableField
 import android.os.Bundle
 import android.widget.DatePicker
+import android.widget.Toast
 import com.framgia.fbook.MainApplication
 import com.framgia.fbook.R
+import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.model.Category
 import com.framgia.fbook.data.model.Office
 import com.framgia.fbook.data.source.remote.api.error.BaseException
@@ -21,7 +23,7 @@ import com.fstyle.structure_android.widget.dialog.DialogManager
 import pl.aprilapps.easyphotopicker.DefaultCallback
 import pl.aprilapps.easyphotopicker.EasyImage
 import java.io.File
-import java.util.Calendar
+import java.util.*
 import javax.inject.Inject
 
 
@@ -130,6 +132,11 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
     }
   }
 
+  override fun onAddBookSuccess(book: Book?) {
+    Toast.makeText(applicationContext, R.string.add_successful, Toast.LENGTH_SHORT).show()
+    finish()
+  }
+
   override fun onDateSet(datePicker: DatePicker?, year: Int, month: Int, day: Int) {
     // when year = 0 clear publish date
     if (year == 0) {
@@ -152,7 +159,7 @@ class ShareBookActivity : BaseActivity(), ShareBookContract.ViewModel, ItemImage
     if (!mPresenter.validateDataInput(mBookRequest)) {
       return
     }
-    //todo request server
+    mPresenter.addBook(mBookRequest)
   }
 
   fun onClickAddImage() {
