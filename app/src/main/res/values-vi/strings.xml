@@ -59,4 +59,7 @@
     <string name="shared_by">Chia sẻ bởi</string>
     <string name="publish_date_two_dots">Ngày xuất bản</string>
     <string name="add_successful">Thêm thành công</string>
+    <string name="import_data_from_google_book">Nhập dữ liệu từ google sách</string>
+    <string name="import_data_from_internal_book">Nhập dữ liệu từ sách nội bộ</string>
+    <string name="please_enter_title">Vui lòng nhập tiêu đề</string>
 </resources>

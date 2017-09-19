@@ -88,6 +88,31 @@ class ShareBookPresenter(private val mValidator: Validator,
     mCompositeDisposable.add(disposable)
   }
 
+  override fun searchBookFromInternal(keyword: String?, field: String?) {
+    val disposable: Disposable = mBookRepository.searchBook(keyword, field)
+        .subscribeOn(mBaseSchedulerProvider.io())
+        .doOnSubscribe { mViewModel?.onShowProgressDialog() }
+        .doAfterTerminate { mViewModel?.onDismissProgressDialog() }
+        .observeOn(mBaseSchedulerProvider.ui())
+        .subscribe(
+            { listBook -> mViewModel?.onSearchBookFromInternalSuccess(listBook.items?.data) },
+            { error -> mViewModel?.onError(error as BaseException) })
+    mCompositeDisposable.add(disposable)
+  }
+
+  override fun searchBookFromGoogleBook(title: String?) {
+    val disposable: Disposable = mBookRepository.searchBookWithGoogleApi(title)
+        .subscribeOn(mBaseSchedulerProvider.io())
+        .doOnSubscribe { mViewModel?.onShowProgressDialog() }
+        .doAfterTerminate { mViewModel?.onDismissProgressDialog() }
+        .observeOn(mBaseSchedulerProvider.ui())
+        .subscribe(
+            { bookResponse -> mViewModel?.onSearchBookFromGoogleBookSuccess(bookResponse.items) },
+            { error -> mViewModel?.onError(error as BaseException) }
+        )
+    mCompositeDisposable.add(disposable)
+  }
+
   private fun validateTitleInput(title: String?) {
     var message: String? = mValidator.validateValueNonEmpty(title)
     if (!StringUtils.isBlank(message)) {

@@ -81,6 +81,8 @@
     <string name="are_u_want_to_sign_out">Are you sure want to sign out?</string>
     <string name="select_category">Select category</string>
     <string name="add_successful">Add successful</string>
+    <string name="import_data_from_internal_book">Import data from internal books</string>
+    <string name="please_enter_title">Please enter title</string>
 
     <!-- date format -->
     <string name="date_format_yyyy_MM_dd">yyyy-MM-dd</string>

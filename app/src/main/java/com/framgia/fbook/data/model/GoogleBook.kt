@@ -15,15 +15,6 @@ class GoogleBook : BaseModel() {
   @SerializedName("volumeInfo")
   @Expose
   var volumeInfo: VolumeInfo? = null
-  @SerializedName("publisher")
-  @Expose
-  var publisher: String? = null
-  @SerializedName("publishedDate")
-  @Expose
-  var publishedDate: Int? = null
-  @SerializedName("description")
-  @Expose
-  var description: String? = null
   @SerializedName("readingModes")
   @Expose
   var readingModes: ReadingModes? = null
@@ -62,6 +53,15 @@ class GoogleBook : BaseModel() {
     @SerializedName("authors")
     @Expose
     var listAuthor: List<String>? = null
+    @SerializedName("publisher")
+    @Expose
+    var publisher: String? = null
+    @SerializedName("publishedDate")
+    @Expose
+    var publishedDate: String? = null
+    @SerializedName("description")
+    @Expose
+    var description: String? = null
   }
 
   inner class ReadingModes : BaseModel() {
