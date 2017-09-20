@@ -10,6 +10,7 @@ import com.framgia.fbook.data.model.Category
 import com.framgia.fbook.data.source.CategoryRepository
 import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException
+import com.framgia.fbook.data.source.remote.api.request.AddCategoryFavoriteRequest
 import com.framgia.fbook.databinding.ActivityAddCategoryFavoriteBinding
 import com.framgia.fbook.screen.BaseActivity
 import com.framgia.fbook.utils.Constant
@@ -34,6 +35,7 @@ class AddCategoryFavoriteActivity : BaseActivity(), AddCategoryFavoriteContract.
   internal lateinit var mCategoryRepository: CategoryRepository
   @Inject
   internal lateinit var mDialogManager: DialogManager
+  private var tags: String = String()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -84,16 +86,25 @@ class AddCategoryFavoriteActivity : BaseActivity(), AddCategoryFavoriteContract.
   override fun onUpdateCategoryFavoriteSuccess() {
     Toast.makeText(applicationContext, getString(R.string.update_success),
         Toast.LENGTH_SHORT).show()
+    val user = mUserRepository.getUserLocal()
+    user?.tag = tags
+    mUserRepository.saveUser(user)
     mPresenter.getCategory()
   }
 
   fun onClickUpdate() {
-    var tags: String? = null
+    val addCategory: AddCategoryFavoriteRequest = AddCategoryFavoriteRequest()
+    val addItemTag: AddCategoryFavoriteRequest.Tags = AddCategoryFavoriteRequest.Tags()
+    tags = Constant.EXTRA_EMTY
     mAdapter.mListCategory
         .filter { it.favorite == true }
         .forEach { tags += it.id.toString() + Constant.EXTRA_COMMA }
-    tags = tags?.substring(0, tags.length - 1)
-    mPresenter.updateCategory(tags)
+    tags = tags.substring(0, tags.length - 1)
+    tags.let {
+      addItemTag.tags = tags
+      addItemTag.let { addCategory.item = addItemTag }
+    }
+    mPresenter.updateCategory(addCategory)
   }
 
   companion object {

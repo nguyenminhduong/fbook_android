@@ -1,6 +1,7 @@
 package com.framgia.fbook.data.source.remote.api.service
 
 import com.framgia.fbook.data.model.*
+import com.framgia.fbook.data.source.remote.api.request.AddCategoryFavoriteRequest
 import com.framgia.fbook.data.source.remote.api.request.ReadingOrCancelBookRequest
 import com.framgia.fbook.data.source.remote.api.request.SearchBookRequest
 import com.framgia.fbook.data.source.remote.api.request.SignInRequest
@@ -52,7 +53,8 @@ interface FBookApi {
 
   @Multipart
   @POST("/api/v0/books")
-  fun addBook(@PartMap params: Map<String, @JvmSuppressWildcards RequestBody?>): Single<BaseResponse<Book>>
+  fun addBook(
+      @PartMap params: Map<String, @JvmSuppressWildcards RequestBody?>): Single<BaseResponse<Book>>
 
   @GET("api/v0/books/add-owner/{book_id}")
   fun addUserHaveThisBook(@Path("book_id") bookId: Int?): Single<Any>
@@ -62,6 +64,10 @@ interface FBookApi {
 
   @POST("api/v0/books/booking")
   fun readOrCancelBook(@Body readingOrCancelBookRequest: ReadingOrCancelBookRequest?): Single<Any>
+
+  @POST("api/v0/users/add-tags")
+  fun addCategoryFavorite(
+      @Body addCategoryFavoriteRequest: AddCategoryFavoriteRequest?): Single<Any>
 
   @GET("/api/v0/books/category/{category_id}?office_id=1")
   fun getListBookByCategory(@Path(

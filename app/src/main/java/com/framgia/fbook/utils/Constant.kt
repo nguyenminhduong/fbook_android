@@ -17,6 +17,7 @@ object Constant {
   val READ = "read"
   val PAGE = 1
   val EXTRA_COMMA = ","
+  val EXTRA_EMTY = ""
 
   val BOOK_DETAIL_EXTRA = "book_detail"
 
