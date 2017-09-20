@@ -1,11 +1,11 @@
 package com.framgia.fbook.data.source.remote
 
+import com.framgia.fbook.data.model.ActionBookDetail
 import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.model.GoogleBook
-import com.framgia.fbook.data.model.ReadingBook
 import com.framgia.fbook.data.source.BookDataSource
 import com.framgia.fbook.data.source.remote.api.request.BookRequest
-import com.framgia.fbook.data.source.remote.api.request.ReadingBookRequest
+import com.framgia.fbook.data.source.remote.api.request.ReadingOrCancelBookRequest
 import com.framgia.fbook.data.source.remote.api.request.SearchBookRequest
 import com.framgia.fbook.data.source.remote.api.response.BaseBookRespone
 import com.framgia.fbook.data.source.remote.api.response.BaseResponse
@@ -93,9 +93,9 @@ class BookRemoteDataSource @Inject constructor(nameApi: FBookApi) : BaseRemoteDa
     return fbookApi.removeOwnerThisBook(bookId)
   }
 
-  override fun wantToReadingBook(readingBook: ReadingBook?): Single<Any> {
-    val readingBookRequest = ReadingBookRequest()
-    readingBookRequest.readingBook = readingBook
-    return fbookApi.wantToReadingBook(readingBookRequest)
+  override fun readOrCancelBook(actionBookDetail: ActionBookDetail?): Single<Any> {
+    val readingOrCancelBookRequest = ReadingOrCancelBookRequest()
+    readingOrCancelBookRequest.actionBookDetail = actionBookDetail
+    return fbookApi.readOrCancelBook(readingOrCancelBookRequest)
   }
 }

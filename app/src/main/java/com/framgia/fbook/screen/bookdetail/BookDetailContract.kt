@@ -1,7 +1,7 @@
 package com.framgia.fbook.screen.bookdetail;
 
+import com.framgia.fbook.data.model.ActionBookDetail
 import com.framgia.fbook.data.model.Book
-import com.framgia.fbook.data.model.ReadingBook
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.screen.BasePresenter
 import com.framgia.fbook.screen.BaseViewModel
@@ -27,7 +27,7 @@ interface BookDetailContract {
 
     fun onRemoveOwnerThisBookSuccess()
 
-    fun onWantToReadingBookSuccess()
+    fun onReadOrCancelBookSuccess()
   }
 
   /**
@@ -41,6 +41,6 @@ interface BookDetailContract {
 
     fun removeOwnerThisBook(bookId: Int?)
 
-    fun wantToReadingBook(readingBook: ReadingBook?)
+    fun readOrCancelBook(actionBookDetail: ActionBookDetail?)
   }
 }

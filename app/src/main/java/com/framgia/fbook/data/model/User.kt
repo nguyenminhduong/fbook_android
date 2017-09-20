@@ -53,6 +53,12 @@ class User() : BaseModel(), Parcelable {
   @SerializedName("favorite_categories")
   @Expose
   var categories: List<Category>? = null
+  @SerializedName("owner_id")
+  @Expose
+  var ownerId: Int? = null
+  @SerializedName("pivot")
+  @Expose
+  var pivot: Pivot? = null
 
   constructor(parcel: Parcel) : this() {
     id = parcel.readValue(Int::class.java.classLoader) as? Int
@@ -69,10 +75,12 @@ class User() : BaseModel(), Parcelable {
     avatar = parcel.readString()
     tag = parcel.readString()
     categories = parcel.createTypedArrayList(Category.CREATOR)
+    ownerId = parcel.readValue(Int::class.java.classLoader) as? Int
   }
 
   override fun writeToParcel(parcel: Parcel, flags: Int) {
     parcel.writeValue(id)
+    parcel.writeValue(ownerId)
     parcel.writeString(name)
     parcel.writeString(email)
     parcel.writeString(phone)
@@ -100,5 +108,20 @@ class User() : BaseModel(), Parcelable {
     override fun newArray(size: Int): Array<User?> {
       return arrayOfNulls(size)
     }
+  }
+
+  inner class Pivot : BaseModel() {
+    @SerializedName("book_id")
+    @Expose
+    var bookId: Int? = null
+    @SerializedName("user_id")
+    @Expose
+    var userId: Int? = null
+    @SerializedName("status")
+    @Expose
+    var status: Int? = null
+    @SerializedName("owner_id")
+    @Expose
+    var ownerId: Int? = null
   }
 }
