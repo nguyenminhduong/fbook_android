@@ -2,6 +2,7 @@ package com.framgia.fbook.screen.listbookseemore
 
 import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.source.BookRepository
+import com.framgia.fbook.data.source.CategoryRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.data.source.remote.api.error.Type
 import com.framgia.fbook.data.source.remote.api.response.BaseBookRespone
@@ -34,6 +35,8 @@ class ListBookPresenterTest {
   lateinit var mBaseSchedulerProvider: ImmediateSchedulerProvider
   @Mock
   lateinit var mBookRepository: BookRepository
+  @Mock
+  lateinit var mCategoryRepository: CategoryRepository
   private val listResponse: BaseResponse<BaseBookRespone<List<Book>>> = BaseResponse()
   private val baseException = BaseException(Type.HTTP, ErrorResponse())
 
@@ -47,7 +50,7 @@ class ListBookPresenterTest {
   fun getListBook_shouldReturnListLateBook_whenTypeBookIsLate() {
     Mockito.`when`(mBookRepository.getSectionListBook(Constant.LATE, Constant.PAGE))
         .thenReturn(Single.just(listResponse))
-    mPresenter.getListBook(Constant.LATE,Constant.PAGE)
+    mPresenter.getListBook(Constant.LATE, Constant.PAGE)
     Mockito.verify(mViewModel).onGetListBookSuccess(listResponse.item?.data)
     Mockito.verify(mViewModel, Mockito.never()).onError(baseException)
   }

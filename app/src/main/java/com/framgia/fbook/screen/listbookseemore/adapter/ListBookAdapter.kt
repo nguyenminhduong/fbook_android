@@ -21,7 +21,10 @@ class ListBookAdapter(context: Context) : BaseRecyclerViewAdapter<ListBookAdapte
   private lateinit var mItemClickListener: onItemRecyclerViewClickListener
   private val mListBook = mutableListOf<Book>()
 
-  fun updateData(listBook: List<Book>?) {
+  fun updateData(listBook: List<Book>?, isBookNormal: Boolean) {
+    if (!isBookNormal) {
+      mListBook.clear()
+    }
     listBook?.let {
       mListBook.addAll(listBook)
       notifyDataSetChanged()

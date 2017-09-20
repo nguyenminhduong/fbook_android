@@ -4,6 +4,7 @@ import com.framgia.fbook.data.model.*
 import com.framgia.fbook.data.source.remote.api.request.ReadingOrCancelBookRequest
 import com.framgia.fbook.data.source.remote.api.request.SearchBookRequest
 import com.framgia.fbook.data.source.remote.api.request.SignInRequest
+import com.framgia.fbook.data.source.remote.api.response.BaseBookByCategoryResponse
 import com.framgia.fbook.data.source.remote.api.response.BaseBookRespone
 import com.framgia.fbook.data.source.remote.api.response.BaseResponse
 import com.framgia.fbook.data.source.remote.api.response.SignInResponse
@@ -61,4 +62,8 @@ interface FBookApi {
 
   @POST("api/v0/books/booking")
   fun readOrCancelBook(@Body readingOrCancelBookRequest: ReadingOrCancelBookRequest?): Single<Any>
+
+  @GET("/api/v0/books/category/{category_id}?office_id=1")
+  fun getListBookByCategory(@Path(
+      "category_id") categoryId: Int?): Single<BaseResponse<BaseBookByCategoryResponse>>
 }
