@@ -16,7 +16,8 @@ import com.framgia.fbook.screen.BaseRecyclerViewAdapter
 class AddCategoryFavoriteAdapter(
     context: Context) : BaseRecyclerViewAdapter<AddCategoryFavoriteAdapter.ItemViewHolder>(
     context) {
-  private val mListCategory: MutableList<Category> = ArrayList()
+  val mListCategory: MutableList<Category> = ArrayList()
+  private lateinit var mItemListener: ItemClickSelectCategoryListener
 
   fun updateData(listCategory: List<Category>?) {
     mListCategory.clear()
@@ -26,13 +27,21 @@ class AddCategoryFavoriteAdapter(
     notifyDataSetChanged()
   }
 
+  fun updateOneItem(category: Category?) {
+    notifyItemChanged(mListCategory.indexOf(category))
+  }
+
+  fun setItemListener(itemClickSelectCategoryListener: ItemClickSelectCategoryListener) {
+    mItemListener = itemClickSelectCategoryListener
+  }
+
   override fun getItemCount(): Int = mListCategory.size
 
   override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ItemViewHolder {
     val binding = DataBindingUtil.inflate<ItemAddCategoryFavoriteBinding>(
         LayoutInflater.from(parent?.context),
         R.layout.item_add_category_favorite, parent, false)
-    return ItemViewHolder(binding)
+    return ItemViewHolder(binding, mItemListener)
   }
 
   override fun onBindViewHolder(holder: ItemViewHolder?, position: Int) {
@@ -40,10 +49,12 @@ class AddCategoryFavoriteAdapter(
   }
 
   inner class ItemViewHolder(
-      private val mBinding: ItemAddCategoryFavoriteBinding) : RecyclerView.ViewHolder(
+      private val mBinding: ItemAddCategoryFavoriteBinding,
+      private val mItemClickSelectCategoryListener: ItemClickSelectCategoryListener) : RecyclerView.ViewHolder(
       mBinding.root) {
     fun binData(category: Category) {
-      mBinding.viewModel = ItemAddCategoryFavoriteViewModel(category)
+      mBinding.viewModel = ItemAddCategoryFavoriteViewModel(category,
+          mItemClickSelectCategoryListener)
       mBinding.executePendingBindings()
     }
   }

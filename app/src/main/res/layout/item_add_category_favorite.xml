@@ -27,6 +27,7 @@
                 android:layout_margin="@dimen/dp_16"
                 android:checked="@{viewModel.category.favorite}"
                 android:gravity="center_vertical"
+                android:onClick="@{viewModel::onItemClickCategory}"
                 android:src="@android:color/darker_gray"
                 app:allow_random_color="false"
                 app:btn_color="@android:color/darker_gray"
