@@ -1,6 +1,7 @@
 package com.framgia.fbook.screen.listbookseemore
 
 import com.framgia.fbook.data.source.BookRepository
+import com.framgia.fbook.data.source.CategoryRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
@@ -11,7 +12,7 @@ import io.reactivex.disposables.Disposable
  * Listens to user actions from the UI ([ListBookFragment]), retrieves the data and updates
  * the UI as required.
  */
-open class ListBookPresenter(
+open class ListBookPresenter(private val mCategoryRepository: CategoryRepository,
     private val mBookRepository: BookRepository) : ListBookContract.Presenter {
 
   private var mViewModel: ListBookContract.ViewModel? = null
@@ -22,6 +23,37 @@ open class ListBookPresenter(
 
   override fun onStop() {
     mCompositeDisposable.clear()
+  }
+
+  override fun getListBookByCategory(categoryId: Int?) {
+    val disposable: Disposable = mCategoryRepository.getListBookByCategory(categoryId)
+        .subscribeOn(mSchedulerProvider.io())
+        .doOnSubscribe { mViewModel?.onShowProgressBarDialog() }
+        .doAfterTerminate { mViewModel?.onDismissProgressBarDialog() }
+        .observeOn(mSchedulerProvider.ui())
+        .subscribe(
+            { listBookResponse ->
+              mViewModel?.onGetListBookByCategorySuccess(
+                  listBookResponse.item?.categoryResponse?.data)
+            },
+            { error ->
+              mViewModel?.onError(error as BaseException)
+            })
+    mCompositeDisposable.add(disposable)
+  }
+
+  override fun getListCategory() {
+    val disposable: Disposable = mCategoryRepository.getCategory()
+        .subscribeOn(mSchedulerProvider.io())
+        .observeOn(mSchedulerProvider.ui())
+        .subscribe(
+            { listCategory ->
+              mViewModel?.onGetListCategorySuccess(listCategory.items)
+            },
+            { error ->
+              mViewModel?.onError(error as BaseException)
+            })
+    mCompositeDisposable.add(disposable)
   }
 
   override fun getListBook(typeBook: String?, page: Int?) {
@@ -84,7 +116,8 @@ open class ListBookPresenter(
               })
           mCompositeDisposable.add(disposable)
         }
-        else -> {}
+        else -> {
+        }
       }
     }
   }

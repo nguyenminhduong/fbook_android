@@ -14,28 +14,81 @@
             />
         <import type="android.view.View"/>
     </data>
-
-    <RelativeLayout
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
-        android:orientation="vertical"
         >
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerListBook"
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            >
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                app:contentScrim="?attr/colorPrimary"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+                >
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp_5"
+                    android:layout_marginEnd="@dimen/dp_5"
+                    android:layout_marginLeft="@dimen/dp_5"
+                    android:layout_marginRight="@dimen/dp_5"
+                    android:layout_marginStart="@dimen/dp_5"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:background="@color/color_white"
+                    android:onClick="@{() -> viewModel.onClickChooseCategory()}"
+                    android:padding="@dimen/dp_5"
+                    >
+                    <ImageView
+                        android:layout_width="@dimen/dp_20"
+                        android:layout_height="@dimen/dp_20"
+                        android:layout_gravity="end"
+                        app:srcCompat="@drawable/ic_arrow_drop_down"
+                        tools:ignore="ContentDescription"
+                        />
+                    <TextView
+                        android:text="@{viewModel.mCurrentCategory}"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_30"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:hint="@string/choose_category"
+                        android:maxLines="1"
+                        android:textColor="@color/colorPrimary"
+                        android:textColorHint="@color/colorPrimary"
+                        />
+                </FrameLayout>
+            </android.support.design.widget.CollapsingToolbarLayout>
+        </android.support.design.widget.AppBarLayout>
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
-            bind:recyclerAdapter="@{viewModel.mListBookAdapter}"
-            />
-        <ProgressBar
-            android:id="@+id/progress"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
-            android:layout_alignParentBottom="true"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center_horizontal"
-            android:visibility="@{viewModel.mShowProgress ? View.VISIBLE : View.GONE}"
-            />
-    </RelativeLayout>
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            >
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerListBook"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                bind:recyclerAdapter="@{viewModel.mListBookAdapter}"
+                />
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center_horizontal"
+                android:visibility="@{viewModel.mShowProgress ? View.VISIBLE : View.GONE}"
+                />
+        </RelativeLayout>
+    </android.support.design.widget.CoordinatorLayout>
 </layout>

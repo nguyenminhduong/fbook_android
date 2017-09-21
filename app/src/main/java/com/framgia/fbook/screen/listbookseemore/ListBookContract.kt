@@ -1,6 +1,7 @@
 package com.framgia.fbook.screen.listbookseemore
 
 import com.framgia.fbook.data.model.Book
+import com.framgia.fbook.data.model.Category
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.screen.BasePresenter
 import com.framgia.fbook.screen.BaseViewModel
@@ -20,6 +21,10 @@ interface ListBookContract {
     fun onShowProgressBarDialog()
 
     fun onDismissProgressBarDialog()
+
+    fun onGetListCategorySuccess(listCategory: List<Category>?)
+
+    fun onGetListBookByCategorySuccess(listBook: List<Book>?)
   }
 
   /**
@@ -27,5 +32,9 @@ interface ListBookContract {
    */
   interface Presenter : BasePresenter<ViewModel> {
     fun getListBook(typeBook: String?, page: Int?)
+
+    fun getListCategory()
+
+    fun getListBookByCategory(categoryId: Int?)
   }
 }

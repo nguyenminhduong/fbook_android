@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.framgia.fbook.R
 import com.framgia.fbook.data.model.Book
+import com.framgia.fbook.data.model.Category
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.databinding.FragmentListbookBinding
 import com.framgia.fbook.screen.BaseFragment
@@ -17,6 +18,7 @@ import com.framgia.fbook.screen.listbookseemore.adapter.ListBookAdapter
 import com.framgia.fbook.screen.main.MainActivity
 import com.framgia.fbook.screen.onItemRecyclerViewClickListener
 import com.framgia.fbook.utils.Constant
+import com.fstyle.library.MaterialDialog
 import com.fstyle.structure_android.widget.dialog.DialogManager
 import javax.inject.Inject
 
@@ -31,7 +33,12 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel, onItem
   internal lateinit var mDialogManager: DialogManager
   @Inject
   internal lateinit var mListBookAdapter: ListBookAdapter
+  private val mListCategory = mutableListOf<Category>()
+  private var mCurrentCategoryPosition = 0
+  private var mIsGetBookByCategory = false
+  private var mIsBookNormal = true
   val mShowProgress: ObservableField<Boolean> = ObservableField()
+  val mCurrentCategory: ObservableField<String> = ObservableField()
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
 
@@ -47,13 +54,18 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel, onItem
     mListBookAdapter.setItemInternalBookListener(this)
     val typeBook = arguments.getString(Constant.LIST_BOOK_EXTRA)
     mPresenter.getListBook(typeBook, Constant.PAGE)
+    mPresenter.getListCategory()
     val gridLayoutManager = GridLayoutManager(context, 2)
     binding.recyclerListBook.layoutManager = gridLayoutManager
     binding.recyclerListBook.addOnScrollListener(
         object : EndlessRecyclerOnScrollListener(gridLayoutManager) {
           override fun onLoadMore(page: Int) {
-            mShowProgress.set(true)
-            mPresenter.getListBook(typeBook, page)
+            if (mIsGetBookByCategory) {
+              //TODO edit later
+            } else {
+              mShowProgress.set(true)
+              mPresenter.getListBook(typeBook, page)
+            }
           }
         })
 
@@ -83,13 +95,41 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel, onItem
     mShowProgress.set(false)
   }
 
+  override fun onGetListCategorySuccess(listCategory: List<Category>?) {
+    listCategory?.let { mListCategory.addAll(listCategory) }
+  }
+
   override fun onGetListBookSuccess(listBook: List<Book>?) {
-    mListBookAdapter.updateData(listBook)
+    mListBookAdapter.updateData(listBook, mIsBookNormal)
     mShowProgress.set(false)
   }
 
+  override fun onGetListBookByCategorySuccess(listBook: List<Book>?) {
+    listBook?.let { mListBookAdapter.updateData(listBook, mIsBookNormal) }
+    mIsGetBookByCategory = true
+  }
+
   override fun onItemClickListener(any: Any?) {
-    //TODO edit later
+    //TODO dev later
+  }
+
+  fun onClickChooseCategory() {
+    if (mListCategory.isEmpty()) {
+      return
+    }
+    val listCategory: MutableList<String?> = mutableListOf()
+    mListCategory.indices.mapTo(listCategory) { mListCategory[it].name.toString() }
+    mDialogManager.dialogListSingleChoice(context.getString(R.string.category), listCategory,
+        mCurrentCategoryPosition,
+        MaterialDialog.ListCallbackSingleChoice({ _, _, position, charSequence ->
+          run {
+            mCurrentCategoryPosition = position
+            mCurrentCategory.set(charSequence.toString())
+            mPresenter.getListBookByCategory(mListCategory[position].id)
+            mIsBookNormal = false
+          }
+          true
+        }))
   }
 
   companion object {

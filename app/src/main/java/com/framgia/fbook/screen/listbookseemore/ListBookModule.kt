@@ -3,7 +3,10 @@ package com.framgia.fbook.screen.listbookseemore
 import android.support.v4.app.Fragment
 import com.framgia.fbook.data.source.BookRepository
 import com.framgia.fbook.data.source.BookRepositoryImpl
+import com.framgia.fbook.data.source.CategoryRepository
+import com.framgia.fbook.data.source.CategoryRepositoryImpl
 import com.framgia.fbook.data.source.remote.BookRemoteDataSource
+import com.framgia.fbook.data.source.remote.CategoryRemoteDataSource
 import com.framgia.fbook.screen.listbookseemore.adapter.ListBookAdapter
 import com.framgia.fbook.utils.dagger.FragmentScope
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
@@ -21,9 +24,9 @@ class ListBookModule(private val mFragment: Fragment) {
 
   @FragmentScope
   @Provides
-  fun providePresenter(bookRepository: BookRepository,
+  fun providePresenter(categoryRepository: CategoryRepository,bookRepository: BookRepository,
       schedulerProvider: BaseSchedulerProvider): ListBookContract.Presenter {
-    val presenter = ListBookPresenter(bookRepository)
+    val presenter = ListBookPresenter(categoryRepository,bookRepository)
     presenter.setViewModel(mFragment as ListBookContract.ViewModel)
     presenter.setSchedulerProvider(schedulerProvider)
     return presenter
@@ -45,5 +48,12 @@ class ListBookModule(private val mFragment: Fragment) {
   @Provides
   fun provideListBookAdapter(): ListBookAdapter {
     return ListBookAdapter(mFragment.context)
+  }
+
+  @FragmentScope
+  @Provides
+  fun provideCategoryRepository(
+      categoryRemoteDataSource: CategoryRemoteDataSource): CategoryRepository {
+    return CategoryRepositoryImpl(categoryRemoteDataSource)
   }
 }

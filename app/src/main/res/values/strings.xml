@@ -55,6 +55,7 @@
     <string name="do_you_want_to_read_this_book">Do you want to read this book?</string>
     <string name="update_success">Update Success !</string>
     <string name="do_you_want_cancel_waiting_this_book">Do you want cancel waiting this book?</string>
+    <string name="choose_category">Choose Category</string>
 
     <!-- Dialog -->
     <string name="agree">Agree</string>

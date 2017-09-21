@@ -2,6 +2,7 @@ package com.framgia.fbook.data.source
 
 import com.framgia.fbook.data.model.Category
 import com.framgia.fbook.data.source.remote.CategoryRemoteDataSource
+import com.framgia.fbook.data.source.remote.api.response.BaseBookByCategoryResponse
 import com.framgia.fbook.data.source.remote.api.response.BaseResponse
 import io.reactivex.Single
 import javax.inject.Inject
@@ -15,5 +16,10 @@ class CategoryRepositoryImpl @Inject constructor(
     private val categoryRemoteDataSource: CategoryRemoteDataSource) : CategoryRepository {
   override fun getCategory(): Single<BaseResponse<List<Category>>> {
     return categoryRemoteDataSource.getCategory()
+  }
+
+  override fun getListBookByCategory(
+      categoryId: Int?): Single<BaseResponse<BaseBookByCategoryResponse>> {
+    return categoryRemoteDataSource.getListBookByCategory(categoryId)
   }
 }
