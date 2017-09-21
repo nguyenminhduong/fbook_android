@@ -56,6 +56,8 @@
     <string name="update_success">Update Success !</string>
     <string name="do_you_want_cancel_waiting_this_book">Do you want cancel waiting this book?</string>
     <string name="choose_category">Choose Category</string>
+    <string name="this_book_does_not_have_the_owner">This book does not have the owner !</string>
+    <string name="you_already_own_this_book">You already own this book !</string>
 
     <!-- Dialog -->
     <string name="agree">Agree</string>

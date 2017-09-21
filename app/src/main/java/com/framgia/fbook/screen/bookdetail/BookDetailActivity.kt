@@ -209,10 +209,20 @@ open class BookDetailActivity : BaseActivity(), BookDetailContract.ViewModel, It
     val ownerNames: MutableList<String?> = mutableListOf()
     mOwners.mapTo(ownerNames) { it.name }
 
+    if (ownerNames.isEmpty()) {
+      mDialogManager.dialogError(getString(R.string.this_book_does_not_have_the_owner))
+      return
+    }
+
     mDialogManager.dialogListSingleChoice(getString(R.string.do_you_want_to_read_this_book),
         ownerNames, 0, MaterialDialog.ListCallbackSingleChoice({ _, _, position, _ ->
-      mActionBookDetail.ownerId = (mOwners[position]).id
-      presenter.readOrCancelBook(mActionBookDetail)
+      val currentOwnerId = (mOwners[position]).id
+      if (mUserId == currentOwnerId) {
+        mDialogManager.dialogError(getString(R.string.you_already_own_this_book))
+      } else {
+        mActionBookDetail.ownerId = currentOwnerId
+        presenter.readOrCancelBook(mActionBookDetail)
+      }
       true
     }))
   }
