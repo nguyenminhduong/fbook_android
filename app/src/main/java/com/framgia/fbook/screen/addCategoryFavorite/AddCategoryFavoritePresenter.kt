@@ -37,7 +37,7 @@ mCategoryRepository: CategoryRepository,
               val tags = userRepository.getUserLocal()?.tag?.split(Constant.EXTRA_COMMA)
               listCategory.items?.iterator()?.forEach { category ->
                 tags?.filter {
-                  it.equals(category.id.toString())
+                  it == category.id.toString()
                 }?.forEach { category.favorite = true }
               }
               mViewModel?.onGetCategorySuccess(listCategory.items)
@@ -46,6 +46,10 @@ mCategoryRepository: CategoryRepository,
               mViewModel?.onError(error as BaseException)
             })
     mCompositeDisposable.add(disposable)
+  }
+
+  override fun updateCategory(tag: String?) {
+    //Todo edit later
   }
 
   override fun setViewModel(viewModel: AddCategoryFavoriteContract.ViewModel) {

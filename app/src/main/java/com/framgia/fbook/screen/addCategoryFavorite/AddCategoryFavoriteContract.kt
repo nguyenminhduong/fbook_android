@@ -21,6 +21,8 @@ interface AddCategoryFavoriteContract {
     fun onError(exception: BaseException)
 
     fun onGetCategorySuccess(category: List<Category>?)
+
+    fun onUpdateCategoryFavoriteSuccess()
   }
 
   /**
@@ -29,5 +31,7 @@ interface AddCategoryFavoriteContract {
   interface Presenter : BasePresenter<ViewModel> {
 
     fun getCategory()
+
+    fun updateCategory(tag: String?)
   }
 }
