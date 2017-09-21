@@ -45,6 +45,8 @@
     <string name="do_you_want_to_read_this_book">Bạn có muốn đọc cuốn sách này?</string>
     <string name="do_you_want_cancel_waiting_this_book">Bạn có muốn hủy bỏ chờ đợi cuốn sách này?</string>
     <string name="choose_category">Chọn thể loại</string>
+    <string name="this_book_does_not_have_the_owner">Cuốn sách này không có chủ sở hữu !</string>
+    <string name="you_already_own_this_book">Bạn đã sở hữu cuốn sách này !</string>
 
     <!-- Dialog -->
     <string name="agree">Đồng ý</string>
