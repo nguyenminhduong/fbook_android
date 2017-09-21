@@ -21,11 +21,12 @@ import io.reactivex.functions.BiFunction
  * Listens to user actions from the UI ({@link ShareBookActivity}), retrieves the data and updates
  * the UI as required.
  */
-class ShareBookPresenter(private val mValidator: Validator,
+open class ShareBookPresenter(private val mValidator: Validator,
     private val mUserRepository: UserRepository,
     private val mCategoryRepository: CategoryRepository,
-    private val mBookRepository: BookRepository,
-    private val mBaseSchedulerProvider: BaseSchedulerProvider) : ShareBookContract.Presenter {
+    private val mBookRepository: BookRepository) : ShareBookContract.Presenter {
+  private lateinit var mBaseSchedulerProvider: BaseSchedulerProvider
+
   companion object {
     private val TAG = ShareBookPresenter::class.java.name
   }
@@ -114,23 +115,27 @@ class ShareBookPresenter(private val mValidator: Validator,
   }
 
   private fun validateTitleInput(title: String?) {
-    var message: String? = mValidator.validateValueNonEmpty(title)
+    val message: String? = mValidator.validateValueNonEmpty(title)
     if (!StringUtils.isBlank(message)) {
       mViewModel?.onInputTitleError(message)
     }
   }
 
   private fun validateAuthorInput(author: String?) {
-    var message: String? = mValidator.validateValueNonEmpty(author)
+    val message: String? = mValidator.validateValueNonEmpty(author)
     if (!StringUtils.isBlank(message)) {
       mViewModel?.onInputAuthorError(message)
     }
   }
 
   private fun validateDescriptionInput(description: String?) {
-    var message: String? = mValidator.validateValueNonEmpty(description)
+    val message: String? = mValidator.validateValueNonEmpty(description)
     if (!StringUtils.isBlank(message)) {
       mViewModel?.onInputDescriptionError(message)
     }
+  }
+
+  fun setSchedulerProvider(baseSchedulerProvider: BaseSchedulerProvider) {
+    mBaseSchedulerProvider = baseSchedulerProvider
   }
 }
