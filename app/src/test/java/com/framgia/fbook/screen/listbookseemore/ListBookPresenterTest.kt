@@ -1,10 +1,12 @@
 package com.framgia.fbook.screen.listbookseemore
 
 import com.framgia.fbook.data.model.Book
+import com.framgia.fbook.data.model.Category
 import com.framgia.fbook.data.source.BookRepository
 import com.framgia.fbook.data.source.CategoryRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.data.source.remote.api.error.Type
+import com.framgia.fbook.data.source.remote.api.response.BaseBookByCategoryResponse
 import com.framgia.fbook.data.source.remote.api.response.BaseBookRespone
 import com.framgia.fbook.data.source.remote.api.response.BaseResponse
 import com.framgia.fbook.data.source.remote.api.response.ErrorResponse
@@ -38,6 +40,8 @@ class ListBookPresenterTest {
   @Mock
   lateinit var mCategoryRepository: CategoryRepository
   private val listResponse: BaseResponse<BaseBookRespone<List<Book>>> = BaseResponse()
+  private val listCategory: BaseResponse<List<Category>> = BaseResponse()
+  private val listBookByCategory: BaseResponse<BaseBookByCategoryResponse> = BaseResponse()
   private val baseException = BaseException(Type.HTTP, ErrorResponse())
 
   @Before
@@ -91,12 +95,50 @@ class ListBookPresenterTest {
     Mockito.verify(mViewModel, Mockito.never()).onError(baseException)
   }
 
-  @Test(expected = BaseException::class)
+  @Test
   fun getListBook_shouldReturnError_whenGetListBook() {
     Mockito.`when`(mBookRepository.getSectionListBook(Constant.READ, Constant.PAGE))
-        .thenThrow(baseException)
+        .thenReturn(Single.error(baseException))
     mPresenter.getListBook(Constant.READ, Constant.PAGE)
     Mockito.verify(mViewModel, Mockito.never()).onGetListBookSuccess(listResponse.item?.data)
+    Mockito.verify(mViewModel).onError(baseException)
+  }
+
+  @Test
+  fun getListCategory_shouldReturnListCategory_whenGetListCategory() {
+    Mockito.`when`(mCategoryRepository.getCategory()).thenReturn(Single.just(listCategory))
+    mPresenter.getListCategory()
+    Mockito.verify(mViewModel).onGetListCategorySuccess(listCategory.item)
+    Mockito.verify(mViewModel, Mockito.never()).onError(baseException)
+  }
+
+  @Test
+  fun getListCategory_shouldReturnError_whenGetListCategory() {
+    Mockito.`when`(mCategoryRepository.getCategory()).thenReturn(Single.error(baseException))
+    mPresenter.getListCategory()
+    Mockito.verify(mViewModel, Mockito.never()).onGetListCategorySuccess(listCategory.item)
+    Mockito.verify(mViewModel).onError(baseException)
+  }
+
+  @Test
+  fun getListBookByCategory_shouldReturnListBook_whenGetListBookByCategory() {
+    val categoryId = 1
+    Mockito.`when`(mCategoryRepository.getListBookByCategory(categoryId)).thenReturn(
+        Single.just(listBookByCategory))
+    mPresenter.getListBookByCategory(categoryId)
+    Mockito.verify(mViewModel).onGetListBookByCategorySuccess(
+        listBookByCategory.item?.categoryResponse?.data)
+    Mockito.verify(mViewModel, Mockito.never()).onError(baseException)
+  }
+
+  @Test
+  fun getListBookByCategory_shouldReturnError_whenGetListBookByCategory() {
+    val categoryId = 1
+    Mockito.`when`(mCategoryRepository.getListBookByCategory(categoryId)).thenReturn(
+        Single.error(baseException))
+    mPresenter.getListBookByCategory(categoryId)
+    Mockito.verify(mViewModel, Mockito.never()).onGetListBookByCategorySuccess(
+        listBookByCategory.item?.categoryResponse?.data)
     Mockito.verify(mViewModel).onError(baseException)
   }
 }
