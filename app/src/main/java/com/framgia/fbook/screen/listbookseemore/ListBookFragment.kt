@@ -39,6 +39,7 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel, onItem
   private var mIsBookNormal = true
   val mShowProgress: ObservableField<Boolean> = ObservableField()
   val mCurrentCategory: ObservableField<String> = ObservableField()
+  val mCurrentSortBy: ObservableField<String> = ObservableField()
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
 
@@ -130,6 +131,10 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel, onItem
           }
           true
         }))
+  }
+
+  fun onClickSortBy() {
+    //TODO dev later
   }
 
   companion object {

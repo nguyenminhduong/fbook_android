@@ -31,38 +31,75 @@
                 app:contentScrim="?attr/colorPrimary"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
                 >
-                <FrameLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/dp_5"
-                    android:layout_marginEnd="@dimen/dp_5"
-                    android:layout_marginLeft="@dimen/dp_5"
-                    android:layout_marginRight="@dimen/dp_5"
-                    android:layout_marginStart="@dimen/dp_5"
-                    android:layout_marginTop="@dimen/dp_5"
-                    android:background="@color/color_white"
-                    android:onClick="@{() -> viewModel.onClickChooseCategory()}"
-                    android:padding="@dimen/dp_5"
+                    android:orientation="vertical"
                     >
-                    <ImageView
-                        android:layout_width="@dimen/dp_20"
-                        android:layout_height="@dimen/dp_20"
-                        android:layout_gravity="end"
-                        app:srcCompat="@drawable/ic_arrow_drop_down"
-                        tools:ignore="ContentDescription"
-                        />
-                    <TextView
-                        android:text="@{viewModel.mCurrentCategory}"
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_30"
-                        android:ellipsize="end"
-                        android:gravity="center_vertical"
-                        android:hint="@string/choose_category"
-                        android:maxLines="1"
-                        android:textColor="@color/colorPrimary"
-                        android:textColorHint="@color/colorPrimary"
-                        />
-                </FrameLayout>
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp_5"
+                        android:layout_marginEnd="@dimen/dp_5"
+                        android:layout_marginLeft="@dimen/dp_5"
+                        android:layout_marginRight="@dimen/dp_5"
+                        android:layout_marginStart="@dimen/dp_5"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:background="@color/color_white"
+                        android:onClick="@{() -> viewModel.onClickSortBy()}"
+                        android:padding="@dimen/dp_5"
+                        >
+                        <ImageView
+                            android:layout_width="@dimen/dp_20"
+                            android:layout_height="@dimen/dp_20"
+                            android:layout_gravity="end"
+                            app:srcCompat="@drawable/ic_arrow_drop_down"
+                            tools:ignore="ContentDescription"
+                            />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dp_30"
+                            android:ellipsize="end"
+                            android:gravity="center_vertical"
+                            android:hint="@string/sort_by"
+                            android:maxLines="1"
+                            android:text="@{viewModel.mCurrentSortBy}"
+                            android:textColor="@color/colorPrimary"
+                            android:textColorHint="@color/colorPrimary"
+                            />
+                    </FrameLayout>
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp_5"
+                        android:layout_marginEnd="@dimen/dp_5"
+                        android:layout_marginLeft="@dimen/dp_5"
+                        android:layout_marginRight="@dimen/dp_5"
+                        android:layout_marginStart="@dimen/dp_5"
+                        android:background="@color/color_white"
+                        android:onClick="@{() -> viewModel.onClickChooseCategory()}"
+                        android:padding="@dimen/dp_5"
+                        >
+                        <ImageView
+                            android:layout_width="@dimen/dp_20"
+                            android:layout_height="@dimen/dp_20"
+                            android:layout_gravity="end"
+                            app:srcCompat="@drawable/ic_arrow_drop_down"
+                            tools:ignore="ContentDescription"
+                            />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dp_30"
+                            android:ellipsize="end"
+                            android:gravity="center_vertical"
+                            android:hint="@string/choose_category"
+                            android:maxLines="1"
+                            android:text="@{viewModel.mCurrentCategory}"
+                            android:textColor="@color/colorPrimary"
+                            android:textColorHint="@color/colorPrimary"
+                            />
+                    </FrameLayout>
+                </LinearLayout>
             </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>
         <RelativeLayout

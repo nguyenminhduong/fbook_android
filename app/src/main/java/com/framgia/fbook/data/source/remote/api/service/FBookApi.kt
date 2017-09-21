@@ -72,4 +72,7 @@ interface FBookApi {
   @GET("/api/v0/books/category/{category_id}?office_id=1")
   fun getListBookByCategory(@Path(
       "category_id") categoryId: Int?): Single<BaseResponse<BaseBookByCategoryResponse>>
+
+  @GET("/api/v0/books/sort-by/?office_id=1")
+  fun getListSortBook(): Single<BaseResponse<List<SortBook>>>
 }
