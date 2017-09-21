@@ -3,6 +3,7 @@ package com.framgia.fbook.data.source
 import com.framgia.fbook.data.model.ActionBookDetail
 import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.model.GoogleBook
+import com.framgia.fbook.data.model.SortBook
 import com.framgia.fbook.data.source.remote.BookRemoteDataSource
 import com.framgia.fbook.data.source.remote.api.request.BookRequest
 import com.framgia.fbook.data.source.remote.api.response.BaseBookRespone
@@ -57,5 +58,9 @@ class BookRepositoryImpl @Inject constructor(
 
   override fun readOrCancelBook(actionBookDetail: ActionBookDetail?): Single<Any> {
     return bookRemoteDataSource.readOrCancelBook(actionBookDetail)
+  }
+
+  override fun getListSortBook(): Single<BaseResponse<List<SortBook>>> {
+    return bookRemoteDataSource.getListSortBook()
   }
 }

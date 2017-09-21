@@ -3,6 +3,7 @@ package com.framgia.fbook.data.source
 import com.framgia.fbook.data.model.ActionBookDetail
 import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.model.GoogleBook
+import com.framgia.fbook.data.model.SortBook
 import com.framgia.fbook.data.source.remote.api.request.BookRequest
 import com.framgia.fbook.data.source.remote.api.response.BaseBookRespone
 import com.framgia.fbook.data.source.remote.api.response.BaseResponse
@@ -38,5 +39,7 @@ interface BookDataSource {
     fun removeOwnerThisBook(bookId: Int?): Single<Any>
 
     fun readOrCancelBook(actionBookDetail: ActionBookDetail?): Single<Any>
+
+    fun getListSortBook(): Single<BaseResponse<List<SortBook>>>
   }
 }
