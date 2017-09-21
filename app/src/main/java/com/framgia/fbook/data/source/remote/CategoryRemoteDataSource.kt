@@ -3,6 +3,7 @@ package com.framgia.fbook.data.source.remote
 import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.model.Category
 import com.framgia.fbook.data.source.CategoryDateSource
+import com.framgia.fbook.data.source.remote.api.request.AddCategoryFavoriteRequest
 import com.framgia.fbook.data.source.remote.api.response.BaseBookByCategoryResponse
 import com.framgia.fbook.data.source.remote.api.response.BaseBookRespone
 import com.framgia.fbook.data.source.remote.api.response.BaseResponse
@@ -15,6 +16,12 @@ import javax.inject.Inject
  */
 class CategoryRemoteDataSource @Inject constructor(nameApi: FBookApi) : BaseRemoteDataSource(
     nameApi), CategoryDateSource.CategoryRemoteDataSource {
+
+  override fun addCategoryFavorite(
+      addCategoryFavoriteRequest: AddCategoryFavoriteRequest?): Single<Any> {
+    return fbookApi.addCategoryFavorite(addCategoryFavoriteRequest)
+  }
+
   override fun getCategory(): Single<BaseResponse<List<Category>>> {
     return fbookApi.getCategory()
   }

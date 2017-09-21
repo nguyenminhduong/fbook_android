@@ -3,6 +3,7 @@ package com.framgia.fbook.screen.addCategoryFavorite;
 import com.framgia.fbook.data.source.CategoryRepository
 import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException
+import com.framgia.fbook.data.source.remote.api.request.AddCategoryFavoriteRequest
 import com.framgia.fbook.utils.Constant
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
@@ -48,8 +49,20 @@ mCategoryRepository: CategoryRepository,
     mCompositeDisposable.add(disposable)
   }
 
-  override fun updateCategory(tag: String?) {
-    //Todo edit later
+  override fun updateCategory(addCategoryFavoriteRequest: AddCategoryFavoriteRequest?) {
+    val disposable: Disposable = mCategoryRepository.addCategoryFavorite(addCategoryFavoriteRequest)
+        .subscribeOn(mBaseSchedulerProvider.io())
+        .observeOn(mBaseSchedulerProvider.ui())
+        .doOnSubscribe { mViewModel?.onShowProgressDialog() }
+        .doAfterTerminate { mViewModel?.onDismissProgressDialog() }
+        .subscribe(
+            {
+              mViewModel?.onUpdateCategoryFavoriteSuccess()
+            },
+            { error ->
+              mViewModel?.onError(error as BaseException)
+            })
+    mCompositeDisposable.add(disposable)
   }
 
   override fun setViewModel(viewModel: AddCategoryFavoriteContract.ViewModel) {

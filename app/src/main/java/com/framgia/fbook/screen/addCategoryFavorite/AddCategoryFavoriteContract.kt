@@ -2,6 +2,7 @@ package com.framgia.fbook.screen.addCategoryFavorite;
 
 import com.framgia.fbook.data.model.Category
 import com.framgia.fbook.data.source.remote.api.error.BaseException
+import com.framgia.fbook.data.source.remote.api.request.AddCategoryFavoriteRequest
 import com.framgia.fbook.screen.BasePresenter;
 import com.framgia.fbook.screen.BaseViewModel;
 
@@ -32,6 +33,6 @@ interface AddCategoryFavoriteContract {
 
     fun getCategory()
 
-    fun updateCategory(tag: String?)
+    fun updateCategory(addCategoryFavoriteRequest: AddCategoryFavoriteRequest?)
   }
 }
