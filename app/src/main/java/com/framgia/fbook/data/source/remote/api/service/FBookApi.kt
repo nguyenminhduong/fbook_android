@@ -75,4 +75,8 @@ interface FBookApi {
 
   @GET("/api/v0/books/sort-by/?office_id=1")
   fun getListSortBook(): Single<BaseResponse<List<SortBook>>>
+
+  @GET("/api/v0/books/")
+  fun getListBookBySort(@Query("field") type: String?, @Query(
+      "page") page: Int?, @Body sort: Sort?): Single<BaseResponse<BaseBookRespone<List<Book>>>>
 }

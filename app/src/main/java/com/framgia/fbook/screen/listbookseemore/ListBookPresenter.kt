@@ -25,6 +25,22 @@ open class ListBookPresenter(private val mCategoryRepository: CategoryRepository
     mCompositeDisposable.clear()
   }
 
+  override fun getListSortBook() {
+    val disposable: Disposable = mBookRepository.getListSortBook()
+        .subscribeOn(mSchedulerProvider.io())
+        .doOnSubscribe { mViewModel?.onShowProgressBarDialog() }
+        .doAfterTerminate { mViewModel?.onDismissProgressBarDialog() }
+        .observeOn(mSchedulerProvider.ui())
+        .subscribe(
+            { sortBookResponse ->
+              mViewModel?.onGetListSortBookSuccess(sortBookResponse.items)
+            },
+            { error ->
+              mViewModel?.onError(error as BaseException)
+            })
+    mCompositeDisposable.add(disposable)
+  }
+
   override fun getListBookByCategory(categoryId: Int?) {
     val disposable: Disposable = mCategoryRepository.getListBookByCategory(categoryId)
         .subscribeOn(mSchedulerProvider.io())
@@ -64,7 +80,7 @@ open class ListBookPresenter(private val mCategoryRepository: CategoryRepository
               .subscribeOn(mSchedulerProvider.io())
               .observeOn(mSchedulerProvider.ui())
               .subscribe({ listBookLateResponse ->
-                mViewModel?.onGetListBookSuccess(listBookLateResponse.item?.data)
+                mViewModel?.onGetListBookSuccess(listBookLateResponse.items?.data)
               }, { error ->
                 mViewModel?.onError(error as BaseException)
               })
@@ -75,7 +91,7 @@ open class ListBookPresenter(private val mCategoryRepository: CategoryRepository
               .subscribeOn(mSchedulerProvider.io())
               .observeOn(mSchedulerProvider.ui())
               .subscribe({ listBookLateResponse ->
-                mViewModel?.onGetListBookSuccess(listBookLateResponse.item?.data)
+                mViewModel?.onGetListBookSuccess(listBookLateResponse.items?.data)
               }, { error ->
                 mViewModel?.onError(error as BaseException)
               })
@@ -87,7 +103,7 @@ open class ListBookPresenter(private val mCategoryRepository: CategoryRepository
               .subscribeOn(mSchedulerProvider.io())
               .observeOn(mSchedulerProvider.ui())
               .subscribe({ listBookLateResponse ->
-                mViewModel?.onGetListBookSuccess(listBookLateResponse.item?.data)
+                mViewModel?.onGetListBookSuccess(listBookLateResponse.items?.data)
               }, { error ->
                 mViewModel?.onError(error as BaseException)
               })
@@ -99,7 +115,7 @@ open class ListBookPresenter(private val mCategoryRepository: CategoryRepository
               .subscribeOn(mSchedulerProvider.io())
               .observeOn(mSchedulerProvider.ui())
               .subscribe({ listBookLateResponse ->
-                mViewModel?.onGetListBookSuccess(listBookLateResponse.item?.data)
+                mViewModel?.onGetListBookSuccess(listBookLateResponse.items?.data)
               }, { error ->
                 mViewModel?.onError(error as BaseException)
               })
@@ -110,7 +126,7 @@ open class ListBookPresenter(private val mCategoryRepository: CategoryRepository
               .subscribeOn(mSchedulerProvider.io())
               .observeOn(mSchedulerProvider.ui())
               .subscribe({ listBookLateResponse ->
-                mViewModel?.onGetListBookSuccess(listBookLateResponse.item?.data)
+                mViewModel?.onGetListBookSuccess(listBookLateResponse.items?.data)
               }, { error ->
                 mViewModel?.onError(error as BaseException)
               })

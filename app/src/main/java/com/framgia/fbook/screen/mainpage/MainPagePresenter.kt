@@ -31,28 +31,28 @@ open class MainPagePresenter(
         .doAfterTerminate { mViewModel.onDismissProgressDialog() }
         .flatMap { listBookLateResponse ->
           mViewModel.onGetSectionListBookSuccess(TypeBook.LATE_BOOK,
-              listBookLateResponse.item?.data)
+              listBookLateResponse.items?.data)
           mBookRepository.getSectionListBook(Constant.RATING, Constant.PAGE)
         }
         .flatMap { listBookRatingResponse ->
           mViewModel.onGetSectionListBookSuccess(TypeBook.RATING_BOOK,
-              listBookRatingResponse.item?.data)
+              listBookRatingResponse.items?.data)
           mBookRepository.getSectionListBook(Constant.VIEW, Constant.PAGE)
         }
         .flatMap { listBookViewResponse ->
           mViewModel.onGetSectionListBookSuccess(TypeBook.VIEW_BOOK,
-              listBookViewResponse.item?.data)
+              listBookViewResponse.items?.data)
           mBookRepository.getSectionListBook(Constant.WAITING, Constant.PAGE)
         }
         .flatMap { listBookWaitingResponse ->
           mViewModel.onGetSectionListBookSuccess(TypeBook.WAITING_BOOK,
-              listBookWaitingResponse.item?.data)
+              listBookWaitingResponse.items?.data)
           mBookRepository.getSectionListBook(Constant.READ, Constant.PAGE)
         }
         .observeOn(mSchedulerProvider.ui())
         .subscribe({ listBookReadResponse ->
           mViewModel.onGetSectionListBookSuccess(TypeBook.READ_BOOK,
-              listBookReadResponse.item?.data)
+              listBookReadResponse.items?.data)
         }, { error ->
           if(error is BaseException) {
             mViewModel.onError(error)

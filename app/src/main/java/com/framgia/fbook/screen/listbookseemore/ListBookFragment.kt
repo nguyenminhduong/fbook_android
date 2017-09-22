@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import com.framgia.fbook.R
 import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.model.Category
+import com.framgia.fbook.data.model.SortBook
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.databinding.FragmentListbookBinding
 import com.framgia.fbook.screen.BaseFragment
@@ -34,7 +35,9 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel, onItem
   @Inject
   internal lateinit var mListBookAdapter: ListBookAdapter
   private val mListCategory = mutableListOf<Category>()
+  private val mListSortBook = mutableListOf<SortBook>()
   private var mCurrentCategoryPosition = 0
+  private var mCurrentSortBookPosition = 0
   private var mIsGetBookByCategory = false
   private var mIsBookNormal = true
   val mShowProgress: ObservableField<Boolean> = ObservableField()
@@ -56,6 +59,7 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel, onItem
     val typeBook = arguments.getString(Constant.LIST_BOOK_EXTRA)
     mPresenter.getListBook(typeBook, Constant.PAGE)
     mPresenter.getListCategory()
+    mPresenter.getListSortBook()
     val gridLayoutManager = GridLayoutManager(context, 2)
     binding.recyclerListBook.layoutManager = gridLayoutManager
     binding.recyclerListBook.addOnScrollListener(
@@ -110,6 +114,12 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel, onItem
     mIsGetBookByCategory = true
   }
 
+  override fun onGetListSortBookSuccess(listSort: List<SortBook>?) {
+    listSort?.let {
+      mListSortBook.addAll(it)
+    }
+  }
+
   override fun onItemClickListener(any: Any?) {
     //TODO dev later
   }
@@ -119,7 +129,7 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel, onItem
       return
     }
     val listCategory: MutableList<String?> = mutableListOf()
-    mListCategory.indices.mapTo(listCategory) { mListCategory[it].name.toString() }
+    mListCategory.indices.mapTo(listCategory) { mListCategory[it].name }
     mDialogManager.dialogListSingleChoice(context.getString(R.string.category), listCategory,
         mCurrentCategoryPosition,
         MaterialDialog.ListCallbackSingleChoice({ _, _, position, charSequence ->
@@ -134,7 +144,22 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel, onItem
   }
 
   fun onClickSortBy() {
-    //TODO dev later
+    if (mListSortBook.isEmpty()) {
+      return
+    }
+    val listSortBook: MutableList<String?> = mutableListOf()
+    mListSortBook.indices.mapTo(listSortBook) { mListSortBook[it].text }
+    mDialogManager.dialogListSingleChoice(context.getString(R.string.sort_by), listSortBook,
+        mCurrentSortBookPosition, MaterialDialog.ListCallbackSingleChoice(
+        { _, _, position, charSequence ->
+          run {
+            mCurrentSortBookPosition = position
+            mCurrentSortBy.set(charSequence.toString())
+            //TODO edit later
+          }
+          true
+        }
+    ))
   }
 
   companion object {
