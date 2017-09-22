@@ -65,6 +65,8 @@
     <string name="user_reading">User Reading</string>
     <string name="user_returning">User Returning</string>
     <string name="user_returned">User Returned</string>
+    <string name="desc">Desc</string>
+    <string name="asc">Asc</string>
 
     <!-- Dialog -->
     <string name="agree">Agree</string>

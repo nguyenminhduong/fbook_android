@@ -23,4 +23,10 @@
         <item name="android:textSize">@dimen/sp_20</item>
         <item name="colorAccent">@color/colorPrimary</item>
     </style>
+
+    <style name="Theme.SwitchTheme" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/color_white</item>
+        <item name="colorPrimaryDark">@color/color_white</item>
+        <item name="colorAccent">@color/color_white</item>
+    </style>
 </resources>
