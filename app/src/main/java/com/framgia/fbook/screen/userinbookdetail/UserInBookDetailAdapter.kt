@@ -5,28 +5,31 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import com.framgia.fbook.R
+import com.framgia.fbook.data.model.Book
+import com.framgia.fbook.screen.userinbookdetail.screen.UserReview.UserReviewFragment
 import com.framgia.fbook.utils.Constant
 
 /**
  * Created by framgia on 21/09/2017.
  */
 class UserInBookDetailAdapter(private val context: Context,
-    fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
+    fragmentManager: FragmentManager, private val mBook: Book) : FragmentPagerAdapter(
+    fragmentManager) {
 
   companion object {
     val TOTAL_TAB: Int = 5
   }
 
-  private val mFragments: MutableList<Fragment> = ArrayList<Fragment>()
-
-  init {
-    for (i in 0 until UserInBookDetailAdapter.TOTAL_TAB) {
-      mFragments.add(Fragment())
-    }
-  }
-
   override fun getItem(position: Int): Fragment {
+    when (position) {
+      Constant.TabUser.TAB_USER_REVIEW -> return UserReviewFragment.newInstance(mBook)
+
     //TODO edit later
+      Constant.TabUser.TAB_USER_WAITING -> return UserReviewFragment.newInstance(mBook)
+      Constant.TabUser.TAB_USER_READING -> return UserReviewFragment.newInstance(mBook)
+      Constant.TabUser.TAB_USER_RETURNING -> return UserReviewFragment.newInstance(mBook)
+      Constant.TabUser.TAB_USER_RETURNED -> return UserReviewFragment.newInstance(mBook)
+    }
     return Fragment()
   }
 
@@ -42,12 +45,4 @@ class UserInBookDetailAdapter(private val context: Context,
   }
 
   override fun getCount(): Int = UserInBookDetailAdapter.TOTAL_TAB
-
-  fun getFragment(position: Int?): Fragment? {
-    try {
-      return position?.let { mFragments[it] }
-    } catch (e: IndexOutOfBoundsException) {
-      return null
-    }
-  }
 }

@@ -30,22 +30,28 @@ open class UserInBookDetailActivity : BaseActivity(), UserInBookDetailContract.V
   internal lateinit var mNavigator: Navigator
   @Inject
   internal lateinit var mUserInBookDetailAdapter: UserInBookDetailAdapter
+  lateinit var mUserInBookDetailComponent: UserInBookDetailComponent
+
 
   val mBook: ObservableField<Book> = ObservableField()
   val mPageLimit: ObservableField<Int> = ObservableField(4)
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    DaggerUserInBookDetailComponent.builder()
+
+    val book: Book = intent.getParcelableExtra(Constant.USER_BOOK_DETAIL_EXTRA)
+
+    mUserInBookDetailComponent = DaggerUserInBookDetailComponent.builder()
         .appComponent((application as MainApplication).appComponent)
-        .userInBookDetailModule(UserInBookDetailModule(this))
+        .userInBookDetailModule(UserInBookDetailModule(this, book))
         .build()
-        .inject(this)
+    mUserInBookDetailComponent.inject(this)
 
     val binding = DataBindingUtil.setContentView<ActivityUserInBookDetailBinding>(this,
         R.layout.activity_user_in_book_detail)
     binding.viewModel = this
-    initData()
+
+    mBook.set(book)
   }
 
   override fun onStart() {
@@ -63,16 +69,15 @@ open class UserInBookDetailActivity : BaseActivity(), UserInBookDetailContract.V
     super.onBackPressed()
   }
 
+  fun getUserInBookDetailComponent(): UserInBookDetailComponent {
+    return mUserInBookDetailComponent
+  }
+
   fun onClickArrowBack(view: View) {
     mNavigator.finishActivityWithResult(Activity.RESULT_OK)
   }
 
   fun onClickSearch(view: View) {
     mNavigator.startActivity(SearchBookActivity::class.java)
-  }
-
-  private fun initData() {
-    val book: Book = intent.getParcelableExtra(Constant.USER_BOOK_DETAIL_EXTRA)
-    mBook.set(book)
   }
 }

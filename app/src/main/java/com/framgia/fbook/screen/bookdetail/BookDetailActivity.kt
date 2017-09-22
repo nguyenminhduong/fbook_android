@@ -87,6 +87,9 @@ open class BookDetailActivity : BaseActivity(), BookDetailContract.ViewModel, It
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
     if (resultCode == Activity.RESULT_OK && requestCode == Constant.RequestCode.BOOK_DETAIL_REQUEST) {
+      mUserRepository.getUserLocal()?.let {
+        mUserId = it.id
+      }
       mPresenter.getBookDetail(mBookId)
     }
   }
@@ -190,6 +193,23 @@ open class BookDetailActivity : BaseActivity(), BookDetailContract.ViewModel, It
     return mIsUserWaitingThisBook.set(userWaitingThisBook)
   }
 
+  private fun isUserNotLoggedIn(): Boolean {
+    if (mUserRepository.getUserLocal() == null) {
+      showDialogInformUserNotLogin()
+      return true
+    }
+    return false
+  }
+
+  private fun showDialogInformUserNotLogin() {
+    mDialogManager.dialogBasic(getString(R.string.inform),
+        getString(R.string.you_must_be_login_into_perform_this_function),
+        MaterialDialog.SingleButtonCallback { materialDialog, dialogAction ->
+          mNavigator.startActivityForResult(LoginActivity::class.java, Bundle(),
+              Constant.RequestCode.BOOK_DETAIL_REQUEST)
+        })
+  }
+
   fun onClickArrowBack(view: View) {
     mNavigator.finishActivity()
   }
@@ -199,6 +219,9 @@ open class BookDetailActivity : BaseActivity(), BookDetailContract.ViewModel, It
   }
 
   fun onClickUserHaveThisBook(view: View) {
+    if (isUserNotLoggedIn()) {
+      return
+    }
     mDialogManager.dialogBasic(getString(R.string.inform),
         getString(R.string.are_you_sure_add_owner_this_book),
         MaterialDialog.SingleButtonCallback { materialDialog, dialogAction ->
@@ -207,6 +230,9 @@ open class BookDetailActivity : BaseActivity(), BookDetailContract.ViewModel, It
   }
 
   fun onClickRemoveOwnerThisBook(view: View) {
+    if (isUserNotLoggedIn()) {
+      return
+    }
     mDialogManager.dialogBasic(getString(R.string.inform),
         getString(R.string.are_you_sure_remove_owner_this_book),
         MaterialDialog.SingleButtonCallback { materialDialog, dialogAction ->
@@ -215,6 +241,9 @@ open class BookDetailActivity : BaseActivity(), BookDetailContract.ViewModel, It
   }
 
   fun onClickWantToReadingBook(view: View) {
+    if (isUserNotLoggedIn()) {
+      return
+    }
     mActionBookDetail.status = Status.WANT_TO_READ_THIS_BOOK.value
 
     val ownerNames: MutableList<String?> = mutableListOf()
@@ -239,6 +268,9 @@ open class BookDetailActivity : BaseActivity(), BookDetailContract.ViewModel, It
   }
 
   fun onClickCancelWaitingBook(view: View) {
+    if (isUserNotLoggedIn()) {
+      return
+    }
     mActionBookDetail.status = Status.CANCEL_WAITING_THIS_BOOK.value
 
     mUserWaitings.forEach { userWaiting ->

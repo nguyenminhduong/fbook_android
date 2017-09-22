@@ -1,8 +1,6 @@
-package com.framgia.fbook.screen.userinbookdetail;
+package com.framgia.fbook.screen.userinbookdetail.screen.UserReview
 
-import android.app.Activity
-import android.support.v4.app.FragmentActivity
-import com.framgia.fbook.data.model.Book
+import android.support.v4.app.Fragment
 import com.framgia.fbook.data.source.BookRepository
 import com.framgia.fbook.data.source.BookRepositoryImpl
 import com.framgia.fbook.data.source.UserRepository
@@ -10,7 +8,7 @@ import com.framgia.fbook.data.source.UserRepositoryImpl
 import com.framgia.fbook.data.source.local.UserLocalDataSource
 import com.framgia.fbook.data.source.remote.BookRemoteDataSource
 import com.framgia.fbook.data.source.remote.UserRemoteDataSource
-import com.framgia.fbook.utils.dagger.ActivityScope
+import com.framgia.fbook.utils.dagger.FragmentScope
 import com.framgia.fbook.utils.navigator.Navigator
 import com.framgia.fbook.utils.rx.BaseSchedulerProvider
 import com.fstyle.structure_android.widget.dialog.DialogManager
@@ -20,50 +18,43 @@ import dagger.Provides
 
 /**
  * This is a Dagger module. We use this to pass in the View dependency to
- * the {@link UserInBookDetailPresenter}.
+ * the [UserReviewPresenter].
  */
 @Module
-class UserInBookDetailModule(private val activity: Activity, private val mBook: Book) {
+class UserReviewModule(private val mFragment: Fragment) {
 
-  @ActivityScope
+  @FragmentScope
   @Provides
   fun providePresenter(bookRepository: BookRepository,
-      basesShedulerProvider: BaseSchedulerProvider): UserInBookDetailContract.Presenter {
-    val presenter = UserInBookDetailPresenter(bookRepository)
-    presenter.setSchedulerProvider(basesShedulerProvider)
-    presenter.setViewModel(activity as UserInBookDetailContract.ViewModel)
+      schedulerProvider: BaseSchedulerProvider): UserReviewContract.Presenter {
+    val presenter = UserReviewPresenter(bookRepository)
+    presenter.setViewModel(mFragment as UserReviewContract.ViewModel)
+    presenter.setSchedulerProvider(schedulerProvider)
     return presenter
   }
 
-  @ActivityScope
-  @Provides
-  fun provideBookRepository(bookRemoteDataSource: BookRemoteDataSource): BookRepository {
-    return BookRepositoryImpl(bookRemoteDataSource)
-  }
-
-  @ActivityScope
+  @FragmentScope
   @Provides
   fun provideUserRepository(userRemoteDataSource: UserRemoteDataSource,
       userLocalDataSource: UserLocalDataSource): UserRepository {
     return UserRepositoryImpl(userRemoteDataSource, userLocalDataSource)
   }
 
-  @ActivityScope
+  @FragmentScope
   @Provides
-  fun provideUserInBookDetailAdapter(): UserInBookDetailAdapter {
-    return UserInBookDetailAdapter(activity,
-        (activity as FragmentActivity).supportFragmentManager, mBook)
+  fun provideBookRepository(bookRemoteDataSource: BookRemoteDataSource): BookRepository {
+    return BookRepositoryImpl(bookRemoteDataSource)
   }
 
-  @ActivityScope
+  @FragmentScope
   @Provides
   fun provideDialogManager(): DialogManager {
-    return DialogManagerImpl(activity)
+    return DialogManagerImpl(mFragment.context)
   }
 
-  @ActivityScope
+  @FragmentScope
   @Provides
   fun provideNavigator(): Navigator {
-    return Navigator(activity)
+    return Navigator(mFragment)
   }
 }
