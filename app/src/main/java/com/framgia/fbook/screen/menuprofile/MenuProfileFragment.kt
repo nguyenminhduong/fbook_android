@@ -13,6 +13,7 @@ import com.framgia.fbook.data.model.User
 import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.databinding.FragmentMenuProfileBinding
 import com.framgia.fbook.screen.BaseFragment
+import com.framgia.fbook.screen.approverequest.ApproveRequestActivity
 import com.framgia.fbook.screen.categoryfavorite.CategoryFavoriteFragment
 import com.framgia.fbook.screen.login.LoginActivity
 import com.framgia.fbook.screen.main.MainActivity
@@ -126,7 +127,7 @@ class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
   }
 
   fun onClickApproveRequest() {
-    //Todo navigation Activity Approve Request
+    mNavigator.startActivity(ApproveRequestActivity::class.java)
   }
 
   fun onClickSetting() {
