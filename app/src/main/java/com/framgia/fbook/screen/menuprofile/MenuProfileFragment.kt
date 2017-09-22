@@ -29,11 +29,10 @@ import javax.inject.Inject
  * Menuprofile Screen.
  */
 class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
-  private val PAGE_LIMIT = 1
 
+  private val mNavigator: Navigator by lazy { Navigator(this) }
   @Inject
   internal lateinit var mPresenter: MenuProfileContract.Presenter
-  private val mNavigator: Navigator by lazy { Navigator(this) }
   @Inject
   internal lateinit var menuProfileAdapter: MenuProfileAdapter
   private lateinit var mMenuProfileComponent: MenuProfileComponent
@@ -70,6 +69,7 @@ class MenuProfileFragment : BaseFragment(), MenuProfileContract.ViewModel {
   }
 
   companion object {
+    private val PAGE_LIMIT = 1
     val TAG: String = "MenuProfileFragment"
     fun newInstance(): MenuProfileFragment {
       return MenuProfileFragment()

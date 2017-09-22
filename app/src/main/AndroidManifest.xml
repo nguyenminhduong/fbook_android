@@ -53,6 +53,9 @@
             android:name=".screen.userinbookdetail.UserInBookDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".screen.profile.ProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"/>
     </application>
-
 </manifest>
