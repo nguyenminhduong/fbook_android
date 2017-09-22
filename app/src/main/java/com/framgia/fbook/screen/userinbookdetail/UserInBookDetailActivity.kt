@@ -1,12 +1,21 @@
 package com.framgia.fbook.screen.userinbookdetail;
 
+import android.app.Activity
 import android.databinding.DataBindingUtil
+import android.databinding.ObservableField
 import android.os.Bundle
+import android.view.View
 import com.framgia.fbook.MainApplication
 import com.framgia.fbook.R
+import com.framgia.fbook.data.model.Book
+import com.framgia.fbook.data.source.UserRepository
 import com.framgia.fbook.databinding.ActivityUserInBookDetailBinding
 import com.framgia.fbook.screen.BaseActivity
+import com.framgia.fbook.screen.SearchBook.SearchBookActivity
+import com.framgia.fbook.utils.Constant
+import com.framgia.fbook.utils.navigator.Navigator
 import javax.inject.Inject
+
 
 /**
  * UserInBookDetail Screen.
@@ -14,7 +23,16 @@ import javax.inject.Inject
 open class UserInBookDetailActivity : BaseActivity(), UserInBookDetailContract.ViewModel {
 
   @Inject
-  internal lateinit var presenter: UserInBookDetailContract.Presenter
+  internal lateinit var mPresenter: UserInBookDetailContract.Presenter
+  @Inject
+  internal lateinit var mUserRepository: UserRepository
+  @Inject
+  internal lateinit var mNavigator: Navigator
+  @Inject
+  internal lateinit var mUserInBookDetailAdapter: UserInBookDetailAdapter
+
+  val mBook: ObservableField<Book> = ObservableField()
+  val mPageLimit: ObservableField<Int> = ObservableField(4)
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -27,15 +45,34 @@ open class UserInBookDetailActivity : BaseActivity(), UserInBookDetailContract.V
     val binding = DataBindingUtil.setContentView<ActivityUserInBookDetailBinding>(this,
         R.layout.activity_user_in_book_detail)
     binding.viewModel = this
+    initData()
   }
 
   override fun onStart() {
     super.onStart()
-    presenter.onStart()
+    mPresenter.onStart()
   }
 
   override fun onStop() {
-    presenter.onStop()
+    mPresenter.onStop()
     super.onStop()
+  }
+
+  override fun onBackPressed() {
+    mNavigator.finishActivityWithResult(Activity.RESULT_OK)
+    super.onBackPressed()
+  }
+
+  fun onClickArrowBack(view: View) {
+    mNavigator.finishActivityWithResult(Activity.RESULT_OK)
+  }
+
+  fun onClickSearch(view: View) {
+    mNavigator.startActivity(SearchBookActivity::class.java)
+  }
+
+  private fun initData() {
+    val book: Book = intent.getParcelableExtra(Constant.USER_BOOK_DETAIL_EXTRA)
+    mBook.set(book)
   }
 }

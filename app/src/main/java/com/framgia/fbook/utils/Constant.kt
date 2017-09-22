@@ -20,6 +20,7 @@ object Constant {
   val EXTRA_EMTY = ""
 
   val BOOK_DETAIL_EXTRA = "book_detail"
+  val USER_BOOK_DETAIL_EXTRA = "user_book_detail"
 
   object Tab {
     val TAB_HOME: Int = 0
@@ -29,7 +30,16 @@ object Constant {
   }
 
   object RequestCode {
-    val TAB_MY_BOOK_REQUEST: Int = 101;
-    val TAB_PROFILE_REQUEST: Int = 102;
+    val TAB_MY_BOOK_REQUEST: Int = 101
+    val TAB_PROFILE_REQUEST: Int = 102
+    val BOOK_DETAIL_REQUEST: Int = 103
+  }
+
+  object TabUser {
+    val TAB_USER_REVIEW = 0
+    val TAB_USER_WAITING = 1
+    val TAB_USER_READING = 2
+    val TAB_USER_RETURNING = 3
+    val TAB_USER_RETURNED = 4
   }
 }
