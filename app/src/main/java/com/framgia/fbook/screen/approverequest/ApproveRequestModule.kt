@@ -1,8 +1,17 @@
 package com.framgia.fbook.screen.approverequest
 
 import android.app.Activity
+import com.framgia.fbook.data.source.BookRepository
+import com.framgia.fbook.data.source.BookRepositoryImpl
+import com.framgia.fbook.data.source.UserRepository
+import com.framgia.fbook.data.source.UserRepositoryImpl
+import com.framgia.fbook.data.source.local.UserLocalDataSource
+import com.framgia.fbook.data.source.remote.BookRemoteDataSource
+import com.framgia.fbook.data.source.remote.UserRemoteDataSource
 import com.framgia.fbook.utils.dagger.ActivityScope
 import com.framgia.fbook.utils.navigator.Navigator
+import com.fstyle.structure_android.widget.dialog.DialogManager
+import com.fstyle.structure_android.widget.dialog.DialogManagerImpl
 import dagger.Module
 import dagger.Provides
 
@@ -15,8 +24,8 @@ class ApproveRequestModule(private val activity: Activity) {
 
   @ActivityScope
   @Provides
-  fun providePresenter(): ApproveRequestContract.Presenter {
-    val presenter = ApproveRequestPresenter()
+  fun providePresenter(bookRepository: BookRepository): ApproveRequestContract.Presenter {
+    val presenter = ApproveRequestPresenter(bookRepository)
     presenter.setViewModel(activity as ApproveRequestContract.ViewModel)
     return presenter
   }
@@ -25,5 +34,23 @@ class ApproveRequestModule(private val activity: Activity) {
   @Provides
   fun provideNavigator(): Navigator {
     return Navigator(activity)
+  }
+
+  @ActivityScope
+  @Provides
+  fun provideBookRepository(bookRemoteDataSource: BookRemoteDataSource): BookRepository {
+    return BookRepositoryImpl(bookRemoteDataSource)
+  }
+
+  @ActivityScope
+  @Provides
+  fun provideApproveRequestAdapter(): ApproveRequestAdapter {
+    return ApproveRequestAdapter(activity)
+  }
+
+  @ActivityScope
+  @Provides
+  fun provideDialogManager(): DialogManager {
+    return DialogManagerImpl(activity)
   }
 }

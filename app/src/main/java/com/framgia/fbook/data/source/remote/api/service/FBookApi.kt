@@ -79,4 +79,7 @@ interface FBookApi {
   @GET("/api/v0/books/")
   fun getListBookBySort(@Query("field") type: String?, @Query(
       "page") page: Int?, @Body sort: Sort?): Single<BaseResponse<BaseBookRespone<List<Book>>>>
+
+  @GET("/api/v0/user/books/waiting_approve")
+  fun getApproveRequest(): Single<BaseResponse<BaseBookRespone<List<Book>>>>
 }
