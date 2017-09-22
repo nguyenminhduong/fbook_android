@@ -67,6 +67,7 @@
     <string name="user_returned">User Returned</string>
     <string name="desc">Desc</string>
     <string name="asc">Asc</string>
+    <string name="waiting_approve">Waiting Approve</string>
 
     <!-- Dialog -->
     <string name="agree">Agree</string>

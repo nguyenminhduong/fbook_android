@@ -54,6 +54,7 @@
     <string name="user_reading">Đang đọc</string>
     <string name="user_returning">Đang trả lại</string>
     <string name="user_returned">Đã trả lại</string>
+    <string name="waiting_approve">Chờ phê duyệt</string>
 
     <!-- Dialog -->
     <string name="agree">Đồng ý</string>
