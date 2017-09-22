@@ -1,5 +1,6 @@
 package com.framgia.fbook.screen.listbookseemore
 
+import com.framgia.fbook.data.model.Sort
 import com.framgia.fbook.data.source.BookRepository
 import com.framgia.fbook.data.source.CategoryRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException
@@ -25,6 +26,28 @@ open class ListBookPresenter(private val mCategoryRepository: CategoryRepository
     mCompositeDisposable.clear()
   }
 
+  override fun getListBookBySort(type: String?, page: Int?, sort: Sort?) {
+    val disposable: Disposable = mBookRepository.getListBookBySort(type, page, sort)
+        .subscribeOn(mSchedulerProvider.io())
+        .doOnSubscribe {
+          mViewModel?.let {
+            if (it.isShowProgressDialog()) {
+              it.onShowProgressBarDialog()
+            }
+          }
+        }
+        .doAfterTerminate { mViewModel?.onDismissProgressBarDialog() }
+        .observeOn(mSchedulerProvider.ui())
+        .subscribe(
+            { listBookResponse ->
+              mViewModel?.onGetListBookSuccess(listBookResponse.items?.data)
+            },
+            { error ->
+              mViewModel?.onError(error as BaseException)
+            })
+    mCompositeDisposable.add(disposable)
+  }
+
   override fun getListSortBook() {
     val disposable: Disposable = mBookRepository.getListSortBook()
         .subscribeOn(mSchedulerProvider.io())
@@ -44,13 +67,19 @@ open class ListBookPresenter(private val mCategoryRepository: CategoryRepository
   override fun getListBookByCategory(categoryId: Int?) {
     val disposable: Disposable = mCategoryRepository.getListBookByCategory(categoryId)
         .subscribeOn(mSchedulerProvider.io())
-        .doOnSubscribe { mViewModel?.onShowProgressBarDialog() }
+        .doOnSubscribe {
+          mViewModel?.let {
+            if (it.isShowProgressDialog()) {
+              it.onShowProgressBarDialog()
+            }
+          }
+        }
         .doAfterTerminate { mViewModel?.onDismissProgressBarDialog() }
         .observeOn(mSchedulerProvider.ui())
         .subscribe(
             { listBookResponse ->
-              mViewModel?.onGetListBookByCategorySuccess(
-                  listBookResponse.item?.categoryResponse?.data)
+              mViewModel?.onGetListBookSuccess(
+                  listBookResponse.items?.categoryResponse?.data)
             },
             { error ->
               mViewModel?.onError(error as BaseException)

@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import com.framgia.fbook.R
 import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.model.Category
+import com.framgia.fbook.data.model.Sort
 import com.framgia.fbook.data.model.SortBook
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.databinding.FragmentListbookBinding
@@ -38,11 +39,16 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel, onItem
   private val mListSortBook = mutableListOf<SortBook>()
   private var mCurrentCategoryPosition = 0
   private var mCurrentSortBookPosition = 0
-  private var mIsGetBookByCategory = false
-  private var mIsBookNormal = true
+  private var mIsLoadMore = false
+  private var mTypeBook: String? = null
+  private var mTypeGetBook: Int = 0
+  private val mSort by lazy { Sort() }
+  private var mIsShowProgressDialog = true
   val mShowProgress: ObservableField<Boolean> = ObservableField()
   val mCurrentCategory: ObservableField<String> = ObservableField()
   val mCurrentSortBy: ObservableField<String> = ObservableField()
+  val mIsOrderByAsc: ObservableField<Boolean> = ObservableField()
+
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
 
@@ -56,21 +62,31 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel, onItem
         R.layout.fragment_listbook, container, false)
     binding.viewModel = this
     mListBookAdapter.setItemInternalBookListener(this)
-    val typeBook = arguments.getString(Constant.LIST_BOOK_EXTRA)
-    mPresenter.getListBook(typeBook, Constant.PAGE)
+    mTypeBook = arguments.getString(Constant.LIST_BOOK_EXTRA)
+    mPresenter.getListBook(mTypeBook, Constant.PAGE)
     mPresenter.getListCategory()
     mPresenter.getListSortBook()
+    mIsOrderByAsc.set(false)
     val gridLayoutManager = GridLayoutManager(context, 2)
     binding.recyclerListBook.layoutManager = gridLayoutManager
     binding.recyclerListBook.addOnScrollListener(
         object : EndlessRecyclerOnScrollListener(gridLayoutManager) {
           override fun onLoadMore(page: Int) {
-            if (mIsGetBookByCategory) {
-              //TODO edit later
-            } else {
-              mShowProgress.set(true)
-              mPresenter.getListBook(typeBook, page)
+            mIsLoadMore = true
+            mIsShowProgressDialog = false
+            mShowProgress.set(true)
+            when (mTypeGetBook) {
+              BOOK_NORMAL -> {
+                mPresenter.getListBook(mTypeBook, page)
+              }
+              BOOK_CATEGORY -> {
+                //TODO edit later
+              }
+              BOOK_SORT -> {
+                mPresenter.getListBookBySort(mTypeBook, page, mSort)
+              }
             }
+
           }
         })
 
@@ -95,6 +111,10 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel, onItem
     mDialogManager.showIndeterminateProgressDialog()
   }
 
+  override fun isShowProgressDialog(): Boolean {
+    return mIsShowProgressDialog
+  }
+
   override fun onError(exception: BaseException) {
     mDialogManager.dialogError(exception.getMessageError())
     mShowProgress.set(false)
@@ -104,24 +124,28 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel, onItem
     listCategory?.let { mListCategory.addAll(listCategory) }
   }
 
-  override fun onGetListBookSuccess(listBook: List<Book>?) {
-    mListBookAdapter.updateData(listBook, mIsBookNormal)
-    mShowProgress.set(false)
-  }
-
-  override fun onGetListBookByCategorySuccess(listBook: List<Book>?) {
-    listBook?.let { mListBookAdapter.updateData(listBook, mIsBookNormal) }
-    mIsGetBookByCategory = true
-  }
-
   override fun onGetListSortBookSuccess(listSort: List<SortBook>?) {
     listSort?.let {
       mListSortBook.addAll(it)
     }
   }
 
+  override fun onGetListBookSuccess(listBook: List<Book>?) {
+    if (!mIsLoadMore) {
+      mListBookAdapter.clearData()
+    }
+    listBook?.let {
+      mListBookAdapter.updateData(listBook)
+    }
+    mShowProgress.set(false)
+  }
+
   override fun onItemClickListener(any: Any?) {
     //TODO dev later
+  }
+
+  fun onClickOrderBy() {
+    mIsOrderByAsc.set(!mIsOrderByAsc.get())
   }
 
   fun onClickChooseCategory() {
@@ -136,8 +160,11 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel, onItem
           run {
             mCurrentCategoryPosition = position
             mCurrentCategory.set(charSequence.toString())
+            mIsShowProgressDialog = true
             mPresenter.getListBookByCategory(mListCategory[position].id)
-            mIsBookNormal = false
+            mTypeGetBook = BOOK_CATEGORY
+            mIsLoadMore = false
+            EndlessRecyclerOnScrollListener.resetLoadMore()
           }
           true
         }))
@@ -151,11 +178,21 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel, onItem
     mListSortBook.indices.mapTo(listSortBook) { mListSortBook[it].text }
     mDialogManager.dialogListSingleChoice(context.getString(R.string.sort_by), listSortBook,
         mCurrentSortBookPosition, MaterialDialog.ListCallbackSingleChoice(
-        { _, _, position, charSequence ->
+        { _, _, position, _ ->
           run {
             mCurrentSortBookPosition = position
-            mCurrentSortBy.set(charSequence.toString())
-            //TODO edit later
+            mCurrentSortBy.set(mListSortBook[position].text)
+            mSort.by = if (mIsOrderByAsc.get()) {
+              ASC
+            } else {
+              DESC
+            }
+            mSort.orderBy = mListSortBook[position].field
+            mIsShowProgressDialog = true
+            mPresenter.getListBookBySort(mTypeBook, Constant.PAGE, mSort)
+            mTypeGetBook = BOOK_SORT
+            mIsLoadMore = false
+            EndlessRecyclerOnScrollListener.resetLoadMore()
           }
           true
         }
@@ -165,6 +202,11 @@ open class ListBookFragment : BaseFragment(), ListBookContract.ViewModel, onItem
   companion object {
 
     val TAG = ListBookFragment::class.java.simpleName
+    private val DESC = "desc"
+    private val ASC = "asc"
+    private val BOOK_NORMAL = 0
+    private val BOOK_CATEGORY = 1
+    private val BOOK_SORT = 2
 
     fun newInstance(typeBook: String): ListBookFragment {
       val listBookFragment = ListBookFragment()

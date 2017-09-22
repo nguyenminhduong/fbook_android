@@ -16,10 +16,18 @@ abstract class EndlessRecyclerOnScrollListener(
   protected abstract fun onLoadMore(page: Int)
 
   private val visibleThreshold = 5
-  private var currentPage = 1
-  private var previousTotalItemCount = 0
+
   private var loading = true
   private val startingPageIndex = 2
+
+  companion object {
+    private var currentPage = 1
+    private var previousTotalItemCount = 0
+    fun resetLoadMore() {
+      currentPage = 1
+      previousTotalItemCount = 0
+    }
+  }
 
   private fun getLastVisibleItem(lastVisibleItemPositions: IntArray): Int {
     var maxSize = 0
@@ -47,8 +55,8 @@ abstract class EndlessRecyclerOnScrollListener(
       is LinearLayoutManager -> lastVisibleItemPosition = mLayoutManager.findLastVisibleItemPosition()
     }
     if (totalItemCount < previousTotalItemCount) {
-      this.currentPage = this.startingPageIndex
-      this.previousTotalItemCount = totalItemCount
+      currentPage = this.startingPageIndex
+      previousTotalItemCount = totalItemCount
       if (totalItemCount == 0) {
         this.loading = true
       }
@@ -63,4 +71,6 @@ abstract class EndlessRecyclerOnScrollListener(
       loading = true
     }
   }
+
+
 }
