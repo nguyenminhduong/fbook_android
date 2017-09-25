@@ -2,6 +2,8 @@ package com.framgia.fbook.screen.listbookseemore
 
 import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.model.Category
+import com.framgia.fbook.data.model.Sort
+import com.framgia.fbook.data.model.SortBook
 import com.framgia.fbook.data.source.BookRepository
 import com.framgia.fbook.data.source.CategoryRepository
 import com.framgia.fbook.data.source.remote.api.error.BaseException
@@ -42,6 +44,7 @@ class ListBookPresenterTest {
   private val listResponse: BaseResponse<BaseBookRespone<List<Book>>> = BaseResponse()
   private val listCategory: BaseResponse<List<Category>> = BaseResponse()
   private val listBookByCategory: BaseResponse<BaseBookByCategoryResponse> = BaseResponse()
+  private val listSortBook: BaseResponse<List<SortBook>> = BaseResponse()
   private val baseException = BaseException(Type.HTTP, ErrorResponse())
 
   @Before
@@ -55,7 +58,7 @@ class ListBookPresenterTest {
     Mockito.`when`(mBookRepository.getSectionListBook(Constant.LATE, Constant.PAGE))
         .thenReturn(Single.just(listResponse))
     mPresenter.getListBook(Constant.LATE, Constant.PAGE)
-    Mockito.verify(mViewModel).onGetListBookSuccess(listResponse.item?.data)
+    Mockito.verify(mViewModel).onGetListBookSuccess(listResponse.items?.data)
     Mockito.verify(mViewModel, Mockito.never()).onError(baseException)
   }
 
@@ -64,7 +67,7 @@ class ListBookPresenterTest {
     Mockito.`when`(mBookRepository.getSectionListBook(Constant.RATING, Constant.PAGE))
         .thenReturn(Single.just(listResponse))
     mPresenter.getListBook(Constant.RATING, Constant.PAGE)
-    Mockito.verify(mViewModel).onGetListBookSuccess(listResponse.item?.data)
+    Mockito.verify(mViewModel).onGetListBookSuccess(listResponse.items?.data)
     Mockito.verify(mViewModel, Mockito.never()).onError(baseException)
   }
 
@@ -73,7 +76,7 @@ class ListBookPresenterTest {
     Mockito.`when`(mBookRepository.getSectionListBook(Constant.VIEW, Constant.PAGE))
         .thenReturn(Single.just(listResponse))
     mPresenter.getListBook(Constant.VIEW, Constant.PAGE)
-    Mockito.verify(mViewModel).onGetListBookSuccess(listResponse.item?.data)
+    Mockito.verify(mViewModel).onGetListBookSuccess(listResponse.items?.data)
     Mockito.verify(mViewModel, Mockito.never()).onError(baseException)
   }
 
@@ -82,7 +85,7 @@ class ListBookPresenterTest {
     Mockito.`when`(mBookRepository.getSectionListBook(Constant.WAITING, Constant.PAGE))
         .thenReturn(Single.just(listResponse))
     mPresenter.getListBook(Constant.WAITING, Constant.PAGE)
-    Mockito.verify(mViewModel).onGetListBookSuccess(listResponse.item?.data)
+    Mockito.verify(mViewModel).onGetListBookSuccess(listResponse.items?.data)
     Mockito.verify(mViewModel, Mockito.never()).onError(baseException)
   }
 
@@ -91,7 +94,7 @@ class ListBookPresenterTest {
     Mockito.`when`(mBookRepository.getSectionListBook(Constant.READ, Constant.PAGE))
         .thenReturn(Single.just(listResponse))
     mPresenter.getListBook(Constant.READ, Constant.PAGE)
-    Mockito.verify(mViewModel).onGetListBookSuccess(listResponse.item?.data)
+    Mockito.verify(mViewModel).onGetListBookSuccess(listResponse.items?.data)
     Mockito.verify(mViewModel, Mockito.never()).onError(baseException)
   }
 
@@ -100,7 +103,7 @@ class ListBookPresenterTest {
     Mockito.`when`(mBookRepository.getSectionListBook(Constant.READ, Constant.PAGE))
         .thenReturn(Single.error(baseException))
     mPresenter.getListBook(Constant.READ, Constant.PAGE)
-    Mockito.verify(mViewModel, Mockito.never()).onGetListBookSuccess(listResponse.item?.data)
+    Mockito.verify(mViewModel, Mockito.never()).onGetListBookSuccess(listResponse.items?.data)
     Mockito.verify(mViewModel).onError(baseException)
   }
 
@@ -108,7 +111,7 @@ class ListBookPresenterTest {
   fun getListCategory_shouldReturnListCategory_whenGetListCategory() {
     Mockito.`when`(mCategoryRepository.getCategory()).thenReturn(Single.just(listCategory))
     mPresenter.getListCategory()
-    Mockito.verify(mViewModel).onGetListCategorySuccess(listCategory.item)
+    Mockito.verify(mViewModel).onGetListCategorySuccess(listCategory.items)
     Mockito.verify(mViewModel, Mockito.never()).onError(baseException)
   }
 
@@ -116,7 +119,7 @@ class ListBookPresenterTest {
   fun getListCategory_shouldReturnError_whenGetListCategory() {
     Mockito.`when`(mCategoryRepository.getCategory()).thenReturn(Single.error(baseException))
     mPresenter.getListCategory()
-    Mockito.verify(mViewModel, Mockito.never()).onGetListCategorySuccess(listCategory.item)
+    Mockito.verify(mViewModel, Mockito.never()).onGetListCategorySuccess(listCategory.items)
     Mockito.verify(mViewModel).onError(baseException)
   }
 
@@ -126,8 +129,8 @@ class ListBookPresenterTest {
     Mockito.`when`(mCategoryRepository.getListBookByCategory(categoryId)).thenReturn(
         Single.just(listBookByCategory))
     mPresenter.getListBookByCategory(categoryId)
-    Mockito.verify(mViewModel).onGetListBookByCategorySuccess(
-        listBookByCategory.item?.categoryResponse?.data)
+    Mockito.verify(mViewModel).onGetListBookSuccess(
+        listBookByCategory.items?.categoryResponse?.data)
     Mockito.verify(mViewModel, Mockito.never()).onError(baseException)
   }
 
@@ -137,8 +140,46 @@ class ListBookPresenterTest {
     Mockito.`when`(mCategoryRepository.getListBookByCategory(categoryId)).thenReturn(
         Single.error(baseException))
     mPresenter.getListBookByCategory(categoryId)
-    Mockito.verify(mViewModel, Mockito.never()).onGetListBookByCategorySuccess(
-        listBookByCategory.item?.categoryResponse?.data)
+    Mockito.verify(mViewModel, Mockito.never()).onGetListBookSuccess(
+        listBookByCategory.items?.categoryResponse?.data)
+    Mockito.verify(mViewModel).onError(baseException)
+  }
+
+  @Test
+  fun getListSortBook_shouldReturnListSort_whenGetListSortBook() {
+    Mockito.`when`(mBookRepository.getListSortBook()).thenReturn(Single.just(listSortBook))
+    mPresenter.getListSortBook()
+    Mockito.verify(mViewModel).onGetListSortBookSuccess(listSortBook.items)
+    Mockito.verify(mViewModel, Mockito.never()).onError(baseException)
+  }
+
+  @Test
+  fun getListSortBook_shouldReturnError_whenGetListSortBook() {
+    Mockito.`when`(mBookRepository.getListSortBook()).thenReturn(Single.error(baseException))
+    mPresenter.getListSortBook()
+    Mockito.verify(mViewModel, Mockito.never()).onGetListSortBookSuccess(listSortBook.items)
+    Mockito.verify(mViewModel).onError(baseException)
+  }
+
+  @Test
+  fun getListBookBySort_shouldReturnListBook_whenGetListBySort() {
+    val sort = Sort()
+    Mockito.`when`(
+        mBookRepository.getListBookBySort(Constant.LATE, Constant.PAGE, sort)).thenReturn(
+        Single.just(listResponse))
+    mPresenter.getListBookBySort(Constant.LATE, Constant.PAGE, sort)
+    Mockito.verify(mViewModel).onGetListBookSuccess(listResponse.items?.data)
+    Mockito.verify(mViewModel, Mockito.never()).onError(baseException)
+  }
+
+  @Test
+  fun getListBookBySort_shouldReturnError_whenGetListBySort() {
+    val sort = Sort()
+    Mockito.`when`(
+        mBookRepository.getListBookBySort(Constant.LATE, Constant.PAGE, sort)).thenReturn(
+        Single.error(baseException))
+    mPresenter.getListBookBySort(Constant.LATE, Constant.PAGE, sort)
+    Mockito.verify(mViewModel, Mockito.never()).onGetListBookSuccess(listResponse.items?.data)
     Mockito.verify(mViewModel).onError(baseException)
   }
 }

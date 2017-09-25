@@ -1,9 +1,6 @@
 package com.framgia.fbook.data.source
 
-import com.framgia.fbook.data.model.ActionBookDetail
-import com.framgia.fbook.data.model.Book
-import com.framgia.fbook.data.model.GoogleBook
-import com.framgia.fbook.data.model.SortBook
+import com.framgia.fbook.data.model.*
 import com.framgia.fbook.data.source.remote.api.request.BookRequest
 import com.framgia.fbook.data.source.remote.api.response.BaseBookRespone
 import com.framgia.fbook.data.source.remote.api.response.BaseResponse
@@ -43,5 +40,8 @@ interface BookDataSource {
     fun getListSortBook(): Single<BaseResponse<List<SortBook>>>
 
     fun getApproveRequest(): Single<BaseResponse<BaseBookRespone<List<Book>>>>
+
+    fun getListBookBySort(type: String?,
+        page: Int?, sort: Sort?): Single<BaseResponse<BaseBookRespone<List<Book>>>>
   }
 }

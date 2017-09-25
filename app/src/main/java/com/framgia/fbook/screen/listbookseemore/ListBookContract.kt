@@ -2,6 +2,7 @@ package com.framgia.fbook.screen.listbookseemore
 
 import com.framgia.fbook.data.model.Book
 import com.framgia.fbook.data.model.Category
+import com.framgia.fbook.data.model.Sort
 import com.framgia.fbook.data.model.SortBook
 import com.framgia.fbook.data.source.remote.api.error.BaseException
 import com.framgia.fbook.screen.BasePresenter
@@ -25,9 +26,9 @@ interface ListBookContract {
 
     fun onGetListCategorySuccess(listCategory: List<Category>?)
 
-    fun onGetListBookByCategorySuccess(listBook: List<Book>?)
-
     fun onGetListSortBookSuccess(listSort: List<SortBook>?)
+
+    fun isShowProgressDialog(): Boolean
   }
 
   /**
@@ -41,5 +42,8 @@ interface ListBookContract {
     fun getListBookByCategory(categoryId: Int?)
 
     fun getListSortBook()
+
+    fun getListBookBySort(type: String?,
+        page: Int?, sort: Sort?)
   }
 }

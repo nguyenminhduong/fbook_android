@@ -1,9 +1,6 @@
 package com.framgia.fbook.data.source.remote
 
-import com.framgia.fbook.data.model.ActionBookDetail
-import com.framgia.fbook.data.model.Book
-import com.framgia.fbook.data.model.GoogleBook
-import com.framgia.fbook.data.model.SortBook
+import com.framgia.fbook.data.model.*
 import com.framgia.fbook.data.source.BookDataSource
 import com.framgia.fbook.data.source.remote.api.request.BookRequest
 import com.framgia.fbook.data.source.remote.api.request.ReadingOrCancelBookRequest
@@ -105,5 +102,10 @@ class BookRemoteDataSource @Inject constructor(nameApi: FBookApi) : BaseRemoteDa
 
   override fun getApproveRequest(): Single<BaseResponse<BaseBookRespone<List<Book>>>> {
     return fbookApi.getApproveRequest()
+  }
+
+  override fun getListBookBySort(type: String?,
+      page: Int?, sort: Sort?): Single<BaseResponse<BaseBookRespone<List<Book>>>> {
+    return fbookApi.getListBookBySort(type, page, sort)
   }
 }
