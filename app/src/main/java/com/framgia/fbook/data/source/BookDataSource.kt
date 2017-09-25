@@ -41,5 +41,7 @@ interface BookDataSource {
     fun readOrCancelBook(actionBookDetail: ActionBookDetail?): Single<Any>
 
     fun getListSortBook(): Single<BaseResponse<List<SortBook>>>
+
+    fun getApproveRequest(): Single<BaseResponse<BaseBookRespone<List<Book>>>>
   }
 }
