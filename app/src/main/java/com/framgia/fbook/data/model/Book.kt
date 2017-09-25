@@ -72,7 +72,7 @@ class Book() : BaseModel(), Parcelable {
     var content: String? = null
     @Expose
     @SerializedName("star")
-    var star: Int? = null
+    var star: Float? = null
     @Expose
     @SerializedName("created_at")
     var createdAt: String? = null
